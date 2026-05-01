@@ -1,0 +1,14 @@
+package io.nicolaszurbuchen.pop_know.util
+
+import app.cash.sqldelight.ColumnAdapter
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.serializer
+
+val stringListAdapter = object : ColumnAdapter<List<String>, String> {
+    override fun decode(databaseValue: String): List<String> =
+        Json.decodeFromString(ListSerializer(String.serializer()), databaseValue)
+
+    override fun encode(value: List<String>): String =
+        Json.encodeToString(ListSerializer(String.serializer()), value)
+}
