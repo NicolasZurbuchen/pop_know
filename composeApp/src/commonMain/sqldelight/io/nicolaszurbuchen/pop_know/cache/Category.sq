@@ -1,0 +1,18 @@
+CREATE TABLE Category (
+    id INTEGER NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL
+);
+
+insertCategory:
+INSERT OR REPLACE INTO Category(id, name)
+VALUES (?, ?);
+
+getAllCategories:
+SELECT * FROM Category;
+
+getCategoryById:
+SELECT * FROM Category
+WHERE id = ?;
+
+deleteAllCategories:
+DELETE FROM Category;

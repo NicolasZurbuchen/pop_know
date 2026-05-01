@@ -1,0 +1,44 @@
+CREATE TABLE QuestionHistory (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    type TEXT NOT NULL,
+    difficulty TEXT NOT NULL,
+    category_id INTEGER NOT NULL,
+    question TEXT NOT NULL,
+    correct_answer TEXT NOT NULL,
+    incorrect_answers TEXT AS kotlin.collections.List<kotlin.String> NOT NULL,
+    selected_answer TEXT NOT NULL,
+    answered_at INTEGER NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES Category(id)
+);
+
+insertHistory:
+INSERT INTO QuestionHistory(type, difficulty, category_id, question, correct_answer, incorrect_answers, selected_answer, answered_at)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+
+countAllHistory:
+SELECT COUNT(*) FROM QuestionHistory;
+
+countCorrectAnswers:
+SELECT COUNT(*) FROM QuestionHistory
+WHERE selected_answer = correct_answer;
+
+statsByDifficulty:
+SELECT
+    difficulty,
+    COUNT(*) AS total,
+    SUM(CASE WHEN selected_answer = correct_answer THEN 1 ELSE 0 END) AS correct
+FROM QuestionHistory
+GROUP BY difficulty;
+
+statsByCategory:
+SELECT
+    c.id,
+    c.name,
+    COUNT(*) AS total,
+    SUM(CASE WHEN h.selected_answer = h.correct_answer THEN 1 ELSE 0 END) AS correct
+FROM QuestionHistory h
+JOIN Category c ON h.category_id = c.id
+GROUP BY h.category_id;
+
+deleteAllHistory:
+DELETE FROM QuestionHistory;
