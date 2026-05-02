@@ -4,5 +4,5 @@ import io.nicolaszurbuchen.pop_know.core.database.DatabaseDriverFactory
 import org.koin.dsl.module
 
 val platformModule = module {
-    single { DatabaseDriverFactory(get()) }
+    single<DatabaseDriverFactory> { DatabaseDriverFactory(get()) }
 }

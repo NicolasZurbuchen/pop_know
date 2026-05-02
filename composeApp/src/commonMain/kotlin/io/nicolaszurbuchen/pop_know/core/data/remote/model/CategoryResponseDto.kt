@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.core.data.data_source.remote.model
+package io.nicolaszurbuchen.pop_know.core.data.remote.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

@@ -1,11 +1,11 @@
-package io.nicolaszurbuchen.pop_know.core.data.data_source.remote.api
+package io.nicolaszurbuchen.pop_know.core.data.remote.api
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
-import io.nicolaszurbuchen.pop_know.core.data.data_source.remote.model.CategoryResponseDto
-import io.nicolaszurbuchen.pop_know.core.data.data_source.remote.model.TriviaResponseDto
+import io.nicolaszurbuchen.pop_know.core.data.remote.model.CategoryResponseDto
+import io.nicolaszurbuchen.pop_know.core.data.remote.model.TriviaResponseDto
 
 class TriviaApiImpl(
     private val client: HttpClient,

@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.core.data.data_source.cache
+package io.nicolaszurbuchen.pop_know.core.database
 
 import android.content.Context
 import app.cash.sqldelight.db.SqlDriver
