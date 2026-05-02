@@ -18,14 +18,9 @@ class QuizRepositoryImpl(
 
     override suspend fun saveSession(session: QuizSession) {
         val answeredAt = Clock.System.now().toEpochMilliseconds()
-        session.questionStates
+        val questions = session.questionStates
             .filterIsInstance<QuestionProgress.Answered>()
-            .forEach { progress ->
-                localDataSource.saveQuestion(
-                    question = progress.question,
-                    selectedAnswer = progress.selectedAnswer ?: "",
-                    answeredAt = answeredAt,
-                )
-            }
+            .map { Pair(it.question, it.selectedAnswer ?: "") }
+        localDataSource.saveQuestions(questions, answeredAt)
     }
 }
