@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.feature.home.domain.use_case
+package io.nicolaszurbuchen.pop_know.feature.home.domain.usecase
 
 import io.nicolaszurbuchen.pop_know.core.domain.AnswerStats
 import io.nicolaszurbuchen.pop_know.feature.home.domain.repository.HomeRepository

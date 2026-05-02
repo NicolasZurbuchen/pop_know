@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.feature.stats.data.data_source.local
+package io.nicolaszurbuchen.pop_know.feature.stats.data.datasource.local
 
 import io.nicolaszurbuchen.pop_know.cache.QuestionHistoryQueries
 import io.nicolaszurbuchen.pop_know.core.domain.AnswerStats

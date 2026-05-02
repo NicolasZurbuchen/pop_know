@@ -1,9 +1,9 @@
-package io.nicolaszurbuchen.pop_know.feature.home.data.data_source.local
+package io.nicolaszurbuchen.pop_know.feature.home.data.datasource.local
 
 import io.nicolaszurbuchen.pop_know.cache.QuestionHistoryQueries
 
 class HomeLocalDataSourceImpl(
-    private val queries: QuestionHistoryQueries
+    private val queries: QuestionHistoryQueries,
 ) : HomeLocalDataSource {
 
     override fun countAll(): Long = queries.countAllHistory().executeAsOne()

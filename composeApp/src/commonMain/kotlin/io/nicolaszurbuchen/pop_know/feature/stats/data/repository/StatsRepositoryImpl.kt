@@ -1,12 +1,12 @@
 package io.nicolaszurbuchen.pop_know.feature.stats.data.repository
 
 import io.nicolaszurbuchen.pop_know.core.domain.AnswerStats
-import io.nicolaszurbuchen.pop_know.feature.stats.data.data_source.local.StatsLocalDataSource
+import io.nicolaszurbuchen.pop_know.feature.stats.data.datasource.local.StatsLocalDataSource
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.FullStats
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.repository.StatsRepository
 
 class StatsRepositoryImpl(
-    private val localDataSource: StatsLocalDataSource
+    private val localDataSource: StatsLocalDataSource,
 ) : StatsRepository {
 
     override suspend fun getFullStats(): FullStats? {

@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.feature.stats.data.data_source.local
+package io.nicolaszurbuchen.pop_know.feature.stats.data.datasource.local
 
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.CategoryStats
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.DifficultyStats

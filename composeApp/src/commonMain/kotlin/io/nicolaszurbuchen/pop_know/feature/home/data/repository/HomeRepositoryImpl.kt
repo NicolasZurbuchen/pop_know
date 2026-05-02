@@ -1,11 +1,11 @@
 package io.nicolaszurbuchen.pop_know.feature.home.data.repository
 
 import io.nicolaszurbuchen.pop_know.core.domain.AnswerStats
-import io.nicolaszurbuchen.pop_know.feature.home.data.data_source.local.HomeLocalDataSource
+import io.nicolaszurbuchen.pop_know.feature.home.data.datasource.local.HomeLocalDataSource
 import io.nicolaszurbuchen.pop_know.feature.home.domain.repository.HomeRepository
 
 class HomeRepositoryImpl(
-    private val localDataSource: HomeLocalDataSource
+    private val localDataSource: HomeLocalDataSource,
 ) : HomeRepository {
 
     override suspend fun getAnswerStats(): AnswerStats? {
