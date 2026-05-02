@@ -9,21 +9,17 @@ class QuizLocalDataSourceImpl(
     private val queries: QuestionHistoryQueries,
 ) : QuizLocalDataSource {
 
-    override fun saveQuestions(questions: List<Pair<TriviaQuestion, String>>, answeredAt: Long) {
-        queries.transaction {
-            questions.forEach { (question, selectedAnswer) ->
-                queries.insertHistory(
-                    type = question.questionType.toDbString(),
-                    difficulty = question.difficulty.toDbString(),
-                    category_id = question.category.id.toLong(),
-                    question = question.question,
-                    correct_answer = question.correctAnswer,
-                    incorrect_answers = question.incorrectAnswers,
-                    selected_answer = selectedAnswer,
-                    answered_at = answeredAt,
-                )
-            }
-        }
+    override fun saveQuestion(question: TriviaQuestion, selectedAnswer: String, answeredAt: Long) {
+        queries.insertHistory(
+            type = question.questionType.toDbString(),
+            difficulty = question.difficulty.toDbString(),
+            category_id = question.category.id.toLong(),
+            question = question.question,
+            correct_answer = question.correctAnswer,
+            incorrect_answers = question.incorrectAnswers,
+            selected_answer = selectedAnswer,
+            answered_at = answeredAt,
+        )
     }
 
     private fun QuestionType.toDbString(): String = when (this) {
