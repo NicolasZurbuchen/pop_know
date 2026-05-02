@@ -1,6 +1,6 @@
-package io.nicolaszurbuchen.pop_know.core.data.remote.mapper
+package io.nicolaszurbuchen.pop_know.core.data.datasource.remote.mapper
 
-import io.nicolaszurbuchen.pop_know.core.data.remote.model.TriviaQuestionDto
+import io.nicolaszurbuchen.pop_know.core.data.datasource.remote.model.TriviaQuestionDto
 import io.nicolaszurbuchen.pop_know.core.domain.Category
 import io.nicolaszurbuchen.pop_know.core.domain.Difficulty
 import io.nicolaszurbuchen.pop_know.core.domain.QuestionType

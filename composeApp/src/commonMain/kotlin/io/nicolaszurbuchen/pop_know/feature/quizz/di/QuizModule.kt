@@ -11,8 +11,8 @@ import io.nicolaszurbuchen.pop_know.feature.quizz.domain.usecase.StartQuizUseCas
 import org.koin.dsl.module
 
 val quizModule = module {
-    single<QuizRemoteDataSource> { QuizRemoteDataSourceImpl(get(), get()) }
-    single<QuizLocalDataSource> { QuizLocalDataSourceImpl(get()) }
+    single<QuizRemoteDataSource> { QuizRemoteDataSourceImpl(get()) }
+    single<QuizLocalDataSource> { QuizLocalDataSourceImpl(get(), get()) }
     single<QuizRepository> { QuizRepositoryImpl(get(), get()) }
     factory { StartQuizUseCase(get()) }
     factory { SaveQuizSessionUseCase(get()) }

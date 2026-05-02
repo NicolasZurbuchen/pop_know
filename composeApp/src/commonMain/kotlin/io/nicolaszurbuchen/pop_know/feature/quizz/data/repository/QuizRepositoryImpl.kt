@@ -13,8 +13,14 @@ class QuizRepositoryImpl(
     private val localDataSource: QuizLocalDataSource,
 ) : QuizRepository {
 
-    override suspend fun fetchQuestions(amount: Int): List<TriviaQuestion> =
-        remoteDataSource.fetchQuestions(amount)
+    override suspend fun fetchQuestions(amount: Int): List<TriviaQuestion> {
+        val categories = localDataSource.getCategories().ifEmpty {
+            val fetched = remoteDataSource.fetchCategories()
+            localDataSource.saveCategories(fetched)
+            fetched
+        }
+        return remoteDataSource.fetchQuestions(categories, amount)
+    }
 
     override suspend fun saveSession(session: QuizSession) {
         val answeredAt = Clock.System.now().toEpochMilliseconds()
