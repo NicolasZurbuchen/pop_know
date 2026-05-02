@@ -1,18 +1,18 @@
 package io.nicolaszurbuchen.pop_know.feature.home.data.repository
 
-import io.nicolaszurbuchen.pop_know.cache.QuestionHistoryQueries
 import io.nicolaszurbuchen.pop_know.core.domain.AnswerStats
+import io.nicolaszurbuchen.pop_know.feature.home.data.data_source.local.HomeLocalDataSource
 import io.nicolaszurbuchen.pop_know.feature.home.domain.repository.HomeRepository
 
 class HomeRepositoryImpl(
-    private val queries: QuestionHistoryQueries
+    private val localDataSource: HomeLocalDataSource
 ) : HomeRepository {
 
     override suspend fun getAnswerStats(): AnswerStats? {
-        val totalAnswered = queries.countAllHistory().executeAsOne()
+        val totalAnswered = localDataSource.countAll()
         if (totalAnswered == 0L) return null
 
-        val totalCorrect = queries.countCorrectAnswers().executeAsOne()
+        val totalCorrect = localDataSource.countCorrect()
         return AnswerStats(
             totalAnswered = totalAnswered.toInt(),
             totalCorrect = totalCorrect.toInt(),
