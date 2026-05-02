@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.feature.home.presentation.ui
+package io.nicolaszurbuchen.pop_know.feature.home.presentation.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

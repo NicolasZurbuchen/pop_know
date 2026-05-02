@@ -10,7 +10,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import io.nicolaszurbuchen.pop_know.feature.home.presentation.ui.HomeRoute
+import io.nicolaszurbuchen.pop_know.feature.home.presentation.screen.HomeRoute
+import io.nicolaszurbuchen.pop_know.feature.stats.presentation.screen.StatsRoute
 
 @Composable
 fun NavGraph(
@@ -37,9 +38,9 @@ fun NavGraph(
             }
         }
         composable<Screen.Stats> {
-            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("Stats — coming soon")
-            }
+            StatsRoute(
+                onNavigateBack = { navController.popBackStack() },
+            )
         }
     }
 }

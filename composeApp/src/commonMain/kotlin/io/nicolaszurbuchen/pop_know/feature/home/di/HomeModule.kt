@@ -6,7 +6,7 @@ import io.nicolaszurbuchen.pop_know.feature.home.data.repository.HomeRepositoryI
 import io.nicolaszurbuchen.pop_know.feature.home.domain.repository.HomeRepository
 import io.nicolaszurbuchen.pop_know.feature.home.domain.usecase.GetAnswerStatsUseCase
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.HomeViewModel
-import org.koin.compose.viewmodel.dsl.viewModel
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val homeModule = module {
