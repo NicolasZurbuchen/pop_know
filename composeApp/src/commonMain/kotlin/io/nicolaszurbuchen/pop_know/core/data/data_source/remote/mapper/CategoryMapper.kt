@@ -1,6 +1,6 @@
-package io.nicolaszurbuchen.pop_know.feature.home.data.data_source.remote.mapper
+package io.nicolaszurbuchen.pop_know.core.data.data_source.remote.mapper
 
-import io.nicolaszurbuchen.pop_know.feature.home.data.data_source.remote.model.CategoryDto
+import io.nicolaszurbuchen.pop_know.core.data.data_source.remote.model.CategoryDto
 import io.nicolaszurbuchen.pop_know.core.domain.Category
 
 fun CategoryDto.toDomain(): Category {

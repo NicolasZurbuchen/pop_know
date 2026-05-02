@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.core.data.data_source.remote
+package io.nicolaszurbuchen.pop_know.core.network
 
 import io.ktor.client.engine.HttpClientEngine
 

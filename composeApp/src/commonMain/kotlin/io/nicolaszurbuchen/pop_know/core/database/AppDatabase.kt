@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.core.data.data_source.cache
+package io.nicolaszurbuchen.pop_know.core.database
 
 import io.nicolaszurbuchen.pop_know.cache.AppDatabase
 import io.nicolaszurbuchen.pop_know.cache.QuestionHistory

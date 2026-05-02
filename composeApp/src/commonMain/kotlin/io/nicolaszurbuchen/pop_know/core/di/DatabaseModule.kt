@@ -1,7 +1,7 @@
 package io.nicolaszurbuchen.pop_know.core.di
 
 import io.nicolaszurbuchen.pop_know.cache.AppDatabase
-import io.nicolaszurbuchen.pop_know.core.data.data_source.cache.createDatabase
+import io.nicolaszurbuchen.pop_know.core.database.createDatabase
 import org.koin.dsl.module
 
 val databaseModule = module {
