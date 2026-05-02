@@ -56,6 +56,8 @@ kotlin {
             implementation(libs.runtime)
             implementation(libs.kotlinx.datetime)
             implementation(libs.koin.core)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.navigation.compose)
             implementation(libs.bundles.ktor.common)
         }
         commonTest.dependencies {
