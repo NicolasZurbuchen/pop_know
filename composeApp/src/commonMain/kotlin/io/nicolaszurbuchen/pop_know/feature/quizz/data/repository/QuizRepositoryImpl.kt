@@ -2,11 +2,10 @@ package io.nicolaszurbuchen.pop_know.feature.quizz.data.repository
 
 import io.nicolaszurbuchen.pop_know.feature.quizz.data.datasource.local.QuizLocalDataSource
 import io.nicolaszurbuchen.pop_know.feature.quizz.data.datasource.remote.QuizRemoteDataSource
-import io.nicolaszurbuchen.pop_know.feature.quizz.domain.model.QuestionProgress
-import io.nicolaszurbuchen.pop_know.feature.quizz.domain.model.QuizSession
+import io.nicolaszurbuchen.pop_know.feature.quizz.domain.model.AnswerStatus
+import io.nicolaszurbuchen.pop_know.feature.quizz.domain.model.GameResult
 import io.nicolaszurbuchen.pop_know.feature.quizz.domain.model.TriviaQuestion
 import io.nicolaszurbuchen.pop_know.feature.quizz.domain.repository.QuizRepository
-import kotlin.time.Clock
 
 class QuizRepositoryImpl(
     private val remoteDataSource: QuizRemoteDataSource,
@@ -22,16 +21,17 @@ class QuizRepositoryImpl(
         return remoteDataSource.fetchQuestions(categories, amount)
     }
 
-    override suspend fun saveSession(session: QuizSession) {
-        val answeredAt = Clock.System.now().toEpochMilliseconds()
-        session.questionStates
-            .filterIsInstance<QuestionProgress.Answered>()
-            .forEach { progress ->
-                localDataSource.saveQuestion(
-                    question = progress.question,
-                    selectedAnswer = progress.selectedAnswer ?: "",
-                    answeredAt = answeredAt,
-                )
-            }
+    override suspend fun saveAnswer(
+        gameId: Long,
+        question: TriviaQuestion,
+        selectedAnswer: String?,
+        status: AnswerStatus,
+    ) {
+        localDataSource.saveAnswer(gameId, question, selectedAnswer, status)
+    }
+
+    override suspend fun getLastGameResult(): GameResult? {
+        val rows = localDataSource.getLastGame()
+        return if (rows.isEmpty()) null else GameResult(rows)
     }
 }

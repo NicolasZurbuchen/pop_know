@@ -1,16 +1,13 @@
 package io.nicolaszurbuchen.pop_know.core.navigation
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.screen.HomeRoute
+import io.nicolaszurbuchen.pop_know.feature.quizz.presentation.screen.QuizRoute
+import io.nicolaszurbuchen.pop_know.feature.quizz.presentation.screen.ResultRoute
 import io.nicolaszurbuchen.pop_know.feature.stats.presentation.screen.StatsRoute
 
 @Composable
@@ -28,14 +25,28 @@ fun NavGraph(
             )
         }
         composable<Screen.Play> {
-            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("Play — coming soon")
-            }
+            QuizRoute(
+                onNavigateToResult = { navController.navigate(Screen.Result) },
+            )
         }
         composable<Screen.Result> {
-            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("Result — coming soon")
-            }
+            ResultRoute(
+                onNavigateHome = {
+                    navController.navigate(Screen.Home) {
+                        popUpTo<Screen.Home> { inclusive = false }
+                    }
+                },
+                onPlayAgain = {
+                    navController.navigate(Screen.Play) {
+                        popUpTo<Screen.Result> { inclusive = true }
+                    }
+                },
+                onNavigateToStats = {
+                    navController.navigate(Screen.Stats) {
+                        popUpTo<Screen.Result> { inclusive = true }
+                    }
+                },
+            )
         }
         composable<Screen.Stats> {
             StatsRoute(

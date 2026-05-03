@@ -6,8 +6,12 @@ import io.nicolaszurbuchen.pop_know.feature.quizz.data.datasource.remote.QuizRem
 import io.nicolaszurbuchen.pop_know.feature.quizz.data.datasource.remote.QuizRemoteDataSourceImpl
 import io.nicolaszurbuchen.pop_know.feature.quizz.data.repository.QuizRepositoryImpl
 import io.nicolaszurbuchen.pop_know.feature.quizz.domain.repository.QuizRepository
-import io.nicolaszurbuchen.pop_know.feature.quizz.domain.usecase.SaveQuizSessionUseCase
+import io.nicolaszurbuchen.pop_know.feature.quizz.domain.usecase.GetLastGameResultUseCase
+import io.nicolaszurbuchen.pop_know.feature.quizz.domain.usecase.SaveAnswerUseCase
 import io.nicolaszurbuchen.pop_know.feature.quizz.domain.usecase.StartQuizUseCase
+import io.nicolaszurbuchen.pop_know.feature.quizz.presentation.QuizViewModel
+import io.nicolaszurbuchen.pop_know.feature.quizz.presentation.ResultViewModel
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val quizModule = module {
@@ -15,5 +19,8 @@ val quizModule = module {
     single<QuizLocalDataSource> { QuizLocalDataSourceImpl(get(), get()) }
     single<QuizRepository> { QuizRepositoryImpl(get(), get()) }
     factory { StartQuizUseCase(get()) }
-    factory { SaveQuizSessionUseCase(get()) }
+    factory { SaveAnswerUseCase(get()) }
+    factory { GetLastGameResultUseCase(get()) }
+    viewModel { QuizViewModel(get(), get()) }
+    viewModel { ResultViewModel(get()) }
 }

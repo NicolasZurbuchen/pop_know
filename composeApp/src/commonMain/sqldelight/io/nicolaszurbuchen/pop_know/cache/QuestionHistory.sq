@@ -1,19 +1,21 @@
 CREATE TABLE QuestionHistory (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    game_id INTEGER NOT NULL,
     type TEXT NOT NULL,
     difficulty TEXT NOT NULL,
     category_id INTEGER NOT NULL,
     question TEXT NOT NULL,
     correct_answer TEXT NOT NULL,
     incorrect_answers TEXT AS kotlin.collections.List<kotlin.String> NOT NULL,
-    selected_answer TEXT NOT NULL,
+    selected_answer TEXT,
+    status TEXT NOT NULL,
     answered_at INTEGER NOT NULL,
     FOREIGN KEY (category_id) REFERENCES Category(id)
 );
 
 insertHistory:
-INSERT INTO QuestionHistory(type, difficulty, category_id, question, correct_answer, incorrect_answers, selected_answer, answered_at)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+INSERT INTO QuestionHistory(game_id, type, difficulty, category_id, question, correct_answer, incorrect_answers, selected_answer, status, answered_at)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 countAllHistory:
 SELECT COUNT(*) FROM QuestionHistory;
@@ -39,6 +41,17 @@ SELECT
 FROM QuestionHistory h
 JOIN Category c ON h.category_id = c.id
 GROUP BY h.category_id;
+
+getLastGame:
+SELECT
+    h.id, h.game_id, h.type, h.difficulty,
+    h.question, h.correct_answer, h.incorrect_answers,
+    h.selected_answer, h.status, h.answered_at,
+    c.name AS category_name
+FROM QuestionHistory h
+JOIN Category c ON h.category_id = c.id
+WHERE h.game_id = (SELECT MAX(game_id) FROM QuestionHistory)
+ORDER BY h.id ASC;
 
 deleteAllHistory:
 DELETE FROM QuestionHistory;
