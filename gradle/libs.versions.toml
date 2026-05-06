@@ -17,6 +17,7 @@ coroutinesVersion = "1.10.2"
 dateTimeVersion = "0.7.1"
 koin = "4.2.1"
 ktor = "3.4.3"
+materialIconsExtended = "1.7.3"
 navigation = "2.9.2"
 sqlDelight = "2.3.2"
 
@@ -42,6 +43,7 @@ android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = 
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
+material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutinesVersion" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "dateTimeVersion" }
