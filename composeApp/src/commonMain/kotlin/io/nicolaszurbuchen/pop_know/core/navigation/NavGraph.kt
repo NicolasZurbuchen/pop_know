@@ -1,6 +1,10 @@
 package io.nicolaszurbuchen.pop_know.core.navigation
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,6 +21,9 @@ fun NavGraph(
     NavHost(
         navController = navController,
         startDestination = Screen.Home,
+        modifier = Modifier
+            .background(color = MaterialTheme.colorScheme.background)
+            .systemBarsPadding(),
     ) {
         composable<Screen.Home> {
             HomeRoute(
