@@ -1,7 +1,5 @@
 package io.nicolaszurbuchen.pop_know.feature.quizz.domain.model
 
-import io.nicolaszurbuchen.pop_know.feature.quizz.domain.model.TriviaQuestion
-
 sealed class QuestionProgress {
     data class Unanswered(
         val question: TriviaQuestion
