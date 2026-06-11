@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">PopKnow</string>
+
+    <string name="home_appbar_left">Est · 2026</string>
+    <string name="home_appbar_center">N0. 001</string>
+    <string name="home_appbar_right">Round Ready</string>
+    <string name="home_section_title">The Trivia Show</string>
+    <string name="home_title_upper">Pop</string>
+    <string name="home_title_lower">Know</string>
+    <string name="home_title_subtitle">Ten questions. Fifteen seconds each. One ratio of glory at the end.</string>
+    <string name="home_stats_played">Played</string>
+    <string name="home_stats_correct">Correct</string>
+    <string name="home_stats_ratio">Ratio</string>
+    <string name="home_stats_ratio_value">%1$d%</string>
+    <string name="home_start_round">Start Round</string>
+    <string name="home_view_stats">View Stats</string>
+
+    <string name="quiz_question">Question</string>
+    <string name="quiz_question_count">%1$d%</string>
+    <string name="quiz_easy">Easy</string>
+    <string name="quiz_medium">Medium</string>
+    <string name="quiz_hard">Hard</string>
+    <string name="quiz_points_banked">+ Points Banked</string>
+    <string name="quiz_points_lost">- Points Lost</string>
+    <string name="quiz_nice">Nice!</string>
+    <string name="quiz_nope">Nope.</string>
+    <string name="quiz_slow">Slow.</string>
+    <string name="quiz_next">Next</string>
+    <string name="quiz_see_result">See result</string>
+</resources>
