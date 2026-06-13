@@ -25,16 +25,6 @@ data class PopKnowColors(
     val onAccent: Color,
     val accentSubtle: Color,
     val onAccentSubtle: Color,
-    // --- Correct (lime) ---
-    val correct: Color,
-    val onCorrect: Color,
-    val correctSubtle: Color,
-    val onCorrectSubtle: Color,
-    // --- Wrong (crimson) ---
-    val wrong: Color,
-    val onWrong: Color,
-    val wrongSubtle: Color,
-    val onWrongSubtle: Color,
     // --- Mode flag ---
     val isDark: Boolean,
 )
@@ -59,22 +49,12 @@ val DarkPopKnowColors = PopKnowColors(
     onAccent = InkPalette.ink950,
     accentSubtle = AcidPalette.acid900,
     onAccentSubtle = AcidPalette.acid200,
-    // Correct
-    correct = LimePalette.lime400,
-    onCorrect = LimePalette.lime950,
-    correctSubtle = LimePalette.lime900,
-    onCorrectSubtle = LimePalette.lime300,
-    // Wrong
-    wrong = CrimsonPalette.crimson400,
-    onWrong = CrimsonPalette.crimson50,
-    wrongSubtle = CrimsonPalette.crimson900,
-    onWrongSubtle = CrimsonPalette.crimson300,
 )
 
 val LightPopKnowColors = PopKnowColors(
     isDark = false,
     // Surfaces
-    background = InkPalette.ink50,       // your Cream
+    background = InkPalette.ink50,
     surface = Color(0xFFFFFFFF),
     surfaceRaised = Color(0xFFE8E4DC),
     // Borders
@@ -91,16 +71,6 @@ val LightPopKnowColors = PopKnowColors(
     onAccent = Color(0xFFFFFFFF),
     accentSubtle = VioletPalette.violet100,
     onAccentSubtle = VioletPalette.violet800,
-    // Correct — step up to 500 for contrast on light bg
-    correct = LimePalette.lime500,
-    onCorrect = LimePalette.lime50,
-    correctSubtle = LimePalette.lime100,
-    onCorrectSubtle = LimePalette.lime800,
-    // Wrong
-    wrong = CrimsonPalette.crimson500,
-    onWrong = CrimsonPalette.crimson50,
-    wrongSubtle = CrimsonPalette.crimson100,
-    onWrongSubtle = CrimsonPalette.crimson800,
 )
 
 internal val LocalPopKnowColors = staticCompositionLocalOf { DarkPopKnowColors }
@@ -109,7 +79,3 @@ val MaterialTheme.popKnowColors: PopKnowColors
     @Composable
     @ReadOnlyComposable
     get() = LocalPopKnowColors.current
-
-
-val White = Color(0xFFFFFFFF)
-val Black = Color(0xFF000000)

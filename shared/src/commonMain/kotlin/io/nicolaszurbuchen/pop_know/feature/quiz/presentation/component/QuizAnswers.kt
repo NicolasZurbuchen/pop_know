@@ -21,8 +21,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.model.QuizChoiceUiModel
-import io.nicolaszurbuchen.pop_know.infra.design.theme.Black
+import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowGameColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 
 @Composable
@@ -34,7 +35,12 @@ fun QuizAnswers(
     val isHighlighted = choice.answerStatus != null
     val backgroundColor = choice.color()
     val showBorder = !isHighlighted
-    val contentColor = if (isHighlighted) Black else MaterialTheme.colorScheme.onBackground
+    val contentColor = when (choice.answerStatus) {
+        AnswerStatus.CORRECT -> MaterialTheme.popKnowGameColors.onCorrect
+        AnswerStatus.INCORRECT -> MaterialTheme.popKnowGameColors.onWrong
+        AnswerStatus.TIMEOUT -> MaterialTheme.popKnowGameColors.onTimeout
+        null -> MaterialTheme.colorScheme.onBackground
+    }
 
     Row(
         modifier = Modifier

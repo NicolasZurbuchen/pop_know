@@ -13,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
-import io.nicolaszurbuchen.pop_know.infra.design.theme.White
 import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowGameColors
 
 @Composable
@@ -25,6 +24,11 @@ fun PopKnowQuestionResultDot(
         AnswerStatus.CORRECT -> MaterialTheme.popKnowGameColors.correct
         AnswerStatus.INCORRECT -> MaterialTheme.popKnowGameColors.wrong
         AnswerStatus.TIMEOUT -> MaterialTheme.popKnowGameColors.timeout
+    }
+    val contentColor = when (status) {
+        AnswerStatus.CORRECT -> MaterialTheme.popKnowGameColors.onCorrect
+        AnswerStatus.INCORRECT -> MaterialTheme.popKnowGameColors.onWrong
+        AnswerStatus.TIMEOUT -> MaterialTheme.popKnowGameColors.onTimeout
     }
 
     Box(
@@ -42,7 +46,7 @@ fun PopKnowQuestionResultDot(
                 AnswerStatus.INCORRECT, AnswerStatus.TIMEOUT -> Icons.Default.Close
             },
             contentDescription = null,
-            tint = White,
+            tint = contentColor,
             modifier = Modifier.size(14.dp)
         )
     }

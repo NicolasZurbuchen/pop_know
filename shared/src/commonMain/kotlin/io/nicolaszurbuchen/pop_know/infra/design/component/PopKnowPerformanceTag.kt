@@ -8,7 +8,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import io.nicolaszurbuchen.pop_know.infra.design.theme.Black
 import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 
@@ -31,7 +30,7 @@ fun PopKnowPerformanceTag(
         Text(
             text = text,
             style = MaterialTheme.typography.titleSmall,
-            color = Black
+            color = MaterialTheme.popKnowColors.onAccent
         )
     }
 }

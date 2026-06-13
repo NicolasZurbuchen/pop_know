@@ -16,10 +16,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.model.QuizChoiceUiModel
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.model.QuizIntent
-import io.nicolaszurbuchen.pop_know.infra.design.theme.Black
-import io.nicolaszurbuchen.pop_know.infra.design.theme.White
+import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowColors
+import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowGameColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 
 @Composable
@@ -29,6 +30,12 @@ fun QuizResultBar(
     onIntent: (QuizIntent) -> Unit,
 ) {
     val barColor = resultChoice.color()
+    val barContentColor = when (resultChoice.answerStatus) {
+        AnswerStatus.CORRECT -> MaterialTheme.popKnowGameColors.onCorrect
+        AnswerStatus.INCORRECT -> MaterialTheme.popKnowGameColors.onWrong
+        AnswerStatus.TIMEOUT -> MaterialTheme.popKnowGameColors.onTimeout
+        null -> MaterialTheme.colorScheme.onBackground
+    }
 
     Row(
         modifier = Modifier
@@ -42,12 +49,12 @@ fun QuizResultBar(
             Text(
                 text = resultChoice.label(),
                 style = MaterialTheme.typography.displaySmall,
-                color = Black,
+                color = barContentColor,
             )
             Text(
                 text = resultChoice.headline(),
                 style = MaterialTheme.typography.headlineLarge,
-                color = Black,
+                color = barContentColor,
             )
         }
         Button(
@@ -56,8 +63,8 @@ fun QuizResultBar(
             },
             shape = MaterialTheme.shapes.extraLarge,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Black,
-                contentColor = White,
+                containerColor = MaterialTheme.popKnowColors.textPrimary,
+                contentColor = MaterialTheme.popKnowColors.background,
             ),
         ) {
             Row(
@@ -67,12 +74,12 @@ fun QuizResultBar(
                 Text(
                     text = "NEXT",
                     style = MaterialTheme.typography.titleLarge,
-                    color = White,
+                    color = MaterialTheme.popKnowColors.background,
                 )
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                     contentDescription = null,
-                    tint = White,
+                    tint = MaterialTheme.popKnowColors.background,
                 )
             }
         }

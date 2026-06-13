@@ -6,7 +6,6 @@ import io.nicolaszurbuchen.pop_know.feature.home.presentation.model.HomeContent
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.model.HomeEffect
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.model.HomeIntent
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.model.HomeState
-import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getAnswerStatsUseCase: GetAnswerStatsUseCase,
