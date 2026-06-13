@@ -18,9 +18,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.model.QuizChoiceUiModel
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.model.QuizIntent
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.Black
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.White
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.spacing
+import io.nicolaszurbuchen.pop_know.infra.design.theme.Black
+import io.nicolaszurbuchen.pop_know.infra.design.theme.White
+import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 
 @Composable
 fun QuizResultBar(

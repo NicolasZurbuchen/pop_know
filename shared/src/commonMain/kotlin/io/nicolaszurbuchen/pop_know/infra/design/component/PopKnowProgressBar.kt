@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.infra.ui.component
+package io.nicolaszurbuchen.pop_know.infra.design.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.spacing
+import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 import kotlin.math.roundToInt
 
 @Composable

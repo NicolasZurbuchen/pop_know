@@ -19,9 +19,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.nicolaszurbuchen.pop_know.common.presentation.UiText
 import io.nicolaszurbuchen.pop_know.common.presentation.asString
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.JetBrainsMonoFontFamily
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.SpaceGroteskFontFamily
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.spacing
+import io.nicolaszurbuchen.pop_know.infra.design.theme.JetBrainsMonoFontFamily
+import io.nicolaszurbuchen.pop_know.infra.design.theme.SpaceGroteskFontFamily
+import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 import org.jetbrains.compose.resources.stringResource
 import popknow.shared.generated.resources.Res
 import popknow.shared.generated.resources.home_stats_correct

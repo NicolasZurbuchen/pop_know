@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.infra.ui.component
+package io.nicolaszurbuchen.pop_know.infra.design.component
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -9,7 +9,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import io.nicolaszurbuchen.pop_know.common.presentation.UiText
 import io.nicolaszurbuchen.pop_know.common.presentation.asString
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.JetBrainsMonoFontFamily
+import io.nicolaszurbuchen.pop_know.infra.design.theme.JetBrainsMonoFontFamily
 
 @Composable
 fun PopKnowSectionLabel(

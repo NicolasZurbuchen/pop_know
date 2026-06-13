@@ -18,7 +18,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.appColors
+import io.nicolaszurbuchen.pop_know.infra.design.theme.appColors
 
 @Composable
 fun QuizTimer(seconds: Int, maxSeconds: Int) {

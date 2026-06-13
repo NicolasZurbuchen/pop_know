@@ -17,8 +17,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.appColors
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.spacing
+import io.nicolaszurbuchen.pop_know.infra.design.theme.appColors
+import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 
 @Composable
 fun QuizStoryBar(

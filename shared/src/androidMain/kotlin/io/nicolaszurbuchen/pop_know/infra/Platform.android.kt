@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know
+package io.nicolaszurbuchen.pop_know.infra
 
 import android.os.Build
 

@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.infra.ui.component
+package io.nicolaszurbuchen.pop_know.infra.design.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -13,8 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.White
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.appColors
+import io.nicolaszurbuchen.pop_know.infra.design.theme.White
+import io.nicolaszurbuchen.pop_know.infra.design.theme.appColors
 
 @Composable
 fun PopKnowQuestionResultDot(

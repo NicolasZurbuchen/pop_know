@@ -4,7 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.appColors
+import io.nicolaszurbuchen.pop_know.infra.design.theme.appColors
 
 data class QuizChoiceUiModel(
     val letter: String,

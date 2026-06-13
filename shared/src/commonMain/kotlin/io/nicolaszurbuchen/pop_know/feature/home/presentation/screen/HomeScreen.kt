@@ -15,11 +15,11 @@ import io.nicolaszurbuchen.pop_know.feature.home.presentation.component.HomeTitl
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.component.PopKnowNeonBar
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.model.HomeIntent
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.model.HomeState
-import io.nicolaszurbuchen.pop_know.infra.ui.component.PopKnowButton
-import io.nicolaszurbuchen.pop_know.infra.ui.component.PopKnowButtonVariant
-import io.nicolaszurbuchen.pop_know.infra.ui.component.PopKnowSectionLabel
-import io.nicolaszurbuchen.pop_know.infra.ui.component.PopKnowTopBar
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.spacing
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButton
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButtonVariant
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowSectionLabel
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowTopBar
+import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 import popknow.shared.generated.resources.Res
 import popknow.shared.generated.resources.home_appbar_center
 import popknow.shared.generated.resources.home_appbar_left

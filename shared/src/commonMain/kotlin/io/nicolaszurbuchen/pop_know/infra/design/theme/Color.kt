@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.infra.ui.theme
+package io.nicolaszurbuchen.pop_know.infra.design.theme
 
 import androidx.compose.ui.graphics.Color
 

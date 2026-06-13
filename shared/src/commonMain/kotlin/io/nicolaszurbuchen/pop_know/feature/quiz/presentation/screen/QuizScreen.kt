@@ -29,7 +29,7 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.component.QuizTime
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.model.QuizIntent
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.model.QuizState
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.model.QuizUiModel
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.spacing
+import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 
 @Composable
 fun QuizScreen(

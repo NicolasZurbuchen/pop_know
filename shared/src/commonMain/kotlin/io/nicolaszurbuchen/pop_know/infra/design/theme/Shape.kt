@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.infra.ui.theme
+package io.nicolaszurbuchen.pop_know.infra.design.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes

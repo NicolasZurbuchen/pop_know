@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.infra.ui.component
+package io.nicolaszurbuchen.pop_know.infra.design.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -20,8 +20,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import io.nicolaszurbuchen.pop_know.common.presentation.UiText
 import io.nicolaszurbuchen.pop_know.common.presentation.asString
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.JetBrainsMonoFontFamily
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.spacing
+import io.nicolaszurbuchen.pop_know.infra.design.theme.JetBrainsMonoFontFamily
+import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 
 @Composable
 fun PopKnowTopBar(

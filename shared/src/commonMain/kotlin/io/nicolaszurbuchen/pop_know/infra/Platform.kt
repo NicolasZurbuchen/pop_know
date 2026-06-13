@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know
+package io.nicolaszurbuchen.pop_know.infra
 
 interface Platform {
     val name: String

@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.infra.ui.theme
+package io.nicolaszurbuchen.pop_know.infra.design.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable

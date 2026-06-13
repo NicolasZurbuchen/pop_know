@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.infra.ui.component
+package io.nicolaszurbuchen.pop_know.infra.design.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.nicolaszurbuchen.pop_know.common.presentation.UiText
 import io.nicolaszurbuchen.pop_know.common.presentation.asString
-import io.nicolaszurbuchen.pop_know.infra.ui.theme.SpaceGroteskFontFamily
+import io.nicolaszurbuchen.pop_know.infra.design.theme.SpaceGroteskFontFamily
 
 enum class PopKnowButtonVariant { Primary, Secondary }
 
