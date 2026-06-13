@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.feature.home.presentation.screen
+package io.nicolaszurbuchen.pop_know.feature.home.presentation.screen.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,8 +13,6 @@ import io.nicolaszurbuchen.pop_know.common.presentation.UiText
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.component.HomeStats
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.component.HomeTitle
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.component.PopKnowNeonBar
-import io.nicolaszurbuchen.pop_know.feature.home.presentation.model.HomeIntent
-import io.nicolaszurbuchen.pop_know.feature.home.presentation.model.HomeState
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButton
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButtonVariant
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowSectionLabel
@@ -33,7 +31,8 @@ import kotlin.math.roundToInt
 @Composable
 fun HomeScreen(
     state: HomeState,
-    onIntent: (HomeIntent) -> Unit,
+    onStartRoundClick: () -> Unit,
+    onViewStatsClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -76,18 +75,18 @@ fun HomeScreen(
                     color = MaterialTheme.colorScheme.primary,
                 )
             } else {
-                state.content?.let { content ->
+                state.stats?.let { stats ->
                     HomeStats(
-                        played = UiText.Dynamic(content.stats.totalAnswered.toString()),
-                        correct = UiText.Dynamic(content.stats.totalCorrect.toString()),
-                        ratio = UiText.Resource(Res.string.home_stats_ratio_value, listOf((content.stats.accuracy * 100).roundToInt()))
+                        played = UiText.Dynamic(stats.totalAnswered.toString()),
+                        correct = UiText.Dynamic(stats.totalCorrect.toString()),
+                        ratio = UiText.Resource(Res.string.home_stats_ratio_value, listOf((stats.accuracy * 100).roundToInt()))
                     )
                 }
             }
 
             PopKnowButton(
                 text = UiText.Resource(Res.string.home_start_round),
-                onClick = { onIntent(HomeIntent.NavigateToPlay) },
+                onClick = onStartRoundClick,
                 variant = PopKnowButtonVariant.Primary,
                 modifier = Modifier
                     .padding(top = MaterialTheme.spacing.sm)
@@ -96,7 +95,7 @@ fun HomeScreen(
             if (state.hasHistory) {
                 PopKnowButton(
                     text = UiText.Resource(Res.string.home_view_stats),
-                    onClick = { onIntent(HomeIntent.NavigateToStats) },
+                    onClick = onViewStatsClick,
                     variant = PopKnowButtonVariant.Secondary,
                 )
             }

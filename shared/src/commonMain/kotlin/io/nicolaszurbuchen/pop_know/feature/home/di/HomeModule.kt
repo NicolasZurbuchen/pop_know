@@ -5,13 +5,16 @@ import io.nicolaszurbuchen.pop_know.feature.home.data.datasource.local.HomeLocal
 import io.nicolaszurbuchen.pop_know.feature.home.data.repository.HomeRepositoryImpl
 import io.nicolaszurbuchen.pop_know.feature.home.domain.repository.HomeRepository
 import io.nicolaszurbuchen.pop_know.feature.home.domain.usecase.GetAnswerStatsUseCase
-import io.nicolaszurbuchen.pop_know.feature.home.presentation.HomeViewModel
-import org.koin.core.module.dsl.viewModel
+import io.nicolaszurbuchen.pop_know.feature.home.presentation.screen.home.HomeStoreFactory
+import io.nicolaszurbuchen.pop_know.feature.home.presentation.screen.home.HomeViewModel
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val homeModule = module {
     single<HomeLocalDataSource> { HomeLocalDataSourceImpl(get()) }
     single<HomeRepository> { HomeRepositoryImpl(get()) }
-    factory { GetAnswerStatsUseCase(get()) }
-    viewModel { HomeViewModel(get()) }
+    factoryOf(::GetAnswerStatsUseCase)
+    factoryOf(::HomeStoreFactory)
+    viewModelOf(::HomeViewModel)
 }

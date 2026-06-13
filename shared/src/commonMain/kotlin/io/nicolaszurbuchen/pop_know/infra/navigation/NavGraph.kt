@@ -9,7 +9,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import io.nicolaszurbuchen.pop_know.feature.home.presentation.screen.HomeRoute
+import io.nicolaszurbuchen.pop_know.feature.home.presentation.navigation.HomeGraph
+import io.nicolaszurbuchen.pop_know.feature.home.presentation.navigation.homeGraph
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.QuizRoute
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.ResultRoute
 import io.nicolaszurbuchen.pop_know.feature.stats.presentation.screen.StatsRoute
@@ -20,17 +21,16 @@ fun NavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Home,
+        startDestination = HomeGraph,
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
             .systemBarsPadding(),
     ) {
-        composable<Screen.Home> {
-            HomeRoute(
-                onNavigateToPlay = { navController.navigate(Screen.Play) },
-                onNavigateToStats = { navController.navigate(Screen.Stats) },
-            )
-        }
+        homeGraph(
+            onNavigateToPlay = { navController.navigate(Screen.Play) },
+            onNavigateToStats = { navController.navigate(Screen.Stats) },
+        )
+
         composable<Screen.Play> {
             QuizRoute(
                 onNavigateToResult = { navController.navigate(Screen.Result) },
@@ -39,8 +39,8 @@ fun NavGraph(
         composable<Screen.Result> {
             ResultRoute(
                 onNavigateHome = {
-                    navController.navigate(Screen.Home) {
-                        popUpTo<Screen.Home> { inclusive = false }
+                    navController.navigate(HomeGraph) {
+                        popUpTo<HomeGraph> { inclusive = false }
                     }
                 },
                 onPlayAgain = {
