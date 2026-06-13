@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,7 +37,7 @@ fun QuizScreen(
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         when {
-            state.isLoading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            state.isLoading -> QuizSkeleton()
 
             state.error != null -> Text(
                 text = when (val e = state.error) {
