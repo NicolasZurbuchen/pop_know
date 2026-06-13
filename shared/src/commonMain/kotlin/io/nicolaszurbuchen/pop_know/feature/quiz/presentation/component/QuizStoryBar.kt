@@ -17,7 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import io.nicolaszurbuchen.pop_know.infra.design.theme.appColors
+import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 
 @Composable
@@ -32,7 +32,7 @@ fun QuizStoryBar(
         animationSpec = tween(durationMillis = 1000, easing = LinearEasing),
         label = "storyProgress",
     )
-    val neonColor = MaterialTheme.appColors.neonAccent
+    val neonColor = MaterialTheme.popKnowColors.accent
     val trackColor = MaterialTheme.colorScheme.outline
 
     Row(

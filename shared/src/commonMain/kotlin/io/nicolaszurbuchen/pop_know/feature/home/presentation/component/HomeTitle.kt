@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import io.nicolaszurbuchen.pop_know.common.presentation.UiText
 import io.nicolaszurbuchen.pop_know.common.presentation.asString
 import io.nicolaszurbuchen.pop_know.infra.design.theme.SpaceGroteskFontFamily
-import io.nicolaszurbuchen.pop_know.infra.design.theme.appColors
+import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 import popknow.shared.generated.resources.Res
 import popknow.shared.generated.resources.home_title_lower
@@ -56,7 +56,7 @@ fun HomeTitle(
         ) {
             Box(
                 modifier = Modifier
-                    .background(color = MaterialTheme.appColors.neonAccent)
+                    .background(color = MaterialTheme.popKnowColors.accent)
             ) {
                 Text(
                     text = UiText.Resource(Res.string.home_title_lower).asString().uppercase(),
@@ -75,7 +75,7 @@ fun HomeTitle(
             Text(
                 text = ".",
                 style = TextStyle(
-                    color = MaterialTheme.appColors.neonAccent,
+                    color = MaterialTheme.popKnowColors.accent,
                     fontSize = 92.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = SpaceGroteskFontFamily,

@@ -4,7 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import io.nicolaszurbuchen.pop_know.common.domain.Difficulty
-import io.nicolaszurbuchen.pop_know.infra.design.theme.appColors
+import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowGameColors
 
 data class QuizUiModel(
     val questionText: String,
@@ -23,9 +23,9 @@ data class QuizUiModel(
 ) {
     @Composable
     fun difficultyColor(): Color = when (difficulty) {
-        Difficulty.EASY -> MaterialTheme.appColors.easy
-        Difficulty.MEDIUM -> MaterialTheme.appColors.medium
-        Difficulty.HARD -> MaterialTheme.appColors.hard
+        Difficulty.EASY -> MaterialTheme.popKnowGameColors.difficultyEasy
+        Difficulty.MEDIUM -> MaterialTheme.popKnowGameColors.difficultyMedium
+        Difficulty.HARD -> MaterialTheme.popKnowGameColors.difficultyHard
     }
 
     fun difficultyName(): String = difficulty.name

@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.infra.design.theme.White
-import io.nicolaszurbuchen.pop_know.infra.design.theme.appColors
+import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowGameColors
 
 @Composable
 fun PopKnowQuestionResultDot(
@@ -22,9 +22,9 @@ fun PopKnowQuestionResultDot(
     modifier: Modifier = Modifier
 ) {
     val backgroundColor = when (status) {
-        AnswerStatus.CORRECT -> MaterialTheme.appColors.correct
-        AnswerStatus.INCORRECT -> MaterialTheme.appColors.incorrect
-        AnswerStatus.TIMEOUT -> MaterialTheme.appColors.timeout
+        AnswerStatus.CORRECT -> MaterialTheme.popKnowGameColors.correct
+        AnswerStatus.INCORRECT -> MaterialTheme.popKnowGameColors.wrong
+        AnswerStatus.TIMEOUT -> MaterialTheme.popKnowGameColors.timeout
     }
 
     Box(

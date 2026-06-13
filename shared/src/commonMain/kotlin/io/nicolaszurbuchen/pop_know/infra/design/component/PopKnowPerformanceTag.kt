@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import io.nicolaszurbuchen.pop_know.infra.design.theme.Black
-import io.nicolaszurbuchen.pop_know.infra.design.theme.appColors
+import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 
 @Composable
@@ -20,7 +20,7 @@ fun PopKnowPerformanceTag(
     Box(
         modifier = modifier
             .background(
-                color = MaterialTheme.appColors.neonAccent,
+                color = MaterialTheme.popKnowColors.accent,
                 shape = RectangleShape
             )
             .padding(

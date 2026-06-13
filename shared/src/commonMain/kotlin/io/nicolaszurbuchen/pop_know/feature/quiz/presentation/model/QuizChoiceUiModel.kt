@@ -4,7 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
-import io.nicolaszurbuchen.pop_know.infra.design.theme.appColors
+import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowGameColors
 
 data class QuizChoiceUiModel(
     val letter: String,
@@ -16,9 +16,9 @@ data class QuizChoiceUiModel(
 
     @Composable
     fun color(): Color = when (answerStatus) {
-        AnswerStatus.CORRECT -> MaterialTheme.appColors.correct
-        AnswerStatus.INCORRECT -> MaterialTheme.appColors.incorrect
-        AnswerStatus.TIMEOUT -> MaterialTheme.appColors.timeout
+        AnswerStatus.CORRECT -> MaterialTheme.popKnowGameColors.correct
+        AnswerStatus.INCORRECT -> MaterialTheme.popKnowGameColors.wrong
+        AnswerStatus.TIMEOUT -> MaterialTheme.popKnowGameColors.timeout
         null -> MaterialTheme.colorScheme.background
     }
 

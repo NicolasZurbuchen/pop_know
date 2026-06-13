@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.nicolaszurbuchen.pop_know.infra.design.theme.SpaceGroteskFontFamily
-import io.nicolaszurbuchen.pop_know.infra.design.theme.appColors
+import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 
 @Composable
@@ -26,7 +26,7 @@ fun PopKnowNeonBar(
     Column (
         modifier = modifier
             .fillMaxWidth()
-            .background(color = MaterialTheme.appColors.neonAccent)
+            .background(color = MaterialTheme.popKnowColors.accent)
     ) {
         HorizontalDivider(
             modifier = Modifier
