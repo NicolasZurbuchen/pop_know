@@ -1,10 +1,7 @@
 package io.nicolaszurbuchen.pop_know.feature.stats.presentation.model
 
-import io.nicolaszurbuchen.pop_know.core.presentation.UiText
-import io.nicolaszurbuchen.pop_know.core.presentation.mvi.UiState
-
 data class StatsState(
     val isLoading: Boolean = false,
-    val error: UiText? = null,
+    val error: io.nicolaszurbuchen.pop_know.common.presentation.UiText? = null,
     val content: StatsContent? = null,
-) : UiState
+) : io.nicolaszurbuchen.pop_know.common.presentation.mvi.UiState

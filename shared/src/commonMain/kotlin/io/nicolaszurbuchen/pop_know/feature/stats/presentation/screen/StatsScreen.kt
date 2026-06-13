@@ -18,9 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import io.nicolaszurbuchen.pop_know.core.domain.AnswerStats
-import io.nicolaszurbuchen.pop_know.core.domain.Difficulty
-import io.nicolaszurbuchen.pop_know.core.presentation.UiText
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.CategoryStats
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.DifficultyStats
 import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.StatsContent
@@ -39,8 +36,8 @@ fun StatsScreen(
 
             state.error != null -> Text(
                 text = when (val e = state.error) {
-                    is UiText.Dynamic -> e.value
-                    is UiText.Resource -> "Error"
+                    is io.nicolaszurbuchen.pop_know.common.presentation.UiText.Dynamic -> e.value
+                    is io.nicolaszurbuchen.pop_know.common.presentation.UiText.Resource -> "Error"
                     else -> ""
                 },
                 modifier = Modifier.align(Alignment.Center),
@@ -89,7 +86,7 @@ private fun StatsContent(
 }
 
 @Composable
-private fun SummarySection(stats: AnswerStats) {
+private fun SummarySection(stats: io.nicolaszurbuchen.pop_know.common.domain.AnswerStats) {
     Column {
         Text("Total answered: ${stats.totalAnswered}")
         Text("Total correct: ${stats.totalCorrect}")
@@ -116,7 +113,7 @@ private fun CategoryRow(stats: CategoryStats) {
 @Composable
 private fun StatsRow(
     label: String,
-    answerStats: AnswerStats,
+    answerStats: io.nicolaszurbuchen.pop_know.common.domain.AnswerStats,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -127,4 +124,4 @@ private fun StatsRow(
     }
 }
 
-private fun Difficulty.displayName(): String = name.lowercase().replaceFirstChar { it.uppercaseChar() }
+private fun io.nicolaszurbuchen.pop_know.common.domain.Difficulty.displayName(): String = name.lowercase().replaceFirstChar { it.uppercaseChar() }

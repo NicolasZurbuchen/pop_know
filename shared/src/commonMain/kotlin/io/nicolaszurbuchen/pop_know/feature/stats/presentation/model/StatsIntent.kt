@@ -1,7 +1,5 @@
 package io.nicolaszurbuchen.pop_know.feature.stats.presentation.model
 
-import io.nicolaszurbuchen.pop_know.core.presentation.mvi.UiIntent
-
-sealed class StatsIntent : UiIntent {
+sealed class StatsIntent : io.nicolaszurbuchen.pop_know.common.presentation.mvi.UiIntent {
     data object NavigateBack : StatsIntent()
 }

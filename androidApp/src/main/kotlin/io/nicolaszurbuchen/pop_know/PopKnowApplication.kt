@@ -1,8 +1,8 @@
 package io.nicolaszurbuchen.pop_know
 
 import android.app.Application
-import io.nicolaszurbuchen.pop_know.core.di.initKoin
-import io.nicolaszurbuchen.pop_know.core.di.platformModule
+import io.nicolaszurbuchen.pop_know.infra.di.initKoin
+import io.nicolaszurbuchen.pop_know.infra.di.platformModule
 import org.koin.android.ext.koin.androidContext
 
 class PopKnowApplication : Application() {

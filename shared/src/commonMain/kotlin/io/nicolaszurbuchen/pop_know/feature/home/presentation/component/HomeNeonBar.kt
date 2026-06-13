@@ -15,9 +15,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.nicolaszurbuchen.pop_know.core.ui.theme.SpaceGroteskFontFamily
-import io.nicolaszurbuchen.pop_know.core.ui.theme.appColors
-import io.nicolaszurbuchen.pop_know.core.ui.theme.spacing
+import io.nicolaszurbuchen.pop_know.infra.ui.theme.SpaceGroteskFontFamily
+import io.nicolaszurbuchen.pop_know.infra.ui.theme.appColors
+import io.nicolaszurbuchen.pop_know.infra.ui.theme.spacing
 
 @Composable
 fun PopKnowNeonBar(

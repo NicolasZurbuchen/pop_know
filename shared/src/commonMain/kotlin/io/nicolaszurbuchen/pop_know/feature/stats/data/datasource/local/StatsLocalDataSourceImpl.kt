@@ -1,9 +1,9 @@
 package io.nicolaszurbuchen.pop_know.feature.stats.data.datasource.local
 
 import io.nicolaszurbuchen.pop_know.cache.QuestionHistoryQueries
-import io.nicolaszurbuchen.pop_know.core.domain.AnswerStats
-import io.nicolaszurbuchen.pop_know.core.domain.Category
-import io.nicolaszurbuchen.pop_know.core.domain.Difficulty
+import io.nicolaszurbuchen.pop_know.common.domain.AnswerStats
+import io.nicolaszurbuchen.pop_know.common.domain.Category
+import io.nicolaszurbuchen.pop_know.common.domain.Difficulty
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.CategoryStats
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.DifficultyStats
 
@@ -35,7 +35,10 @@ class StatsLocalDataSourceImpl(
     override fun statsByCategory(): List<CategoryStats> =
         queries.statsByCategory().executeAsList().map { row ->
             CategoryStats(
-                category = Category(id = row.id.toInt(), category = row.name),
+                category = Category(
+                    id = row.id.toInt(),
+                    category = row.name
+                ),
                 answerStats = AnswerStats(
                     totalAnswered = row.total.toInt(),
                     totalCorrect = (row.correct ?: 0L).toInt(),

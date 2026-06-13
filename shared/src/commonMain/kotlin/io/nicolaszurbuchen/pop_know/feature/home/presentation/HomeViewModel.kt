@@ -1,11 +1,12 @@
 package io.nicolaszurbuchen.pop_know.feature.home.presentation
 
-import io.nicolaszurbuchen.pop_know.core.presentation.mvi.MviViewModel
+import io.nicolaszurbuchen.pop_know.common.presentation.mvi.MviViewModel
 import io.nicolaszurbuchen.pop_know.feature.home.domain.usecase.GetAnswerStatsUseCase
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.model.HomeContent
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.model.HomeEffect
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.model.HomeIntent
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.model.HomeState
+import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getAnswerStatsUseCase: GetAnswerStatsUseCase,

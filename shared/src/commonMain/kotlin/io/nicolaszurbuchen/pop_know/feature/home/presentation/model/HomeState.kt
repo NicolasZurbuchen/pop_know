@@ -1,7 +1,7 @@
 package io.nicolaszurbuchen.pop_know.feature.home.presentation.model
 
-import io.nicolaszurbuchen.pop_know.core.presentation.UiText
-import io.nicolaszurbuchen.pop_know.core.presentation.mvi.UiState
+import io.nicolaszurbuchen.pop_know.common.presentation.UiText
+import io.nicolaszurbuchen.pop_know.common.presentation.mvi.UiState
 
 data class HomeState(
     val isLoading: Boolean = false,
