@@ -10,19 +10,23 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.AdvanceQuestionU
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.GetLastGameResultUseCase
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.StartQuizUseCase
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.SubmitAnswerUseCase
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.QuizViewModel
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.ResultViewModel
-import org.koin.core.module.dsl.viewModel
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.QuizStoreFactory
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.QuizViewModel
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result.ResultStoreFactory
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result.ResultViewModel
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val quizModule = module {
     single<QuizRemoteDataSource> { QuizRemoteDataSourceImpl(get()) }
     single<QuizLocalDataSource> { QuizLocalDataSourceImpl(get(), get()) }
     single<QuizRepository> { QuizRepositoryImpl(get(), get()) }
-    factory { StartQuizUseCase(get()) }
-    factory { SubmitAnswerUseCase(get()) }
-    factory { AdvanceQuestionUseCase() }
-    factory { GetLastGameResultUseCase(get()) }
-    viewModel { params -> QuizViewModel(params.get(), get(), get(), get()) }
-    viewModel { ResultViewModel(get()) }
+    factoryOf(::StartQuizUseCase)
+    factoryOf(::SubmitAnswerUseCase)
+    factoryOf(::AdvanceQuestionUseCase)
+    factoryOf(::GetLastGameResultUseCase)
+    factoryOf(::QuizStoreFactory)
+    factoryOf(::ResultStoreFactory)
+    factory { params -> QuizViewModel(params.get(), get()) }
+    factory { ResultViewModel(get()) }
 }

@@ -3,8 +3,8 @@ package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.mapper
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuestionProgress
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuizSessionState
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.model.QuizChoiceUiModel
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.model.QuizUiModel
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.QuizChoiceUiModel
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.QuizUiModel
 
 object QuizUiMapper {
     fun map(

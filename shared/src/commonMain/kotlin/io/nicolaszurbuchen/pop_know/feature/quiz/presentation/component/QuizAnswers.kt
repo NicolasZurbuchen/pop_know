@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.model.QuizChoiceUiModel
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.QuizChoiceUiModel
 import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowGameColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 

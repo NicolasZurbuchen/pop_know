@@ -17,8 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.model.QuizChoiceUiModel
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.model.QuizIntent
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.QuizChoiceUiModel
 import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowGameColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
@@ -27,7 +26,8 @@ import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 fun QuizResultBar(
     resultChoice: QuizChoiceUiModel,
     isLastQuestion: Boolean,
-    onIntent: (QuizIntent) -> Unit,
+    onNextClick: () -> Unit,
+    onSeeResultClick: () -> Unit,
 ) {
     val barColor = resultChoice.color()
     val barContentColor = when (resultChoice.answerStatus) {
@@ -59,7 +59,7 @@ fun QuizResultBar(
         }
         Button(
             onClick = {
-                if (isLastQuestion) onIntent(QuizIntent.SeeResult) else onIntent(QuizIntent.Next)
+                if (isLastQuestion) onSeeResultClick() else onNextClick()
             },
             shape = MaterialTheme.shapes.extraLarge,
             colors = ButtonDefaults.buttonColors(

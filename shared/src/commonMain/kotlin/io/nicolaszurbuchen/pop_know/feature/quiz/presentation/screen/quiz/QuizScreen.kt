@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen
+package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -22,19 +22,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.nicolaszurbuchen.pop_know.common.presentation.UiText
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.component.QuizAnswers
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.component.QuizResultBar
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.component.QuizStoryBar
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.component.QuizTimer
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.model.QuizIntent
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.model.QuizState
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.model.QuizUiModel
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 
 @Composable
 fun QuizScreen(
     state: QuizState,
-    onIntent: (QuizIntent) -> Unit,
+    onSelectAnswer: (String) -> Unit,
+    onNextClick: () -> Unit,
+    onSeeResultClick: () -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         when {
@@ -42,8 +42,8 @@ fun QuizScreen(
 
             state.error != null -> Text(
                 text = when (val e = state.error) {
-                    is io.nicolaszurbuchen.pop_know.common.presentation.UiText.Dynamic -> e.value
-                    is io.nicolaszurbuchen.pop_know.common.presentation.UiText.Resource -> "Error"
+                    is UiText.Dynamic -> e.value
+                    is UiText.Resource -> "Error"
                     else -> "Error"
                 },
                 modifier = Modifier.align(Alignment.Center),
@@ -51,7 +51,9 @@ fun QuizScreen(
 
             state.content != null -> QuizSessionContent(
                 uiModel = state.content,
-                onIntent = onIntent,
+                onSelectAnswer = onSelectAnswer,
+                onNextClick = onNextClick,
+                onSeeResultClick = onSeeResultClick,
             )
         }
     }
@@ -60,7 +62,9 @@ fun QuizScreen(
 @Composable
 private fun QuizSessionContent(
     uiModel: QuizUiModel,
-    onIntent: (QuizIntent) -> Unit,
+    onSelectAnswer: (String) -> Unit,
+    onNextClick: () -> Unit,
+    onSeeResultClick: () -> Unit,
 ) {
     val dotColor = uiModel.difficultyColor()
 
@@ -134,7 +138,7 @@ private fun QuizSessionContent(
                 QuizAnswers(
                     choice = choice,
                     isAnswered = uiModel.isAnswered,
-                    onSelect = { onIntent(QuizIntent.SelectAnswer(choice.text)) },
+                    onSelect = { onSelectAnswer(choice.text) },
                 )
             }
         }
@@ -143,7 +147,8 @@ private fun QuizSessionContent(
             QuizResultBar(
                 resultChoice = uiModel.resultChoice,
                 isLastQuestion = uiModel.isLastQuestion,
-                onIntent = onIntent,
+                onNextClick = onNextClick,
+                onSeeResultClick = onSeeResultClick,
             )
         }
     }

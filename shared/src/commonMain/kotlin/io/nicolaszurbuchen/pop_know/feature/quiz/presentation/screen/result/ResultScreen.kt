@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen
+package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,14 +21,14 @@ import androidx.compose.ui.unit.dp
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnsweredQuestionResult
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.GameResult
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.model.ResultIntent
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.model.ResultState
 import kotlin.math.roundToInt
 
 @Composable
 fun ResultScreen(
     state: ResultState,
-    onIntent: (ResultIntent) -> Unit,
+    onNavigateHomeClick: () -> Unit,
+    onPlayAgainClick: () -> Unit,
+    onViewStatsClick: () -> Unit,
 ) {
     when {
         state.isLoading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -37,14 +37,21 @@ fun ResultScreen(
         state.content == null -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text("No results available.")
         }
-        else -> ResultContentUi(content = state.content, onIntent = onIntent)
+        else -> ResultContentUi(
+            content = state.content,
+            onNavigateHomeClick = onNavigateHomeClick,
+            onPlayAgainClick = onPlayAgainClick,
+            onViewStatsClick = onViewStatsClick,
+        )
     }
 }
 
 @Composable
 private fun ResultContentUi(
     content: GameResult,
-    onIntent: (ResultIntent) -> Unit,
+    onNavigateHomeClick: () -> Unit,
+    onPlayAgainClick: () -> Unit,
+    onViewStatsClick: () -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -70,21 +77,32 @@ private fun ResultContentUi(
         item { Spacer(Modifier.height(8.dp)) }
 
         item {
-            Row(
+            Column(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Button(
-                    onClick = { onIntent(ResultIntent.NavigateHome) },
-                    modifier = Modifier.weight(1f),
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    Text("Home")
+                    Button(
+                        onClick = onNavigateHomeClick,
+                        modifier = Modifier.weight(1f),
+                    ) {
+                        Text("Home")
+                    }
+                    Button(
+                        onClick = onPlayAgainClick,
+                        modifier = Modifier.weight(1f),
+                    ) {
+                        Text("Play Again")
+                    }
                 }
                 Button(
-                    onClick = { onIntent(ResultIntent.PlayAgain) },
-                    modifier = Modifier.weight(1f),
+                    onClick = onViewStatsClick,
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
-                    Text("Play Again")
+                    Text("View Stats")
                 }
             }
         }
