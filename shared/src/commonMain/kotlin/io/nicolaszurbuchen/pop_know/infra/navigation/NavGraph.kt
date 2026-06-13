@@ -14,7 +14,8 @@ import io.nicolaszurbuchen.pop_know.feature.home.presentation.navigation.homeGra
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.navigation.QuizGraph
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.navigation.QuizMainDestination
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.navigation.quizGraph
-import io.nicolaszurbuchen.pop_know.feature.stats.presentation.screen.StatsRoute
+import io.nicolaszurbuchen.pop_know.feature.stats.presentation.navigation.StatsGraph
+import io.nicolaszurbuchen.pop_know.feature.stats.presentation.navigation.statsGraph
 import kotlin.time.Clock
 
 @Composable
@@ -33,7 +34,7 @@ fun NavGraph(
                 val quizId = Clock.System.now().toEpochMilliseconds()
                 navController.navigate(QuizMainDestination(gameId = quizId))
             },
-            onNavigateToStats = { navController.navigate(Screen.Stats) },
+            onNavigateToStats = { navController.navigate(StatsGraph) },
         )
 
         quizGraph(
@@ -44,14 +45,12 @@ fun NavGraph(
                 }
             },
             onNavigateToStats = {
-                navController.navigate(Screen.Stats)
+                navController.navigate(StatsGraph)
             },
         )
 
-        composable<Screen.Stats> {
-            StatsRoute(
-                onNavigateBack = { navController.popBackStack() },
-            )
-        }
+        statsGraph(
+            onNavigateBack = { navController.popBackStack() },
+        )
     }
 }

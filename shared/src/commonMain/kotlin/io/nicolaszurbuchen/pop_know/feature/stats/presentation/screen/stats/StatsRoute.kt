@@ -1,11 +1,10 @@
-package io.nicolaszurbuchen.pop_know.feature.stats.presentation.screen
+package io.nicolaszurbuchen.pop_know.feature.stats.presentation.screen.stats
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.nicolaszurbuchen.pop_know.feature.stats.presentation.StatsViewModel
-import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.StatsEffect
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -15,16 +14,18 @@ fun StatsRoute(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    val onNavigateBackUpdated by rememberUpdatedState(onNavigateBack)
+
     LaunchedEffect(Unit) {
-        viewModel.effects.collect { effect ->
-            when (effect) {
-                StatsEffect.NavigateBack -> onNavigateBack()
+        viewModel.labels.collect { label ->
+            when (label) {
+                StatsLabel.NavigateBack -> onNavigateBackUpdated()
             }
         }
     }
 
     StatsScreen(
         state = state,
-        onIntent = viewModel::onIntent,
+        onBackClick = { viewModel.onIntent(StatsIntent.NavigateBack) },
     )
 }

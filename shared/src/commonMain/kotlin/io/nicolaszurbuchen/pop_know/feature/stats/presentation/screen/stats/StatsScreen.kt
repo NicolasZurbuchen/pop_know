@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.feature.stats.presentation.screen
+package io.nicolaszurbuchen.pop_know.feature.stats.presentation.screen.stats
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,17 +18,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.nicolaszurbuchen.pop_know.common.presentation.UiText
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.CategoryStats
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.DifficultyStats
-import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.StatsContent
-import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.StatsIntent
-import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.StatsState
+import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.FullStats
 import kotlin.math.roundToInt
 
 @Composable
 fun StatsScreen(
     state: StatsState,
-    onIntent: (StatsIntent) -> Unit,
+    onBackClick: () -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         when {
@@ -36,16 +35,16 @@ fun StatsScreen(
 
             state.error != null -> Text(
                 text = when (val e = state.error) {
-                    is io.nicolaszurbuchen.pop_know.common.presentation.UiText.Dynamic -> e.value
-                    is io.nicolaszurbuchen.pop_know.common.presentation.UiText.Resource -> "Error"
+                    is UiText.Dynamic -> e.value
+                    is UiText.Resource -> "Error"
                     else -> ""
                 },
                 modifier = Modifier.align(Alignment.Center),
             )
 
             else -> StatsContent(
-                content = state.content,
-                onIntent = onIntent,
+                stats = state.stats,
+                onBackClick = onBackClick,
             )
         }
     }
@@ -53,30 +52,30 @@ fun StatsScreen(
 
 @Composable
 private fun StatsContent(
-    content: StatsContent?,
-    onIntent: (StatsIntent) -> Unit,
+    stats: FullStats?,
+    onBackClick: () -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        if (content != null) {
-            item { SummarySection(content.stats.summary) }
+        if (stats != null) {
+            item { SummarySection(stats.summary) }
             item { Spacer(Modifier.height(16.dp)) }
             item { Text("By Difficulty") }
             item { Spacer(Modifier.height(8.dp)) }
-            items(content.stats.perDifficulty) { DifficultyRow(it) }
+            items(stats.perDifficulty) { DifficultyRow(it) }
             item { Spacer(Modifier.height(16.dp)) }
             item { Text("By Category") }
             item { Spacer(Modifier.height(8.dp)) }
-            items(content.stats.perCategory) { CategoryRow(it) }
+            items(stats.perCategory) { CategoryRow(it) }
             item { Spacer(Modifier.height(24.dp)) }
         }
 
         item {
             Button(
-                onClick = { onIntent(StatsIntent.NavigateBack) },
+                onClick = onBackClick,
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text("Back")
