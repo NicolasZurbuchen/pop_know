@@ -1,7 +1,7 @@
 package io.nicolaszurbuchen.pop_know.feature.home.presentation.screen.home
 
 import io.nicolaszurbuchen.pop_know.common.domain.AnswerStats
-import io.nicolaszurbuchen.pop_know.common.presentation.UiText
+import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 
 sealed interface HomeIntent {
     data object NavigateToPlay : HomeIntent

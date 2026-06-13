@@ -18,7 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import io.nicolaszurbuchen.pop_know.common.presentation.UiText
+import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.CategoryStats
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.DifficultyStats
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.FullStats
@@ -35,7 +35,7 @@ fun StatsScreen(
 
             state.error != null -> Text(
                 text = when (val e = state.error) {
-                    is UiText.Dynamic -> e.value
+                    is UiText.Raw -> e.value
                     is UiText.Resource -> "Error"
                     else -> ""
                 },

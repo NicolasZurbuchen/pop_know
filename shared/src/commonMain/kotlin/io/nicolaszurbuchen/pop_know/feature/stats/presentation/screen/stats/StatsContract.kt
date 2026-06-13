@@ -1,6 +1,6 @@
 package io.nicolaszurbuchen.pop_know.feature.stats.presentation.screen.stats
 
-import io.nicolaszurbuchen.pop_know.common.presentation.UiText
+import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.FullStats
 
 sealed interface StatsIntent {

@@ -4,7 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import io.nicolaszurbuchen.pop_know.common.domain.Difficulty
-import io.nicolaszurbuchen.pop_know.common.presentation.UiText
+import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowGameColors
 

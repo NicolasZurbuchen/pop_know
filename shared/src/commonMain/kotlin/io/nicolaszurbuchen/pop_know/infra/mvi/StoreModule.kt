@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.infra.di
+package io.nicolaszurbuchen.pop_know.infra.mvi
 
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory

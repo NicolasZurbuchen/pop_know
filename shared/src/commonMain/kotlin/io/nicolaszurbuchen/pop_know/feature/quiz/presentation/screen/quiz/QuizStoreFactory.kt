@@ -5,8 +5,7 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import io.nicolaszurbuchen.pop_know.common.domain.TriviaError
-import io.nicolaszurbuchen.pop_know.common.presentation.UiText
+import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuestionProgress
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuizSession
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.AdvanceQuestionUseCase
@@ -82,7 +81,7 @@ class QuizStoreFactory(
                 } catch (e: Exception) {
                     // This is a bit simplified, but follows the original ViewModel logic
                     // In a real scenario, we'd map TriviaError correctly.
-                    dispatch(QuizMessage.ErrorOccurred(UiText.Dynamic("Something went wrong.")))
+                    dispatch(QuizMessage.ErrorOccurred(UiText.Raw("Something went wrong.")))
                 }
             }
         }

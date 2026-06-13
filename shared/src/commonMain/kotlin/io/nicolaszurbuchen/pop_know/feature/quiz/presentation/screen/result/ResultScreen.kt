@@ -3,24 +3,45 @@ package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
-import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnsweredQuestionResult
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+import io.nicolaszurbuchen.pop_know.infra.ui.UiText
+import io.nicolaszurbuchen.pop_know.infra.ui.asString
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.GameResult
+import io.nicolaszurbuchen.pop_know.feature.home.presentation.component.PopKnowNeonBar
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButton
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButtonVariant
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowPerformanceTag
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowQuestionResultDot
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowSectionLabel
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowTopBar
+import io.nicolaszurbuchen.pop_know.infra.design.theme.SpaceGroteskFontFamily
+import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
+import popknow.shared.generated.resources.Res
+import popknow.shared.generated.resources.result_appbar_left
+import popknow.shared.generated.resources.result_home
+import popknow.shared.generated.resources.result_performance_cold
+import popknow.shared.generated.resources.result_performance_hot
+import popknow.shared.generated.resources.result_performance_legendary
+import popknow.shared.generated.resources.result_performance_warm
+import popknow.shared.generated.resources.result_play_again
+import popknow.shared.generated.resources.result_section_by_question
+import popknow.shared.generated.resources.result_section_ratio
+import popknow.shared.generated.resources.result_stats
+import popknow.shared.generated.resources.result_summary
 import kotlin.math.roundToInt
 
 @Composable
@@ -30,15 +51,30 @@ fun ResultScreen(
     onPlayAgainClick: () -> Unit,
     onViewStatsClick: () -> Unit,
 ) {
-    when {
-        state.isLoading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator()
+    Column(
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        PopKnowTopBar(
+            left = UiText.Resource(Res.string.result_appbar_left),
+            right = state.content?.let { 
+                UiText.Raw("${it.score.totalCorrect} / ${it.score.totalAnswered}")
+            },
+        )
+
+        Box(modifier = Modifier.weight(1f)) {
+            when {
+                state.isLoading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                state.content == null -> Text(
+                    text = "No results available.",
+                    modifier = Modifier.align(Alignment.Center)
+                )
+                else -> ResultContent(
+                    result = state.content,
+                )
+            }
         }
-        state.content == null -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text("No results available.")
-        }
-        else -> ResultContentUi(
-            content = state.content,
+
+        ResultButtons(
             onNavigateHomeClick = onNavigateHomeClick,
             onPlayAgainClick = onPlayAgainClick,
             onViewStatsClick = onViewStatsClick,
@@ -46,84 +82,110 @@ fun ResultScreen(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun ResultContentUi(
-    content: GameResult,
-    onNavigateHomeClick: () -> Unit,
-    onPlayAgainClick: () -> Unit,
-    onViewStatsClick: () -> Unit,
+private fun ResultContent(
+    result: GameResult,
 ) {
-    LazyColumn(
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+            .padding(horizontal = MaterialTheme.spacing.md),
     ) {
-        item {
-            Text("${content.score.totalCorrect} / ${content.score.totalAnswered} correct")
-            Text("${(content.score.accuracy * 100).roundToInt()}% accuracy")
-            Spacer(Modifier.height(4.dp))
-            Text("Correct: ${content.correctCount}")
-            Text("Incorrect: ${content.incorrectCount}")
-            Text("Timeout: ${content.timeoutCount}")
-        }
+        PopKnowSectionLabel(
+            text = UiText.Resource(Res.string.result_section_ratio),
+            showSlashes = true,
+            modifier = Modifier.padding(top = MaterialTheme.spacing.xxl)
+        )
 
-        item { Spacer(Modifier.height(8.dp)) }
+        Text(
+            text = "${(result.score.accuracy * 100).roundToInt()}%",
+            style = TextStyle(
+                color = MaterialTheme.colorScheme.onBackground,
+                fontSize = 120.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = SpaceGroteskFontFamily,
+                lineHeight = 120.sp,
+            ),
+            modifier = Modifier.padding(top = MaterialTheme.spacing.xs)
+        )
 
-        items(content.questions) { result ->
-            QuestionResultRow(result)
-        }
+        val performanceLevel = getPerformanceLevel(result.score.accuracy)
+        PopKnowPerformanceTag(
+            text = performanceLevel.asString().uppercase(),
+            modifier = Modifier.padding(top = MaterialTheme.spacing.sm)
+        )
 
-        item { Spacer(Modifier.height(8.dp)) }
+        Text(
+            text = UiText.Resource(
+                Res.string.result_summary,
+                listOf(result.correctCount, result.score.totalAnswered, result.timeoutCount)
+            ).asString(),
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.padding(top = MaterialTheme.spacing.lg)
+        )
 
-        item {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    Button(
-                        onClick = onNavigateHomeClick,
-                        modifier = Modifier.weight(1f),
-                    ) {
-                        Text("Home")
-                    }
-                    Button(
-                        onClick = onPlayAgainClick,
-                        modifier = Modifier.weight(1f),
-                    ) {
-                        Text("Play Again")
-                    }
-                }
-                Button(
-                    onClick = onViewStatsClick,
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Text("View Stats")
-                }
+        PopKnowSectionLabel(
+            text = UiText.Resource(Res.string.result_section_by_question),
+            modifier = Modifier.padding(top = MaterialTheme.spacing.xxl)
+        )
+
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = MaterialTheme.spacing.sm),
+            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.xs),
+            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.xs),
+        ) {
+            result.questions.forEach { questionResult ->
+                PopKnowQuestionResultDot(status = questionResult.status)
             }
         }
     }
 }
 
 @Composable
-private fun QuestionResultRow(result: AnsweredQuestionResult) {
-    val statusLabel = when (result.status) {
-        AnswerStatus.CORRECT -> "✓"
-        AnswerStatus.INCORRECT -> "✗"
-        AnswerStatus.TIMEOUT -> "⏱"
-    }
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(statusLabel)
-            Text(result.question, modifier = Modifier.weight(1f))
+private fun ResultButtons(
+    onNavigateHomeClick: () -> Unit,
+    onPlayAgainClick: () -> Unit,
+    onViewStatsClick: () -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .padding(MaterialTheme.spacing.md)
+            .padding(bottom = MaterialTheme.spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm),
+    ) {
+        PopKnowButton(
+            text = UiText.Resource(Res.string.result_play_again),
+            onClick = onPlayAgainClick,
+            variant = PopKnowButtonVariant.Primary,
+        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm),
+        ) {
+            PopKnowButton(
+                text = UiText.Resource(Res.string.result_stats),
+                onClick = onViewStatsClick,
+                variant = PopKnowButtonVariant.Secondary,
+                modifier = Modifier.weight(1f)
+            )
+            PopKnowButton(
+                text = UiText.Resource(Res.string.result_home),
+                onClick = onNavigateHomeClick,
+                variant = PopKnowButtonVariant.Secondary,
+                modifier = Modifier.weight(1f)
+            )
         }
-        Text("Correct: ${result.correctAnswer}")
-        if (result.status == AnswerStatus.INCORRECT && result.selectedAnswer != null) {
-            Text("Your answer: ${result.selectedAnswer}")
-        }
     }
+}
+
+private fun getPerformanceLevel(accuracy: Float): UiText = when {
+    accuracy >= 0.85f -> UiText.Resource(Res.string.result_performance_legendary)
+    accuracy >= 0.60f -> UiText.Resource(Res.string.result_performance_hot)
+    accuracy >= 0.25f -> UiText.Resource(Res.string.result_performance_warm)
+    else -> UiText.Resource(Res.string.result_performance_cold)
 }

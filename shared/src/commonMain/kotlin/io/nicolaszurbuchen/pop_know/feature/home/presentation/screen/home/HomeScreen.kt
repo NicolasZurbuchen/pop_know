@@ -9,7 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import io.nicolaszurbuchen.pop_know.common.presentation.UiText
+import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.component.HomeStats
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.component.HomeTitle
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.component.PopKnowNeonBar
@@ -77,8 +77,8 @@ fun HomeScreen(
             } else {
                 state.stats?.let { stats ->
                     HomeStats(
-                        played = UiText.Dynamic(stats.totalAnswered.toString()),
-                        correct = UiText.Dynamic(stats.totalCorrect.toString()),
+                        played = UiText.Raw(stats.totalAnswered.toString()),
+                        correct = UiText.Raw(stats.totalCorrect.toString()),
                         ratio = UiText.Resource(Res.string.home_stats_ratio_value, listOf((stats.accuracy * 100).roundToInt()))
                     )
                 }

@@ -27,4 +27,17 @@
     <string name="quiz_slow">Slow.</string>
     <string name="quiz_next">Next</string>
     <string name="quiz_see_result">See result</string>
+
+    <string name="result_appbar_left">Round Complete</string>
+    <string name="result_section_ratio">The Ratio</string>
+    <string name="result_section_by_question">By Question</string>
+    <string name="result_summary">%1$d of %2$d correct · %3$d ran out the clock</string>
+    <string name="result_play_again">Play Another Round</string>
+    <string name="result_stats">Stats</string>
+    <string name="result_home">Home</string>
+
+    <string name="result_performance_cold">Cold</string>
+    <string name="result_performance_warm">Warm</string>
+    <string name="result_performance_hot">Hot</string>
+    <string name="result_performance_legendary">Legendary</string>
 </resources>
