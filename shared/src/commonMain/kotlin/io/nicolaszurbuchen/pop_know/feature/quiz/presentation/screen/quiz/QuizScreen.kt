@@ -22,12 +22,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.component.QuizAnswers
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.component.QuizResultBar
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.component.QuizStoryBar
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.component.QuizTimer
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
+import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 
 @Composable
 fun QuizScreen(

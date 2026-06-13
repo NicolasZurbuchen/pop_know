@@ -9,7 +9,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.component.HomeStats
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.component.HomeTitle
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.component.PopKnowNeonBar
@@ -18,6 +17,7 @@ import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButtonVariant
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowSectionLabel
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowTopBar
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
+import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import popknow.shared.generated.resources.Res
 import popknow.shared.generated.resources.home_appbar_center
 import popknow.shared.generated.resources.home_appbar_left

@@ -7,11 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.navigation.HomeGraph
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.navigation.homeGraph
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.navigation.QuizGraph
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.navigation.QuizMainDestination
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.navigation.quizGraph
 import io.nicolaszurbuchen.pop_know.feature.stats.presentation.navigation.StatsGraph

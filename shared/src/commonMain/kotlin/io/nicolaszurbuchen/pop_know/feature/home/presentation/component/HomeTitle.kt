@@ -16,11 +16,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.nicolaszurbuchen.pop_know.infra.ui.UiText
-import io.nicolaszurbuchen.pop_know.infra.ui.asString
 import io.nicolaszurbuchen.pop_know.infra.design.theme.SpaceGroteskFontFamily
 import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
+import io.nicolaszurbuchen.pop_know.infra.ui.UiText
+import io.nicolaszurbuchen.pop_know.infra.ui.asString
 import popknow.shared.generated.resources.Res
 import popknow.shared.generated.resources.home_title_lower
 import popknow.shared.generated.resources.home_title_subtitle

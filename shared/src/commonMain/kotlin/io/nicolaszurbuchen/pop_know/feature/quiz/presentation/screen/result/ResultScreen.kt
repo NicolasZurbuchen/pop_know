@@ -18,10 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import io.nicolaszurbuchen.pop_know.infra.ui.UiText
-import io.nicolaszurbuchen.pop_know.infra.ui.asString
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.GameResult
-import io.nicolaszurbuchen.pop_know.feature.home.presentation.component.PopKnowNeonBar
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButton
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButtonVariant
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowPerformanceTag
@@ -30,6 +27,8 @@ import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowSectionLabel
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowTopBar
 import io.nicolaszurbuchen.pop_know.infra.design.theme.SpaceGroteskFontFamily
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
+import io.nicolaszurbuchen.pop_know.infra.ui.UiText
+import io.nicolaszurbuchen.pop_know.infra.ui.asString
 import popknow.shared.generated.resources.Res
 import popknow.shared.generated.resources.result_appbar_left
 import popknow.shared.generated.resources.result_home
