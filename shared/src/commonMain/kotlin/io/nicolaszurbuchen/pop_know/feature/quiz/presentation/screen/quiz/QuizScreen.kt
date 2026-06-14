@@ -46,10 +46,10 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowErrorView
 import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowGameColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
-import io.nicolaszurbuchen.pop_know.infra.ui.asString
 
 @Composable
 fun QuizScreen(
@@ -57,6 +57,7 @@ fun QuizScreen(
     onSelectAnswer: (String) -> Unit,
     onNextClick: () -> Unit,
     onSeeResultClick: () -> Unit,
+    onRetryClick: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -66,10 +67,8 @@ fun QuizScreen(
         when {
             state.isLoading -> Skeleton()
 
-            state.error != null -> Text(
-                text = state.error.asString(),
-                color = MaterialTheme.colorScheme.error,
-                modifier = Modifier.align(Alignment.Center),
+            state.error != null -> PopKnowErrorView(
+                onRetry = onRetryClick,
             )
 
             state.content != null -> SessionContent(

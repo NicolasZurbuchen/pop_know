@@ -44,6 +44,7 @@ fun ResultScreenPreview(
             onNavigateHomeClick = {},
             onPlayAgainClick = {},
             onViewStatsClick = {},
+            onRetryClick = {},
         )
     }
 }

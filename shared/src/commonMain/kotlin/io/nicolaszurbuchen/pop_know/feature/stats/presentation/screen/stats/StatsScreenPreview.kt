@@ -46,6 +46,7 @@ fun StatsScreenPreview(
         StatsScreen(
             state = state,
             onBackClick = {},
+            onRetryClick = {},
         )
     }
 }

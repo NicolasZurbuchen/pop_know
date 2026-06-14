@@ -42,10 +42,12 @@ class StatsStoreFactory(
         override fun executeIntent(intent: StatsIntent) {
             when (intent) {
                 StatsIntent.NavigateBack -> publish(StatsLabel.NavigateBack)
+                StatsIntent.Retry -> loadStats()
             }
         }
 
         private fun loadStats() {
+            dispatch(StatsMessage.StatsLoading)
             scope.launch {
                 val stats = getFullStats()
                 dispatch(StatsMessage.StatsLoaded(stats))
@@ -56,6 +58,11 @@ class StatsStoreFactory(
     private object ReducerImpl : Reducer<StatsState, StatsMessage> {
         override fun StatsState.reduce(msg: StatsMessage): StatsState =
             when (msg) {
+                StatsMessage.StatsLoading -> copy(
+                    isLoading = true,
+                    error = null,
+                )
+
                 is StatsMessage.StatsLoaded -> copy(
                     isLoading = false,
                     stats = msg.stats,

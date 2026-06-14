@@ -7,6 +7,7 @@ sealed interface ResultIntent {
     data object NavigateHome : ResultIntent
     data object PlayAgain : ResultIntent
     data object ViewStats : ResultIntent
+    data object Retry : ResultIntent
 }
 
 sealed interface ResultLabel {
@@ -20,6 +21,7 @@ sealed interface ResultAction {
 }
 
 sealed interface ResultMessage {
+    data object ResultLoading : ResultMessage
     data class ResultLoaded(val result: GameResult?) : ResultMessage
 }
 

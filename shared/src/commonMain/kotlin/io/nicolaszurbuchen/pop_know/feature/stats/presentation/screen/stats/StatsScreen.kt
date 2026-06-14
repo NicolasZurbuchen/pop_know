@@ -40,6 +40,7 @@ import io.nicolaszurbuchen.pop_know.common.domain.Difficulty
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.CategoryStats
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.DifficultyStats
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.FullStats
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowErrorView
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowSectionLabel
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowTopBar
 import io.nicolaszurbuchen.pop_know.infra.design.theme.JetBrainsMonoFontFamily
@@ -62,6 +63,7 @@ import kotlin.math.roundToInt
 fun StatsScreen(
     state: StatsState,
     onBackClick: () -> Unit,
+    onRetryClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -81,10 +83,8 @@ fun StatsScreen(
             when {
                 state.isLoading -> Skeleton()
 
-                state.error != null -> Text(
-                    text = state.error.asString(),
-                    modifier = Modifier.align(Alignment.Center),
-                    color = MaterialTheme.colorScheme.error
+                state.error != null -> PopKnowErrorView(
+                    onRetry = onRetryClick,
                 )
 
                 state.stats != null -> Content(

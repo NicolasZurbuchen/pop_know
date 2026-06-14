@@ -73,6 +73,7 @@ fun QuizScreenPreview(
             onSelectAnswer = {},
             onNextClick = {},
             onSeeResultClick = {},
+            onRetryClick = {},
         )
     }
 }

@@ -64,10 +64,12 @@ class QuizStoreFactory(
                 is QuizIntent.SelectAnswer -> handleSelectAnswer(intent.answer)
                 QuizIntent.Next -> handleNext()
                 QuizIntent.SeeResult -> handleSeeResult()
+                QuizIntent.Retry -> performStartQuiz()
             }
         }
 
         private fun performStartQuiz() {
+            dispatch(QuizMessage.QuizStarted)
             scope.launch {
                 try {
                     val quiz = startQuiz(gameId)

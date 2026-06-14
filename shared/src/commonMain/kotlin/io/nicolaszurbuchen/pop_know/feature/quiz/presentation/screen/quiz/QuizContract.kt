@@ -12,6 +12,7 @@ sealed interface QuizIntent {
     data class SelectAnswer(val answer: String) : QuizIntent
     data object Next : QuizIntent
     data object SeeResult : QuizIntent
+    data object Retry : QuizIntent
 }
 
 sealed interface QuizLabel {

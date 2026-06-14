@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.GameResult
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButton
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButtonVariant
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowErrorView
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowPerformanceTag
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowQuestionResultDot
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowSectionLabel
@@ -63,6 +64,7 @@ fun ResultScreen(
     onNavigateHomeClick: () -> Unit,
     onPlayAgainClick: () -> Unit,
     onViewStatsClick: () -> Unit,
+    onRetryClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -79,10 +81,8 @@ fun ResultScreen(
         Box(modifier = Modifier.weight(1f)) {
             when {
                 state.isLoading -> Skeleton()
-                state.error != null -> Text(
-                    text = state.error.asString(),
-                    color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.align(Alignment.Center)
+                state.error != null -> PopKnowErrorView(
+                    onRetry = onRetryClick,
                 )
                 state.content == null -> Text(
                     text = "No results available.",

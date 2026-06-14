@@ -35,5 +35,6 @@ fun ResultRoute(
         onNavigateHomeClick = { viewModel.onIntent(ResultIntent.NavigateHome) },
         onPlayAgainClick = { viewModel.onIntent(ResultIntent.PlayAgain) },
         onViewStatsClick = { viewModel.onIntent(ResultIntent.ViewStats) },
+        onRetryClick = { viewModel.onIntent(ResultIntent.Retry) },
     )
 }

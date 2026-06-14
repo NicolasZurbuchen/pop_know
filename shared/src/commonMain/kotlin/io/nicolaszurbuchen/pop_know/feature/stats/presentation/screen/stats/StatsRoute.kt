@@ -27,5 +27,6 @@ fun StatsRoute(
     StatsScreen(
         state = state,
         onBackClick = { viewModel.onIntent(StatsIntent.NavigateBack) },
+        onRetryClick = { viewModel.onIntent(StatsIntent.Retry) },
     )
 }

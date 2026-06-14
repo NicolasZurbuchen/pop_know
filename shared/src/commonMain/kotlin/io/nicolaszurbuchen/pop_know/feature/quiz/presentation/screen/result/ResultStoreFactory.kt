@@ -44,10 +44,12 @@ class ResultStoreFactory(
                 ResultIntent.NavigateHome -> publish(ResultLabel.NavigateHome)
                 ResultIntent.PlayAgain -> publish(ResultLabel.PlayAgain)
                 ResultIntent.ViewStats -> publish(ResultLabel.NavigateToStats)
+                ResultIntent.Retry -> loadResult()
             }
         }
 
         private fun loadResult() {
+            dispatch(ResultMessage.ResultLoading)
             scope.launch {
                 val result = getLastGameResult()
                 dispatch(ResultMessage.ResultLoaded(result))
@@ -58,6 +60,11 @@ class ResultStoreFactory(
     private object ReducerImpl : Reducer<ResultState, ResultMessage> {
         override fun ResultState.reduce(msg: ResultMessage): ResultState =
             when (msg) {
+                ResultMessage.ResultLoading -> copy(
+                    isLoading = true,
+                    error = null,
+                )
+
                 is ResultMessage.ResultLoaded -> copy(
                     isLoading = false,
                     content = msg.result,

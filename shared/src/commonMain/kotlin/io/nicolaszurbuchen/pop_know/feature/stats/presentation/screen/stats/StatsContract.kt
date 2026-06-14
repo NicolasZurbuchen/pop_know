@@ -5,6 +5,7 @@ import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 
 sealed interface StatsIntent {
     data object NavigateBack : StatsIntent
+    data object Retry : StatsIntent
 }
 
 sealed interface StatsLabel {
@@ -16,6 +17,7 @@ sealed interface StatsAction {
 }
 
 sealed interface StatsMessage {
+    data object StatsLoading : StatsMessage
     data class StatsLoaded(val stats: FullStats?) : StatsMessage
 }
 
