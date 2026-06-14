@@ -5,6 +5,7 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
+import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.GetLastGameResultUseCase
 import kotlinx.coroutines.launch
 
@@ -51,8 +52,12 @@ class ResultStoreFactory(
         private fun loadResult() {
             dispatch(ResultMessage.ResultLoading)
             scope.launch {
-                val result = getLastGameResult()
-                dispatch(ResultMessage.ResultLoaded(result))
+                try {
+                    val result = getLastGameResult()
+                    dispatch(ResultMessage.ResultLoaded(result))
+                } catch (e: Exception) {
+                    dispatch(ResultMessage.Error(AppError.Database.QueryFailed(e)))
+                }
             }
         }
     }
@@ -68,6 +73,11 @@ class ResultStoreFactory(
                 is ResultMessage.ResultLoaded -> copy(
                     isLoading = false,
                     content = msg.result,
+                )
+
+                is ResultMessage.Error -> copy(
+                    isLoading = false,
+                    error = msg.error,
                 )
             }
     }

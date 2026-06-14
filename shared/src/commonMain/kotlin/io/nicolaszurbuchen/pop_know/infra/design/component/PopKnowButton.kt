@@ -33,14 +33,16 @@ fun PopKnowButton(
     modifier: Modifier = Modifier,
     variant: PopKnowButtonVariant = PopKnowButtonVariant.Primary,
     showArrow: Boolean = true,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    isFullWidth: Boolean = true
 ) {
+    val buttonModifier = if (isFullWidth) modifier.fillMaxWidth() else modifier
+    
     when (variant) {
         PopKnowButtonVariant.Primary -> Button(
             onClick = onClick,
             enabled = enabled,
-            modifier = modifier
-                .fillMaxWidth()
+            modifier = buttonModifier
                 .height(56.dp),
             shape = MaterialTheme.shapes.extraLarge,
             colors = ButtonDefaults.buttonColors(
@@ -49,8 +51,8 @@ fun PopKnowButton(
             )
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = if (isFullWidth) Modifier.fillMaxWidth() else Modifier,
+                horizontalArrangement = if (isFullWidth) Arrangement.SpaceBetween else Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
@@ -76,8 +78,7 @@ fun PopKnowButton(
         PopKnowButtonVariant.Secondary -> OutlinedButton(
             onClick = onClick,
             enabled = enabled,
-            modifier = modifier
-                .fillMaxWidth()
+            modifier = buttonModifier
                 .height(56.dp),
             shape = MaterialTheme.shapes.extraLarge,
             border = BorderStroke(
@@ -89,9 +90,9 @@ fun PopKnowButton(
             )
         ) {
             Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = if (isFullWidth) Arrangement.SpaceBetween else Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = if (isFullWidth) Modifier.fillMaxWidth() else Modifier,
             ) {
                 Text(
                     text = text.asString().uppercase(),

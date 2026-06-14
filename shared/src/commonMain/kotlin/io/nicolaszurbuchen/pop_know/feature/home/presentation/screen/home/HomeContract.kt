@@ -1,11 +1,13 @@
 package io.nicolaszurbuchen.pop_know.feature.home.presentation.screen.home
 
 import io.nicolaszurbuchen.pop_know.common.domain.AnswerStats
-import io.nicolaszurbuchen.pop_know.infra.ui.UiText
+import io.nicolaszurbuchen.pop_know.common.error.AppError
 
 sealed interface HomeIntent {
     data object NavigateToPlay : HomeIntent
     data object NavigateToStats : HomeIntent
+    data object Retry : HomeIntent
+    data object DismissError : HomeIntent
 }
 
 sealed interface HomeLabel {
@@ -19,11 +21,12 @@ sealed interface HomeAction {
 
 sealed interface HomeMessage {
     data class StatsLoaded(val stats: AnswerStats?) : HomeMessage
+    data class Error(val error: AppError?) : HomeMessage
 }
 
 data class HomeState(
     val isLoading: Boolean = false,
-    val error: UiText? = null,
+    val error: AppError? = null,
     val stats: AnswerStats? = null,
 ) {
     val hasHistory: Boolean

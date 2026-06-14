@@ -31,5 +31,6 @@ fun QuizRoute(
         onNextClick = { viewModel.onIntent(QuizIntent.Next) },
         onSeeResultClick = { viewModel.onIntent(QuizIntent.SeeResult) },
         onRetryClick = { viewModel.onIntent(QuizIntent.Retry) },
+        onDismissInsertionErrorClick = { viewModel.onIntent(QuizIntent.DismissInsertionError) },
     )
 }

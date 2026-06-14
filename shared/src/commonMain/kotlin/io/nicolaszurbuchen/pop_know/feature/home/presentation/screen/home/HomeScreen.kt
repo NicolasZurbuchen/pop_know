@@ -32,8 +32,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButton
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButtonVariant
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowErrorBanner
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowSectionLabel
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowTopBar
 import io.nicolaszurbuchen.pop_know.infra.design.theme.JetBrainsMonoFontFamily
@@ -64,6 +66,8 @@ fun HomeScreen(
     state: HomeState,
     onStartRoundClick: () -> Unit,
     onViewStatsClick: () -> Unit,
+    onRetryClick: () -> Unit,
+    onDismissErrorClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -75,6 +79,18 @@ fun HomeScreen(
             center = UiText.Resource(Res.string.home_appbar_center),
             right = UiText.Resource(Res.string.home_appbar_right),
         )
+
+        state.error?.let { error ->
+            val errorMessage = when (error) {
+                is AppError.Database.QueryFailed -> "Failed to load statistics from database."
+                else -> "An unexpected error occurred."
+            }
+            PopKnowErrorBanner(
+                text = errorMessage,
+                onRetry = onRetryClick,
+                onDismiss = onDismissErrorClick
+            )
+        }
 
         NeonBar()
 

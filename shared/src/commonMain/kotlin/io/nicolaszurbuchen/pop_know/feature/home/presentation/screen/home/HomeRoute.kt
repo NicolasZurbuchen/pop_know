@@ -31,5 +31,7 @@ fun HomeRoute(
         state = state,
         onStartRoundClick = { viewModel.onIntent(HomeIntent.NavigateToPlay) },
         onViewStatsClick = { viewModel.onIntent(HomeIntent.NavigateToStats) },
+        onRetryClick = { viewModel.onIntent(HomeIntent.Retry) },
+        onDismissErrorClick = { viewModel.onIntent(HomeIntent.DismissError) },
     )
 }

@@ -8,11 +8,11 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import io.nicolaszurbuchen.pop_know.common.domain.AnswerStats
 import io.nicolaszurbuchen.pop_know.common.domain.Category
 import io.nicolaszurbuchen.pop_know.common.domain.Difficulty
+import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.CategoryStats
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.DifficultyStats
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.FullStats
 import io.nicolaszurbuchen.pop_know.infra.design.theme.PopKnowTheme
-import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 
 class StatsStateProvider : PreviewParameterProvider<StatsState> {
     override val values = sequenceOf(
@@ -32,7 +32,7 @@ class StatsStateProvider : PreviewParameterProvider<StatsState> {
                 ),
             )
         ),
-        StatsState(error = UiText.Raw("Could not load statistics")),
+        StatsState(error = AppError.Database.QueryFailed(Exception("Database connection error"))),
     )
 }
 

@@ -6,9 +6,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import io.nicolaszurbuchen.pop_know.common.domain.Difficulty
+import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.infra.design.theme.PopKnowTheme
-import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 
 class QuizStateProvider : PreviewParameterProvider<QuizState> {
     override val values = sequenceOf(
@@ -55,9 +55,10 @@ class QuizStateProvider : PreviewParameterProvider<QuizState> {
                 isLastQuestion = false,
                 timerSeconds = 10,
                 maxTimerSeconds = 30,
-            )
+            ),
+            insertionError = AppError.Database.InsertFailed(Exception("Failed to save answer")),
         ),
-        QuizState(error = UiText.Raw("Failed to load quiz")),
+        QuizState(initialError = AppError.Network.Unavailable),
     )
 }
 
@@ -74,6 +75,7 @@ fun QuizScreenPreview(
             onNextClick = {},
             onSeeResultClick = {},
             onRetryClick = {},
+            onDismissInsertionErrorClick = {},
         )
     }
 }

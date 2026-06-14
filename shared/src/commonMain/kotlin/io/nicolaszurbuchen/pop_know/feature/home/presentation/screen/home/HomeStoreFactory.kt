@@ -5,6 +5,7 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
+import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.feature.home.domain.usecase.GetAnswerStatsUseCase
 import kotlinx.coroutines.launch
 
@@ -43,13 +44,35 @@ class HomeStoreFactory(
             when (intent) {
                 HomeIntent.NavigateToPlay -> publish(HomeLabel.NavigateToPlay)
                 HomeIntent.NavigateToStats -> publish(HomeLabel.NavigateToStats)
+                HomeIntent.Retry -> loadStats()
+                HomeIntent.DismissError -> dispatch(HomeMessage.Error(null))
             }
         }
 
         private fun loadStats() {
             scope.launch {
-                val stats = getAnswerStats()
-                dispatch(HomeMessage.StatsLoaded(stats))
+                try {
+                    val stats = getAnswerStats()
+                    dispatch(HomeMessage.StatsLoaded(stats))
+                } catch (e: Exception) {
+                    val error = when (e) {
+                        is io.nicolaszurbuchen.pop_know.common.error.AppException -> e.error
+                        else -> AppError.Unexpected(e)
+                    }
+                    
+                    // We specifically want to handle database query errors on home
+                    // But for this requirement, we'll map any exception that isn't
+                    // explicitly a known AppError as Unexpected, and if it's a 
+                    // database error we might want to log it or handle it specifically.
+                    // The user asked to separate error handling between query error and the rest.
+                    
+                    val finalError = when (error) {
+                        is AppError.Database.QueryFailed -> error
+                        else -> AppError.Unexpected(e)
+                    }
+                    
+                    dispatch(HomeMessage.Error(finalError))
+                }
             }
         }
     }
@@ -60,6 +83,11 @@ class HomeStoreFactory(
                 is HomeMessage.StatsLoaded -> copy(
                     isLoading = false,
                     stats = msg.stats,
+                    error = null,
+                )
+                is HomeMessage.Error -> copy(
+                    isLoading = false,
+                    error = msg.error,
                 )
             }
     }

@@ -4,15 +4,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import io.nicolaszurbuchen.pop_know.common.domain.Difficulty
+import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowGameColors
-import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 
 sealed interface QuizIntent {
     data class SelectAnswer(val answer: String) : QuizIntent
     data object Next : QuizIntent
     data object SeeResult : QuizIntent
     data object Retry : QuizIntent
+    data object DismissInsertionError : QuizIntent
 }
 
 sealed interface QuizLabel {
@@ -28,12 +29,14 @@ sealed interface QuizMessage {
     data class QuizDataLoaded(
         val content: QuizUiModel,
     ) : QuizMessage
-    data class ErrorOccurred(val error: UiText) : QuizMessage
+    data class ErrorOccurred(val error: AppError) : QuizMessage
+    data class InsertionError(val error: AppError?) : QuizMessage
 }
 
 data class QuizState(
     val isLoading: Boolean = false,
-    val error: UiText? = null,
+    val initialError: AppError? = null,
+    val insertionError: AppError? = null,
     val content: QuizUiModel? = null,
 )
 

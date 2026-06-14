@@ -6,11 +6,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import io.nicolaszurbuchen.pop_know.common.domain.Difficulty
+import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnsweredQuestionResult
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.GameResult
 import io.nicolaszurbuchen.pop_know.infra.design.theme.PopKnowTheme
-import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 
 class ResultStateProvider : PreviewParameterProvider<ResultState> {
     override val values = sequenceOf(
@@ -27,7 +27,7 @@ class ResultStateProvider : PreviewParameterProvider<ResultState> {
             )
         ),
         ResultState(
-            error = UiText.Raw("Something went wrong while loading results"),
+            error = AppError.Database.QueryFailed(Exception("Failed to load results")),
         ),
     )
 }

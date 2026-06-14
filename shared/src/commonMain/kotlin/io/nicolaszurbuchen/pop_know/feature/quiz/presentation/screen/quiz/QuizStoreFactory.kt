@@ -5,13 +5,15 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
+import io.nicolaszurbuchen.pop_know.common.domain.TriviaError
+import io.nicolaszurbuchen.pop_know.common.domain.TriviaException
+import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuestionProgress
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuizSession
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.AdvanceQuestionUseCase
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.StartQuizUseCase
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.SubmitAnswerUseCase
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.mapper.QuizUiMapper
-import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -65,6 +67,7 @@ class QuizStoreFactory(
                 QuizIntent.Next -> handleNext()
                 QuizIntent.SeeResult -> handleSeeResult()
                 QuizIntent.Retry -> performStartQuiz()
+                QuizIntent.DismissInsertionError -> dispatch(QuizMessage.InsertionError(null))
             }
         }
 
@@ -81,9 +84,17 @@ class QuizStoreFactory(
                     observeSession(quiz)
                     startTimer()
                 } catch (e: Exception) {
-                    // This is a bit simplified, but follows the original ViewModel logic
-                    // In a real scenario, we'd map TriviaError correctly.
-                    dispatch(QuizMessage.ErrorOccurred(UiText.Raw("Something went wrong.")))
+                    val appError = when (e) {
+                        is TriviaException -> when (e.error) {
+                            TriviaError.NoResults -> AppError.Trivia.NoResults
+                            TriviaError.InvalidParameter -> AppError.Trivia.InvalidParameter
+                            TriviaError.RateLimit -> AppError.Trivia.RateLimit
+                            TriviaError.NetworkError -> AppError.Network.Unavailable
+                            is TriviaError.Unknown -> AppError.Unexpected(e)
+                        }
+                        else -> AppError.Unexpected(e)
+                    }
+                    dispatch(QuizMessage.ErrorOccurred(appError))
                 }
             }
         }
@@ -100,7 +111,13 @@ class QuizStoreFactory(
             val quiz = session ?: return
             if (state().content?.isAnswered == true) return
             timerJob?.cancel()
-            scope.launch { submitAnswer(quiz, answer) }
+            scope.launch {
+                try {
+                    submitAnswer(quiz, answer)
+                } catch (e: Exception) {
+                    dispatch(QuizMessage.InsertionError(AppError.Database.InsertFailed(e)))
+                }
+            }
         }
 
         private fun handleNext() {
@@ -137,12 +154,16 @@ class QuizStoreFactory(
                 is QuizMessage.QuizDataLoaded -> copy(
                     isLoading = false,
                     content = msg.content,
+                    initialError = null,
                 )
                 is QuizMessage.ErrorOccurred -> copy(
                     isLoading = false,
-                    error = msg.error,
+                    initialError = msg.error,
                 )
-                QuizMessage.QuizStarted -> copy(isLoading = true)
+                is QuizMessage.InsertionError -> copy(
+                    insertionError = msg.error,
+                )
+                QuizMessage.QuizStarted -> copy(isLoading = true, initialError = null)
             }
     }
 }

@@ -46,6 +46,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowErrorBanner
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowErrorView
 import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowGameColors
@@ -58,6 +59,7 @@ fun QuizScreen(
     onNextClick: () -> Unit,
     onSeeResultClick: () -> Unit,
     onRetryClick: () -> Unit,
+    onDismissInsertionErrorClick: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -67,16 +69,25 @@ fun QuizScreen(
         when {
             state.isLoading -> Skeleton()
 
-            state.error != null -> PopKnowErrorView(
+            state.initialError != null -> PopKnowErrorView(
                 onRetry = onRetryClick,
             )
 
-            state.content != null -> SessionContent(
-                uiModel = state.content,
-                onSelectAnswer = onSelectAnswer,
-                onNextClick = onNextClick,
-                onSeeResultClick = onSeeResultClick,
-            )
+            state.content != null -> Column {
+                state.insertionError?.let {
+                    PopKnowErrorBanner(
+                        text = "Failed to save answer locally",
+                        onRetry = null,
+                        onDismiss = onDismissInsertionErrorClick
+                    )
+                }
+                SessionContent(
+                    uiModel = state.content,
+                    onSelectAnswer = onSelectAnswer,
+                    onNextClick = onNextClick,
+                    onSeeResultClick = onSeeResultClick,
+                )
+            }
         }
     }
 }

@@ -6,8 +6,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import io.nicolaszurbuchen.pop_know.common.domain.AnswerStats
+import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.infra.design.theme.PopKnowTheme
-import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 
 class HomeStateProvider : PreviewParameterProvider<HomeState> {
     override val values = sequenceOf(
@@ -27,8 +27,11 @@ class HomeStateProvider : PreviewParameterProvider<HomeState> {
             )
         ),
         HomeState(
-            error = UiText.Raw("An unexpected error occurred"),
-        )
+            error = AppError.Database.QueryFailed(Exception("Database connection lost")),
+        ),
+        HomeState(
+            error = AppError.Unexpected(Exception("Unknown error")),
+        ),
     )
 }
 
@@ -43,6 +46,8 @@ fun HomeScreenPreview(
             state = state,
             onStartRoundClick = {},
             onViewStatsClick = {},
+            onRetryClick = {},
+            onDismissErrorClick = {},
         )
     }
 }
