@@ -45,6 +45,9 @@ fun NavGraph(
             onNavigateToStats = {
                 navController.navigate(StatsGraph)
             },
+            onNavigateBack = {
+                navController.popBackStack()
+            }
         )
 
         statsGraph(

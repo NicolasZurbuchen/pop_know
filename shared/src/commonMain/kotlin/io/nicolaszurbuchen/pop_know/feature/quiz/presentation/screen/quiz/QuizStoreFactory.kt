@@ -68,6 +68,8 @@ class QuizStoreFactory(
                 QuizIntent.SeeResult -> handleSeeResult()
                 QuizIntent.Retry -> performStartQuiz()
                 QuizIntent.DismissInsertionError -> dispatch(QuizMessage.InsertionError(null))
+                is QuizIntent.ShowQuitDialog -> dispatch(QuizMessage.ToggleQuitDialog(intent.show))
+                QuizIntent.ConfirmQuit -> publish(QuizLabel.NavigateBack)
             }
         }
 
@@ -140,6 +142,7 @@ class QuizStoreFactory(
                     if (state().content?.isAnswered == true) return@launch
                     timerSeconds.value = remaining
                 }
+                delay(1000)
                 val quiz = session ?: return@launch
                 if (state().content?.isAnswered == false) {
                     submitAnswer(quiz, null)
@@ -162,6 +165,9 @@ class QuizStoreFactory(
                 )
                 is QuizMessage.InsertionError -> copy(
                     insertionError = msg.error,
+                )
+                is QuizMessage.ToggleQuitDialog -> copy(
+                    isQuitDialogOpen = msg.show,
                 )
                 QuizMessage.QuizStarted -> copy(isLoading = true, initialError = null)
             }

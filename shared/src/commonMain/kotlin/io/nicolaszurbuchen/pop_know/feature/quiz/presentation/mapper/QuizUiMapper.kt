@@ -27,7 +27,7 @@ object QuizUiMapper {
                 answered == null -> null
                 answered.selectedAnswer == text && text == question.correctAnswer -> AnswerStatus.CORRECT
                 answered.selectedAnswer == text -> AnswerStatus.INCORRECT
-                answered.selectedAnswer == null && text == question.correctAnswer -> null
+                text == question.correctAnswer -> AnswerStatus.CORRECT
                 else -> null
             }
             QuizChoiceUiModel(
@@ -44,7 +44,7 @@ object QuizUiMapper {
                 text = "",
                 answerStatus = AnswerStatus.TIMEOUT,
             )
-            else -> choices.firstOrNull { it.answerStatus != null }
+            else -> choices.firstOrNull { it.text == answered.selectedAnswer }
         }
 
         val score = state.score

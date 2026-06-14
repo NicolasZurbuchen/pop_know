@@ -46,11 +46,14 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowConfirmDialog
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowErrorBanner
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowErrorView
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowTopBar
 import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowGameColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
+import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 
 @Composable
 fun QuizScreen(
@@ -60,12 +63,25 @@ fun QuizScreen(
     onSeeResultClick: () -> Unit,
     onRetryClick: () -> Unit,
     onDismissInsertionErrorClick: () -> Unit,
+    onShowQuitDialog: (Boolean) -> Unit,
+    onConfirmQuit: () -> Unit,
 ) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
     ) {
+        if (state.isQuitDialogOpen) {
+            PopKnowConfirmDialog(
+                title = "Quit Game?",
+                text = "Are you sure you want to quit the current game? Your progress will be lost.",
+                confirmText = "Quit",
+                dismissText = "Cancel",
+                onConfirm = onConfirmQuit,
+                onDismiss = { onShowQuitDialog(false) }
+            )
+        }
+
         when {
             state.isLoading -> Skeleton()
 
@@ -74,6 +90,13 @@ fun QuizScreen(
             )
 
             state.content != null -> Column {
+                PopKnowTopBar(
+                    left = UiText.Raw("Quit"),
+                    center = UiText.Raw("On Air"),
+                    right = UiText.Raw("Live"),
+                    backIcon = Icons.Default.Close,
+                    onBack = { onShowQuitDialog(true) }
+                )
                 state.insertionError?.let {
                     PopKnowErrorBanner(
                         text = "Failed to save answer locally",
@@ -115,8 +138,6 @@ private fun SessionContent(
             StoryBar(
                 totalQuestions = uiModel.totalQuestions,
                 currentIndex = uiModel.currentIndex,
-                timerSeconds = uiModel.timerSeconds,
-                maxTimerSeconds = uiModel.maxTimerSeconds,
             )
 
             Row(
@@ -301,14 +322,7 @@ private fun Answers(
 private fun StoryBar(
     totalQuestions: Int,
     currentIndex: Int,
-    timerSeconds: Int,
-    maxTimerSeconds: Int,
 ) {
-    val animatedFraction by animateFloatAsState(
-        targetValue = timerSeconds.toFloat() / maxTimerSeconds.toFloat().coerceAtLeast(1f),
-        animationSpec = tween(durationMillis = 1000, easing = LinearEasing),
-        label = "storyProgress",
-    )
     val neonColor = MaterialTheme.popKnowColors.accent
     val trackColor = MaterialTheme.colorScheme.outline
 
@@ -317,11 +331,7 @@ private fun StoryBar(
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.xs),
     ) {
         repeat(totalQuestions) { index ->
-            val fillFraction = when {
-                index < currentIndex -> 1f
-                index == currentIndex -> animatedFraction
-                else -> 0f
-            }
+            val fillFraction = if (index <= currentIndex) 1f else 0f
             Box(
                 modifier = Modifier
                     .weight(1f)

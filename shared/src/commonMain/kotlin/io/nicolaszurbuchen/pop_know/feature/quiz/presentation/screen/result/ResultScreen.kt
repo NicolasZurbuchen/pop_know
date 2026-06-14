@@ -45,6 +45,7 @@ import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.infra.ui.asString
 import popknow.shared.generated.resources.Res
+import popknow.shared.generated.resources.home_view_stats
 import popknow.shared.generated.resources.result_appbar_left
 import popknow.shared.generated.resources.result_home
 import popknow.shared.generated.resources.result_performance_cold
@@ -54,7 +55,6 @@ import popknow.shared.generated.resources.result_performance_warm
 import popknow.shared.generated.resources.result_play_again
 import popknow.shared.generated.resources.result_section_by_question
 import popknow.shared.generated.resources.result_section_ratio
-import popknow.shared.generated.resources.result_stats
 import popknow.shared.generated.resources.result_summary
 import kotlin.math.roundToInt
 
@@ -72,10 +72,12 @@ fun ResultScreen(
             .background(MaterialTheme.colorScheme.background),
     ) {
         PopKnowTopBar(
-            left = UiText.Resource(Res.string.result_appbar_left),
+            left = UiText.Resource(Res.string.result_home),
+            center = UiText.Resource(Res.string.result_appbar_left),
             right = state.content?.let { 
                 UiText.Raw("${it.score.totalCorrect} / ${it.score.totalAnswered}")
             },
+            onBack = onNavigateHomeClick,
         )
 
         Box(modifier = Modifier.weight(1f)) {
@@ -95,7 +97,6 @@ fun ResultScreen(
         }
 
         ActionButtons(
-            onNavigateHomeClick = onNavigateHomeClick,
             onPlayAgainClick = onPlayAgainClick,
             onViewStatsClick = onViewStatsClick,
         )
@@ -167,7 +168,6 @@ private fun Content(
 
 @Composable
 private fun ActionButtons(
-    onNavigateHomeClick: () -> Unit,
     onPlayAgainClick: () -> Unit,
     onViewStatsClick: () -> Unit,
 ) {
@@ -183,23 +183,11 @@ private fun ActionButtons(
             variant = PopKnowButtonVariant.Primary,
         )
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm),
-        ) {
-            PopKnowButton(
-                text = UiText.Resource(Res.string.result_stats),
-                onClick = onViewStatsClick,
-                variant = PopKnowButtonVariant.Secondary,
-                modifier = Modifier.weight(1f)
-            )
-            PopKnowButton(
-                text = UiText.Resource(Res.string.result_home),
-                onClick = onNavigateHomeClick,
-                variant = PopKnowButtonVariant.Secondary,
-                modifier = Modifier.weight(1f)
-            )
-        }
+        PopKnowButton(
+            text = UiText.Resource(Res.string.home_view_stats),
+            onClick = onViewStatsClick,
+            variant = PopKnowButtonVariant.Secondary,
+        )
     }
 }
 

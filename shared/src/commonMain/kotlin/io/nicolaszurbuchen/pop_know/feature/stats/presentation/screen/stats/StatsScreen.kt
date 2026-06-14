@@ -77,8 +77,6 @@ fun StatsScreen(
             onBack = onBackClick,
         )
 
-        HorizontalDivider(color = MaterialTheme.colorScheme.outline)
-
         Box(modifier = Modifier.weight(1f)) {
             when {
                 state.isLoading -> Skeleton()

@@ -5,6 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.nicolaszurbuchen.pop_know.infra.ui.BackHandler
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -19,6 +20,10 @@ fun ResultRoute(
     val onNavigateHomeUpdated by rememberUpdatedState(onNavigateHome)
     val onPlayAgainUpdated by rememberUpdatedState(onPlayAgain)
     val onNavigateToStatsUpdated by rememberUpdatedState(onNavigateToStats)
+
+    BackHandler {
+        viewModel.onIntent(ResultIntent.NavigateHome)
+    }
 
     LaunchedEffect(Unit) {
         viewModel.labels.collect { label ->

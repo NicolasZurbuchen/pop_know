@@ -76,6 +76,8 @@ fun QuizScreenPreview(
             onSeeResultClick = {},
             onRetryClick = {},
             onDismissInsertionErrorClick = {},
+            onShowQuitDialog = {},
+            onConfirmQuit = {},
         )
     }
 }

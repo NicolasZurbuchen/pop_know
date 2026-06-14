@@ -12,12 +12,14 @@ fun NavGraphBuilder.quizGraph(
     navController: NavController,
     onNavigateHome: () -> Unit,
     onNavigateToStats: () -> Unit,
+    onNavigateBack: () -> Unit,
 ) {
     navigation<QuizGraph>(startDestination = QuizMainDestination(gameId = 0L)) {
         composable<QuizMainDestination> {
             QuizRoute(
                 gameId = it.toRoute<QuizMainDestination>().gameId,
                 onNavigateToResult = { navController.navigate(ResultDestination) },
+                onNavigateBack = onNavigateBack,
             )
         }
 

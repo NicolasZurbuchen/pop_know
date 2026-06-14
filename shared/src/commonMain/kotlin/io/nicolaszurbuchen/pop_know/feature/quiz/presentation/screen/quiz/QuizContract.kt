@@ -14,10 +14,13 @@ sealed interface QuizIntent {
     data object SeeResult : QuizIntent
     data object Retry : QuizIntent
     data object DismissInsertionError : QuizIntent
+    data class ShowQuitDialog(val show: Boolean) : QuizIntent
+    data object ConfirmQuit : QuizIntent
 }
 
 sealed interface QuizLabel {
     data object NavigateToResult : QuizLabel
+    data object NavigateBack : QuizLabel
 }
 
 sealed interface QuizAction {
@@ -31,6 +34,7 @@ sealed interface QuizMessage {
     ) : QuizMessage
     data class ErrorOccurred(val error: AppError) : QuizMessage
     data class InsertionError(val error: AppError?) : QuizMessage
+    data class ToggleQuitDialog(val show: Boolean) : QuizMessage
 }
 
 data class QuizState(
@@ -38,6 +42,7 @@ data class QuizState(
     val initialError: AppError? = null,
     val insertionError: AppError? = null,
     val content: QuizUiModel? = null,
+    val isQuitDialogOpen: Boolean = false,
 )
 
 data class QuizUiModel(
