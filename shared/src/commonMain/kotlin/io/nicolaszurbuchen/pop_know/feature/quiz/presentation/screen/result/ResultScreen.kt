@@ -1,5 +1,12 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,15 +15,21 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.GameResult
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButton
@@ -26,6 +39,7 @@ import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowQuestionResult
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowSectionLabel
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowTopBar
 import io.nicolaszurbuchen.pop_know.infra.design.theme.SpaceGroteskFontFamily
+import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.infra.ui.asString
@@ -51,7 +65,9 @@ fun ResultScreen(
     onViewStatsClick: () -> Unit,
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
     ) {
         PopKnowTopBar(
             left = UiText.Resource(Res.string.result_appbar_left),
@@ -62,18 +78,23 @@ fun ResultScreen(
 
         Box(modifier = Modifier.weight(1f)) {
             when {
-                state.isLoading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                state.isLoading -> Skeleton()
+                state.error != null -> Text(
+                    text = state.error.asString(),
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.align(Alignment.Center)
+                )
                 state.content == null -> Text(
                     text = "No results available.",
                     modifier = Modifier.align(Alignment.Center)
                 )
-                else -> ResultContent(
+                else -> Content(
                     result = state.content,
                 )
             }
         }
 
-        ResultButtons(
+        ActionButtons(
             onNavigateHomeClick = onNavigateHomeClick,
             onPlayAgainClick = onPlayAgainClick,
             onViewStatsClick = onViewStatsClick,
@@ -83,7 +104,7 @@ fun ResultScreen(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun ResultContent(
+private fun Content(
     result: GameResult,
 ) {
     Column(
@@ -145,7 +166,7 @@ private fun ResultContent(
 }
 
 @Composable
-private fun ResultButtons(
+private fun ActionButtons(
     onNavigateHomeClick: () -> Unit,
     onPlayAgainClick: () -> Unit,
     onViewStatsClick: () -> Unit,
@@ -187,4 +208,89 @@ private fun getPerformanceLevel(accuracy: Float): UiText = when {
     accuracy >= 0.60f -> UiText.Resource(Res.string.result_performance_hot)
     accuracy >= 0.25f -> UiText.Resource(Res.string.result_performance_warm)
     else -> UiText.Resource(Res.string.result_performance_cold)
+}
+
+@Composable
+private fun Skeleton() {
+    val popKnowColors = MaterialTheme.popKnowColors
+    val spacing = MaterialTheme.spacing
+
+    val shimmerAlpha by rememberInfiniteTransition(label = "shimmer")
+        .animateFloat(
+            initialValue = 0.35f,
+            targetValue = 0.85f,
+            animationSpec =
+                infiniteRepeatable(
+                    animation = tween(durationMillis = 900, easing = LinearEasing),
+                    repeatMode = RepeatMode.Reverse,
+                ),
+            label = "shimmer-alpha",
+        )
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = spacing.md),
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(top = spacing.xxl)
+                .width(120.dp)
+                .height(20.dp)
+                .clip(MaterialTheme.shapes.small)
+                .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+        )
+
+        Box(
+            modifier = Modifier
+                .padding(top = spacing.xs)
+                .width(200.dp)
+                .height(120.dp)
+                .clip(MaterialTheme.shapes.small)
+                .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+        )
+
+        Box(
+            modifier = Modifier
+                .padding(top = spacing.sm)
+                .width(100.dp)
+                .height(24.dp)
+                .clip(CircleShape)
+                .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+        )
+
+        Box(
+            modifier = Modifier
+                .padding(top = spacing.lg)
+                .fillMaxWidth(0.8f)
+                .height(20.dp)
+                .clip(MaterialTheme.shapes.small)
+                .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+        )
+
+        Box(
+            modifier = Modifier
+                .padding(top = spacing.xxl)
+                .width(150.dp)
+                .height(20.dp)
+                .clip(MaterialTheme.shapes.small)
+                .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+        )
+
+        Row(
+            modifier = Modifier
+                .padding(top = spacing.sm)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(spacing.xs)
+        ) {
+            repeat(5) {
+                Box(
+                    modifier = Modifier
+                        .size(12.dp)
+                        .clip(CircleShape)
+                        .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+                )
+            }
+        }
+    }
 }

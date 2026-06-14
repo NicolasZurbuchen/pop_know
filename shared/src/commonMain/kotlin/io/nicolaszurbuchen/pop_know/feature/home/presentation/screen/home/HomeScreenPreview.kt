@@ -1,6 +1,5 @@
 package io.nicolaszurbuchen.pop_know.feature.home.presentation.screen.home
 
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,12 +39,10 @@ fun HomeScreenPreview(
     @PreviewParameter(HomeStateProvider::class) state: HomeState,
 ) {
     PopKnowTheme {
-        Surface {
-            HomeScreen(
-                state = state,
-                onStartRoundClick = {},
-                onViewStatsClick = {},
-            )
-        }
+        HomeScreen(
+            state = state,
+            onStartRoundClick = {},
+            onViewStatsClick = {},
+        )
     }
 }

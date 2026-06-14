@@ -1,6 +1,5 @@
 package io.nicolaszurbuchen.pop_know.feature.stats.presentation.screen.stats
 
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,11 +43,9 @@ fun StatsScreenPreview(
     @PreviewParameter(StatsStateProvider::class) state: StatsState,
 ) {
     PopKnowTheme {
-        Surface {
-            StatsScreen(
-                state = state,
-                onBackClick = {},
-            )
-        }
+        StatsScreen(
+            state = state,
+            onBackClick = {},
+        )
     }
 }

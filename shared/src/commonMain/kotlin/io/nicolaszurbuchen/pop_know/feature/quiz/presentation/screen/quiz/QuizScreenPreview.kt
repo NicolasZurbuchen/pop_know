@@ -1,6 +1,5 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz
 
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,7 +39,7 @@ class QuizStateProvider : PreviewParameterProvider<QuizState> {
             content = QuizUiModel(
                 questionText = "Which of the following is NOT a primary color?",
                 categoryText = "Art",
-                difficulty = Difficulty.EASY,
+                difficulty = Difficulty.HARD,
                 progressText = "01/10",
                 scoreText = "0",
                 choices = listOf(
@@ -69,13 +68,11 @@ fun QuizScreenPreview(
     @PreviewParameter(QuizStateProvider::class) state: QuizState,
 ) {
     PopKnowTheme {
-        Surface {
-            QuizScreen(
-                state = state,
-                onSelectAnswer = {},
-                onNextClick = {},
-                onSeeResultClick = {},
-            )
-        }
+        QuizScreen(
+            state = state,
+            onSelectAnswer = {},
+            onNextClick = {},
+            onSeeResultClick = {},
+        )
     }
 }

@@ -1,7 +1,14 @@
 package io.nicolaszurbuchen.pop_know.feature.stats.presentation.screen.stats
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,13 +22,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.TextStyle
@@ -36,6 +44,7 @@ import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowSectionLabel
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowTopBar
 import io.nicolaszurbuchen.pop_know.infra.design.theme.JetBrainsMonoFontFamily
 import io.nicolaszurbuchen.pop_know.infra.design.theme.SpaceGroteskFontFamily
+import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowGameColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
@@ -70,19 +79,15 @@ fun StatsScreen(
 
         Box(modifier = Modifier.weight(1f)) {
             when {
-                state.isLoading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                state.isLoading -> Skeleton()
 
                 state.error != null -> Text(
-                    text = when (val e = state.error) {
-                        is UiText.Raw -> e.value
-                        is UiText.Resource -> "Error"
-                        else -> ""
-                    },
+                    text = state.error.asString(),
                     modifier = Modifier.align(Alignment.Center),
                     color = MaterialTheme.colorScheme.error
                 )
 
-                state.stats != null -> StatsContent(
+                state.stats != null -> Content(
                     stats = state.stats,
                 )
             }
@@ -91,7 +96,7 @@ fun StatsScreen(
 }
 
 @Composable
-private fun StatsContent(
+private fun Content(
     stats: FullStats,
 ) {
     LazyColumn(
@@ -344,5 +349,94 @@ private fun CategoryRow(
             modifier = Modifier.width(48.dp),
             textAlign = androidx.compose.ui.text.style.TextAlign.End
         )
+    }
+}
+
+@Composable
+private fun Skeleton() {
+    val popKnowColors = MaterialTheme.popKnowColors
+    val spacing = MaterialTheme.spacing
+
+    val shimmerAlpha by rememberInfiniteTransition(label = "shimmer")
+        .animateFloat(
+            initialValue = 0.35f,
+            targetValue = 0.85f,
+            animationSpec =
+                infiniteRepeatable(
+                    animation = tween(durationMillis = 900, easing = LinearEasing),
+                    repeatMode = RepeatMode.Reverse,
+                ),
+            label = "shimmer-alpha",
+        )
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = spacing.md),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = spacing.xl),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(180.dp)
+                    .clip(CircleShape)
+                    .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+            )
+
+            Column(
+                modifier = Modifier
+                    .padding(start = spacing.lg)
+                    .weight(1f),
+                verticalArrangement = Arrangement.spacedBy(spacing.sm)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .width(80.dp)
+                        .height(20.dp)
+                        .clip(MaterialTheme.shapes.small)
+                        .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+                )
+                Box(
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(72.dp)
+                        .clip(MaterialTheme.shapes.small)
+                        .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(20.dp)
+                        .clip(MaterialTheme.shapes.small)
+                        .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+                )
+            }
+        }
+
+        Box(
+            modifier = Modifier
+                .padding(top = spacing.xl)
+                .width(150.dp)
+                .height(20.dp)
+                .clip(MaterialTheme.shapes.small)
+                .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+        )
+
+        Spacer(Modifier.height(spacing.sm))
+
+        repeat(5) {
+            Box(
+                modifier = Modifier
+                    .padding(vertical = spacing.xs)
+                    .fillMaxWidth()
+                    .height(48.dp)
+                    .clip(MaterialTheme.shapes.small)
+                    .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+            )
+        }
     }
 }

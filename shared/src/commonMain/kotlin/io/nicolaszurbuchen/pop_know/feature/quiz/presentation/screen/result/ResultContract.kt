@@ -1,6 +1,7 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result
 
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.GameResult
+import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 
 sealed interface ResultIntent {
     data object NavigateHome : ResultIntent
@@ -24,5 +25,6 @@ sealed interface ResultMessage {
 
 data class ResultState(
     val isLoading: Boolean = false,
+    val error: UiText? = null,
     val content: GameResult? = null,
 )
