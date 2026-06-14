@@ -1,7 +1,7 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result
 
 import io.nicolaszurbuchen.pop_know.common.error.AppError
-import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.GameResult
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result.model.GameResultUi
 
 sealed interface ResultIntent {
     data object NavigateHome : ResultIntent
@@ -22,12 +22,12 @@ sealed interface ResultAction {
 
 sealed interface ResultMessage {
     data object ResultLoading : ResultMessage
-    data class ResultLoaded(val result: GameResult?) : ResultMessage
+    data class ResultLoaded(val result: GameResultUi?) : ResultMessage
     data class Error(val error: AppError) : ResultMessage
 }
 
 data class ResultState(
     val isLoading: Boolean = false,
     val error: AppError? = null,
-    val content: GameResult? = null,
+    val content: GameResultUi? = null,
 )

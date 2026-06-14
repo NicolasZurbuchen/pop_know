@@ -1,6 +1,6 @@
 package io.nicolaszurbuchen.pop_know.feature.home.domain.usecase
 
-import io.nicolaszurbuchen.pop_know.common.domain.AnswerStats
+import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.AnswerStats
 import io.nicolaszurbuchen.pop_know.feature.home.domain.repository.HomeRepository
 
 class GetAnswerStatsUseCase(

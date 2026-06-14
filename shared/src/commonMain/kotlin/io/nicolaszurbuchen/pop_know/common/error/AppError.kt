@@ -20,3 +20,10 @@ sealed interface AppError {
 
     data class Unexpected(val cause: Throwable) : AppError
 }
+
+fun Int.toAppError(): AppError = when (this) {
+    1 -> AppError.Trivia.NoResults
+    2 -> AppError.Trivia.InvalidParameter
+    5 -> AppError.Trivia.RateLimit
+    else -> AppError.Network.Http(this)
+}

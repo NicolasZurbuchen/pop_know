@@ -7,6 +7,7 @@ import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.GetLastGameResultUseCase
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result.model.toUi
 import kotlinx.coroutines.launch
 
 interface ResultStore : Store<ResultIntent, ResultState, ResultLabel>
@@ -54,7 +55,7 @@ class ResultStoreFactory(
             scope.launch {
                 try {
                     val result = getLastGameResult()
-                    dispatch(ResultMessage.ResultLoaded(result))
+                    dispatch(ResultMessage.ResultLoaded(result?.toUi()))
                 } catch (e: Exception) {
                     dispatch(ResultMessage.Error(AppError.Database.QueryFailed(e)))
                 }

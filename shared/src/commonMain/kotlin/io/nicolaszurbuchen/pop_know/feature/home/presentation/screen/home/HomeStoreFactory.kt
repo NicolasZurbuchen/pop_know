@@ -6,6 +6,8 @@ import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import io.nicolaszurbuchen.pop_know.common.error.AppError
+import io.nicolaszurbuchen.pop_know.common.error.AppException
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.toUi
 import io.nicolaszurbuchen.pop_know.feature.home.domain.usecase.GetAnswerStatsUseCase
 import kotlinx.coroutines.launch
 
@@ -53,10 +55,10 @@ class HomeStoreFactory(
             scope.launch {
                 try {
                     val stats = getAnswerStats()
-                    dispatch(HomeMessage.StatsLoaded(stats))
+                    dispatch(HomeMessage.StatsLoaded(stats?.toUi()))
                 } catch (e: Exception) {
                     val error = when (e) {
-                        is io.nicolaszurbuchen.pop_know.common.error.AppException -> e.error
+                        is AppException -> e.error
                         else -> AppError.Unexpected(e)
                     }
                     

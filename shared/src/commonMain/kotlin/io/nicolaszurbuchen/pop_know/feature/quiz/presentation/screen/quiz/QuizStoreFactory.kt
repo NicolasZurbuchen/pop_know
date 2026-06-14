@@ -5,9 +5,8 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import io.nicolaszurbuchen.pop_know.common.domain.TriviaError
-import io.nicolaszurbuchen.pop_know.common.domain.TriviaException
 import io.nicolaszurbuchen.pop_know.common.error.AppError
+import io.nicolaszurbuchen.pop_know.common.error.AppException
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuestionProgress
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuizSession
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.AdvanceQuestionUseCase
@@ -87,13 +86,7 @@ class QuizStoreFactory(
                     startTimer()
                 } catch (e: Exception) {
                     val appError = when (e) {
-                        is TriviaException -> when (e.error) {
-                            TriviaError.NoResults -> AppError.Trivia.NoResults
-                            TriviaError.InvalidParameter -> AppError.Trivia.InvalidParameter
-                            TriviaError.RateLimit -> AppError.Trivia.RateLimit
-                            TriviaError.NetworkError -> AppError.Network.Unavailable
-                            is TriviaError.Unknown -> AppError.Unexpected(e)
-                        }
+                        is AppException -> e.error
                         else -> AppError.Unexpected(e)
                     }
                     dispatch(QuizMessage.ErrorOccurred(appError))
@@ -104,8 +97,8 @@ class QuizStoreFactory(
         private fun observeSession(quiz: QuizSession) {
             combine(quiz.state, timerSeconds) { sessionState, seconds ->
                 QuizUiMapper.map(sessionState, seconds, shuffledAnswers)
-            }.onEach { uiModel ->
-                dispatch(QuizMessage.QuizDataLoaded(uiModel))
+            }.onEach { ui ->
+                dispatch(QuizMessage.QuizDataLoaded(ui))
             }.launchIn(scope)
         }
 

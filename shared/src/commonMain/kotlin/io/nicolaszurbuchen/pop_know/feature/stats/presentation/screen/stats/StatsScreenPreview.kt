@@ -5,30 +5,30 @@ import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import io.nicolaszurbuchen.pop_know.common.domain.AnswerStats
-import io.nicolaszurbuchen.pop_know.common.domain.Category
-import io.nicolaszurbuchen.pop_know.common.domain.Difficulty
 import io.nicolaszurbuchen.pop_know.common.error.AppError
-import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.CategoryStats
-import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.DifficultyStats
-import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.FullStats
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUi
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.CategoryUi
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
+import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.CategoryStatsUi
+import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.DifficultyStatsUi
+import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.FullStatsUi
 import io.nicolaszurbuchen.pop_know.infra.design.theme.PopKnowTheme
 
 class StatsStateProvider : PreviewParameterProvider<StatsState> {
     override val values = sequenceOf(
         StatsState(isLoading = true),
         StatsState(
-            stats = FullStats(
-                summary = AnswerStats(100, 75, 0.75f),
+            stats = FullStatsUi(
+                summary = AnswerStatsUi(100, 75, 0.75f),
                 perDifficulty = listOf(
-                    DifficultyStats(Difficulty.EASY, AnswerStats(40, 35, 0.875f)),
-                    DifficultyStats(Difficulty.MEDIUM, AnswerStats(40, 30, 0.75f)),
-                    DifficultyStats(Difficulty.HARD, AnswerStats(20, 10, 0.5f)),
+                    DifficultyStatsUi(DifficultyUi.EASY, AnswerStatsUi(40, 35, 0.875f)),
+                    DifficultyStatsUi(DifficultyUi.MEDIUM, AnswerStatsUi(40, 30, 0.75f)),
+                    DifficultyStatsUi(DifficultyUi.HARD, AnswerStatsUi(20, 10, 0.5f)),
                 ),
                 perCategory = listOf(
-                    CategoryStats(Category(1, "General Knowledge"), AnswerStats(30, 25, 0.83f)),
-                    CategoryStats(Category(2, "Science"), AnswerStats(20, 15, 0.75f)),
-                    CategoryStats(Category(3, "History"), AnswerStats(50, 35, 0.7f)),
+                    CategoryStatsUi(CategoryUi(1, "General Knowledge"), AnswerStatsUi(30, 25, 0.83f)),
+                    CategoryStatsUi(CategoryUi(2, "Science"), AnswerStatsUi(20, 15, 0.75f)),
+                    CategoryStatsUi(CategoryUi(3, "History"), AnswerStatsUi(50, 35, 0.7f)),
                 ),
             )
         ),

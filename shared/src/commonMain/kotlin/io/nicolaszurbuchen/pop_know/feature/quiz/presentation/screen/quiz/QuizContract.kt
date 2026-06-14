@@ -3,8 +3,8 @@ package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import io.nicolaszurbuchen.pop_know.common.domain.Difficulty
 import io.nicolaszurbuchen.pop_know.common.error.AppError
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowGameColors
 
@@ -30,7 +30,7 @@ sealed interface QuizAction {
 sealed interface QuizMessage {
     data object QuizStarted : QuizMessage
     data class QuizDataLoaded(
-        val content: QuizUiModel,
+        val content: QuizUi,
     ) : QuizMessage
     data class ErrorOccurred(val error: AppError) : QuizMessage
     data class InsertionError(val error: AppError?) : QuizMessage
@@ -41,18 +41,18 @@ data class QuizState(
     val isLoading: Boolean = false,
     val initialError: AppError? = null,
     val insertionError: AppError? = null,
-    val content: QuizUiModel? = null,
+    val content: QuizUi? = null,
     val isQuitDialogOpen: Boolean = false,
 )
 
-data class QuizUiModel(
+data class QuizUi(
     val questionText: String,
     val categoryText: String,
-    val difficulty: Difficulty,
+    val difficulty: DifficultyUi,
     val progressText: String,
     val scoreText: String,
-    val choices: List<QuizChoiceUiModel>,
-    val resultChoice: QuizChoiceUiModel?,
+    val choices: List<QuizChoiceUi>,
+    val resultChoice: QuizChoiceUi?,
     val totalQuestions: Int,
     val currentIndex: Int,
     val isAnswered: Boolean,
@@ -62,15 +62,15 @@ data class QuizUiModel(
 ) {
     @Composable
     fun difficultyColor(): Color = when (difficulty) {
-        Difficulty.EASY -> MaterialTheme.popKnowGameColors.difficultyEasy
-        Difficulty.MEDIUM -> MaterialTheme.popKnowGameColors.difficultyMedium
-        Difficulty.HARD -> MaterialTheme.popKnowGameColors.difficultyHard
+        DifficultyUi.EASY -> MaterialTheme.popKnowGameColors.difficultyEasy
+        DifficultyUi.MEDIUM -> MaterialTheme.popKnowGameColors.difficultyMedium
+        DifficultyUi.HARD -> MaterialTheme.popKnowGameColors.difficultyHard
     }
 
     fun difficultyName(): String = difficulty.name
 }
 
-data class QuizChoiceUiModel(
+data class QuizChoiceUi(
     val letter: String,
     val text: String,
     val answerStatus: AnswerStatus?,

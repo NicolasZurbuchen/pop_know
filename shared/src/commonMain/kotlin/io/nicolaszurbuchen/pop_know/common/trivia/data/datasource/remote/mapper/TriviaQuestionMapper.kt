@@ -1,9 +1,9 @@
-package io.nicolaszurbuchen.pop_know.common.data.datasource.remote.mapper
+package io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.mapper
 
-import io.nicolaszurbuchen.pop_know.common.data.datasource.remote.model.TriviaQuestionDto
-import io.nicolaszurbuchen.pop_know.common.domain.Category
-import io.nicolaszurbuchen.pop_know.common.domain.Difficulty
-import io.nicolaszurbuchen.pop_know.common.domain.QuestionType
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.model.TriviaQuestionDto
+import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.Category
+import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.Difficulty
+import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.QuestionType
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.TriviaQuestion
 import io.nicolaszurbuchen.pop_know.util.decodeHtml
 

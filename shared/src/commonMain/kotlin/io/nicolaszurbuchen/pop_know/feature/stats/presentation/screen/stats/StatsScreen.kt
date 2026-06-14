@@ -36,10 +36,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.nicolaszurbuchen.pop_know.common.domain.Difficulty
-import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.CategoryStats
-import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.DifficultyStats
-import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.FullStats
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUi
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
+import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.CategoryStatsUi
+import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.DifficultyStatsUi
+import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.FullStatsUi
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowErrorView
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowSectionLabel
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowTopBar
@@ -95,7 +96,7 @@ fun StatsScreen(
 
 @Composable
 private fun Content(
-    stats: FullStats,
+    stats: FullStatsUi,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -135,8 +136,8 @@ private fun Content(
 
 @Composable
 private fun OverallSummary(
-    summary: io.nicolaszurbuchen.pop_know.common.domain.AnswerStats,
-    perDifficulty: List<DifficultyStats>
+    summary: AnswerStatsUi,
+    perDifficulty: List<DifficultyStatsUi>
 ) {
     Row(
         modifier = Modifier
@@ -194,7 +195,7 @@ private fun OverallSummary(
 }
 
 @Composable
-private fun DifficultyRings(perDifficulty: List<DifficultyStats>) {
+private fun DifficultyRings(perDifficulty: List<DifficultyStatsUi>) {
     val gameColors = MaterialTheme.popKnowGameColors
     val inactiveColor = MaterialTheme.colorScheme.outlineVariant
 
@@ -205,9 +206,9 @@ private fun DifficultyRings(perDifficulty: List<DifficultyStats>) {
         perDifficulty.asReversed().forEachIndexed { index, diffStats ->
             val radius = size.minDimension / 2 - (index * (strokeWidth + spacing)) - strokeWidth / 2
             val color = when (diffStats.difficulty) {
-                Difficulty.EASY -> gameColors.difficultyEasy
-                Difficulty.MEDIUM -> gameColors.difficultyMedium
-                Difficulty.HARD -> gameColors.difficultyHard
+                DifficultyUi.EASY -> gameColors.difficultyEasy
+                DifficultyUi.MEDIUM -> gameColors.difficultyMedium
+                DifficultyUi.HARD -> gameColors.difficultyHard
             }
             
             // Inactive ring
@@ -232,11 +233,11 @@ private fun DifficultyRings(perDifficulty: List<DifficultyStats>) {
 }
 
 @Composable
-private fun DifficultySummaryRow(stats: DifficultyStats) {
+private fun DifficultySummaryRow(stats: DifficultyStatsUi) {
     val color = when (stats.difficulty) {
-        Difficulty.EASY -> MaterialTheme.popKnowGameColors.difficultyEasy
-        Difficulty.MEDIUM -> MaterialTheme.popKnowGameColors.difficultyMedium
-        Difficulty.HARD -> MaterialTheme.popKnowGameColors.difficultyHard
+        DifficultyUi.EASY -> MaterialTheme.popKnowGameColors.difficultyEasy
+        DifficultyUi.MEDIUM -> MaterialTheme.popKnowGameColors.difficultyMedium
+        DifficultyUi.HARD -> MaterialTheme.popKnowGameColors.difficultyHard
     }
     val accuracy = (stats.answerStats.accuracy * 100).roundToInt()
     val accuracyColor = when {
@@ -292,7 +293,7 @@ private fun DifficultySummaryRow(stats: DifficultyStats) {
 @Composable
 private fun CategoryRow(
     index: Int,
-    stats: CategoryStats
+    stats: CategoryStatsUi
 ) {
     val accuracy = (stats.answerStats.accuracy * 100).roundToInt()
     val accuracyColor = when {

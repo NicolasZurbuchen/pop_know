@@ -1,6 +1,6 @@
 package io.nicolaszurbuchen.pop_know.feature.stats.data.repository
 
-import io.nicolaszurbuchen.pop_know.common.domain.AnswerStats
+import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.AnswerStats
 import io.nicolaszurbuchen.pop_know.feature.stats.data.datasource.local.StatsLocalDataSource
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.FullStats
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.repository.StatsRepository

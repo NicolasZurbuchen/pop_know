@@ -7,6 +7,7 @@ import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.usecase.GetFullStatsUseCase
+import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.toUi
 import kotlinx.coroutines.launch
 
 interface StatsStore : Store<StatsIntent, StatsState, StatsLabel>
@@ -52,7 +53,7 @@ class StatsStoreFactory(
             scope.launch {
                 try {
                     val stats = getFullStats()
-                    dispatch(StatsMessage.StatsLoaded(stats))
+                    dispatch(StatsMessage.StatsLoaded(stats?.toUi()))
                 } catch (e: Exception) {
                     dispatch(StatsMessage.Error(AppError.Database.QueryFailed(e)))
                 }

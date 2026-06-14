@@ -5,25 +5,30 @@ import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import io.nicolaszurbuchen.pop_know.common.domain.Difficulty
 import io.nicolaszurbuchen.pop_know.common.error.AppError
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUi
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
-import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnsweredQuestionResult
-import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.GameResult
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result.model.AnsweredQuestionResultUi
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result.model.GameResultUi
 import io.nicolaszurbuchen.pop_know.infra.design.theme.PopKnowTheme
 
 class ResultStateProvider : PreviewParameterProvider<ResultState> {
     override val values = sequenceOf(
         ResultState(isLoading = true),
         ResultState(
-            content = GameResult(
+            content = GameResultUi(
                 questions = listOf(
-                    AnsweredQuestionResult("Q1", "A1", "A1", AnswerStatus.CORRECT, "Cat", Difficulty.EASY),
-                    AnsweredQuestionResult("Q2", "A2", "W2", AnswerStatus.INCORRECT, "Cat", Difficulty.EASY),
-                    AnsweredQuestionResult("Q3", "A3", null, AnswerStatus.TIMEOUT, "Cat", Difficulty.EASY),
-                    AnsweredQuestionResult("Q4", "A4", "A4", AnswerStatus.CORRECT, "Cat", Difficulty.EASY),
-                    AnsweredQuestionResult("Q5", "A5", "A5", AnswerStatus.CORRECT, "Cat", Difficulty.EASY),
+                    AnsweredQuestionResultUi("Q1", "A1", "A1", AnswerStatus.CORRECT, "Cat", DifficultyUi.EASY),
+                    AnsweredQuestionResultUi("Q2", "A2", "W2", AnswerStatus.INCORRECT, "Cat", DifficultyUi.EASY),
+                    AnsweredQuestionResultUi("Q3", "A3", null, AnswerStatus.TIMEOUT, "Cat", DifficultyUi.EASY),
+                    AnsweredQuestionResultUi("Q4", "A4", "A4", AnswerStatus.CORRECT, "Cat", DifficultyUi.EASY),
+                    AnsweredQuestionResultUi("Q5", "A5", "A5", AnswerStatus.CORRECT, "Cat", DifficultyUi.EASY),
                 ),
+                correctCount = 3,
+                incorrectCount = 1,
+                timeoutCount = 1,
+                score = AnswerStatsUi(5, 3, 0.6f)
             )
         ),
         ResultState(

@@ -31,7 +31,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.GameResult
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result.model.GameResultUi
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButton
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButtonVariant
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowErrorView
@@ -106,7 +106,7 @@ fun ResultScreen(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun Content(
-    result: GameResult,
+    result: GameResultUi,
 ) {
     Column(
         modifier = Modifier

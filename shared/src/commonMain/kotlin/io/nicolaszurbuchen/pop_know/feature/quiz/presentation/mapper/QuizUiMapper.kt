@@ -1,17 +1,18 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.mapper
 
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.toUi
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuestionProgress
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuizSessionState
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.QuizChoiceUiModel
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.QuizUiModel
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.QuizChoiceUi
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.QuizUi
 
 object QuizUiMapper {
     fun map(
         state: QuizSessionState,
         timerSeconds: Int,
         shuffledAnswers: List<List<String>>,
-    ): QuizUiModel {
+    ): QuizUi {
         val progress = state.currentQuestion
         val question = when (progress) {
             is QuestionProgress.Unanswered -> progress.question
@@ -30,16 +31,16 @@ object QuizUiMapper {
                 text == question.correctAnswer -> AnswerStatus.CORRECT
                 else -> null
             }
-            QuizChoiceUiModel(
+            QuizChoiceUi(
                 letter = ('A' + index).toString(),
                 text = text,
                 answerStatus = status,
             )
         }
 
-        val resultChoice: QuizChoiceUiModel? = when {
+        val resultChoice: QuizChoiceUi? = when {
             answered == null -> null
-            answered.status == AnswerStatus.TIMEOUT -> QuizChoiceUiModel(
+            answered.status == AnswerStatus.TIMEOUT -> QuizChoiceUi(
                 letter = "",
                 text = "",
                 answerStatus = AnswerStatus.TIMEOUT,
@@ -50,10 +51,10 @@ object QuizUiMapper {
         val score = state.score
         val total = state.questionStates.size
 
-        return QuizUiModel(
+        return QuizUi(
             questionText = question.question,
             categoryText = question.category.category.uppercase(),
-            difficulty = question.difficulty,
+            difficulty = question.difficulty.toUi(),
             progressText = "${(state.currentIndex + 1).twoDigits()}/${total.twoDigits()}",
             scoreText = "${score.totalCorrect}/${score.totalAnswered}",
             choices = choices,

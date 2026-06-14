@@ -1,11 +1,11 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote
 
-import io.nicolaszurbuchen.pop_know.common.data.datasource.remote.api.TriviaApi
-import io.nicolaszurbuchen.pop_know.common.data.datasource.remote.mapper.toDomain
-import io.nicolaszurbuchen.pop_know.common.domain.Category
-import io.nicolaszurbuchen.pop_know.common.domain.TriviaError
-import io.nicolaszurbuchen.pop_know.common.domain.TriviaException
-import io.nicolaszurbuchen.pop_know.common.domain.toTriviaError
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.api.TriviaApi
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.mapper.toDomain
+import io.nicolaszurbuchen.pop_know.common.error.AppError
+import io.nicolaszurbuchen.pop_know.common.error.AppException
+import io.nicolaszurbuchen.pop_know.common.error.toAppError
+import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.Category
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.TriviaQuestion
 
 class QuizRemoteDataSourceImpl(
@@ -16,7 +16,7 @@ class QuizRemoteDataSourceImpl(
         return try {
             api.getCategories().triviaCategories.map { it.toDomain() }
         } catch (_: Exception) {
-            throw TriviaException(TriviaError.NetworkError)
+            throw AppException(AppError.Network.Unavailable)
         }
     }
 
@@ -33,15 +33,15 @@ class QuizRemoteDataSourceImpl(
                 difficulty = difficulty,
             )
             if (response.responseCode != 0) {
-                throw TriviaException(
-                    response.responseCode.toTriviaError()
+                throw AppException(
+                    response.responseCode.toAppError()
                 )
             }
             response.results.map { it.toDomain(categories) }
-        } catch (e: TriviaException) {
+        } catch (e: AppException) {
             throw e
         } catch (_: Exception) {
-            throw TriviaException(TriviaError.NetworkError)
+            throw AppException(AppError.Network.Unavailable)
         }
     }
 }

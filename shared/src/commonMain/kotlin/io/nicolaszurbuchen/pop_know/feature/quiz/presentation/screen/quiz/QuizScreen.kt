@@ -105,7 +105,7 @@ fun QuizScreen(
                     )
                 }
                 SessionContent(
-                    uiModel = state.content,
+                    ui = state.content,
                     onSelectAnswer = onSelectAnswer,
                     onNextClick = onNextClick,
                     onSeeResultClick = onSeeResultClick,
@@ -117,12 +117,12 @@ fun QuizScreen(
 
 @Composable
 private fun SessionContent(
-    uiModel: QuizUiModel,
+    ui: QuizUi,
     onSelectAnswer: (String) -> Unit,
     onNextClick: () -> Unit,
     onSeeResultClick: () -> Unit,
 ) {
-    val dotColor = uiModel.difficultyColor()
+    val dotColor = ui.difficultyColor()
 
     Column(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -136,8 +136,8 @@ private fun SessionContent(
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.md),
         ) {
             StoryBar(
-                totalQuestions = uiModel.totalQuestions,
-                currentIndex = uiModel.currentIndex,
+                totalQuestions = ui.totalQuestions,
+                currentIndex = ui.currentIndex,
             )
 
             Row(
@@ -152,14 +152,14 @@ private fun SessionContent(
                         color = MaterialTheme.colorScheme.secondary,
                     )
                     Text(
-                        text = uiModel.progressText,
+                        text = ui.progressText,
                         style = MaterialTheme.typography.displayMedium,
                         color = MaterialTheme.colorScheme.onBackground,
                     )
                 }
                 Timer(
-                    seconds = uiModel.timerSeconds,
-                    maxSeconds = uiModel.maxTimerSeconds,
+                    seconds = ui.timerSeconds,
+                    maxSeconds = ui.maxTimerSeconds,
                 )
             }
 
@@ -174,33 +174,33 @@ private fun SessionContent(
                 }
                 Spacer(Modifier.width(MaterialTheme.spacing.xs))
                 Text(
-                    text = "${uiModel.difficultyName()} · ${uiModel.categoryText}",
+                    text = "${ui.difficultyName()} · ${ui.categoryText}",
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.secondary,
                 )
             }
 
             Text(
-                text = uiModel.questionText,
+                text = ui.questionText,
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onBackground,
             )
 
             Spacer(Modifier.height(MaterialTheme.spacing.xs))
 
-            uiModel.choices.forEach { choice ->
+            ui.choices.forEach { choice ->
                 Answers(
                     choice = choice,
-                    isAnswered = uiModel.isAnswered,
+                    isAnswered = ui.isAnswered,
                     onSelect = { onSelectAnswer(choice.text) },
                 )
             }
         }
 
-        if (uiModel.isAnswered && uiModel.resultChoice != null) {
+        if (ui.isAnswered && ui.resultChoice != null) {
             ResultBar(
-                resultChoice = uiModel.resultChoice,
-                isLastQuestion = uiModel.isLastQuestion,
+                resultChoice = ui.resultChoice,
+                isLastQuestion = ui.isLastQuestion,
                 onNextClick = onNextClick,
                 onSeeResultClick = onSeeResultClick,
             )
@@ -257,7 +257,7 @@ private fun Timer(seconds: Int, maxSeconds: Int) {
 
 @Composable
 private fun Answers(
-    choice: QuizChoiceUiModel,
+    choice: QuizChoiceUi,
     isAnswered: Boolean,
     onSelect: () -> Unit,
 ) {
@@ -352,7 +352,7 @@ private fun StoryBar(
 
 @Composable
 private fun ResultBar(
-    resultChoice: QuizChoiceUiModel,
+    resultChoice: QuizChoiceUi,
     isLastQuestion: Boolean,
     onNextClick: () -> Unit,
     onSeeResultClick: () -> Unit,

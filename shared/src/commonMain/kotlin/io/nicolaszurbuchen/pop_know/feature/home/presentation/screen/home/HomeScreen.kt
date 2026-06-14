@@ -134,7 +134,7 @@ fun HomeScreen(
                 onClick = onStartRoundClick,
                 variant = PopKnowButtonVariant.Primary,
                 modifier = Modifier
-                    .padding(top = MaterialTheme.spacing.sm)
+                    .padding(top = MaterialTheme.spacing.sm),
             )
 
             if (state.hasHistory) {
@@ -155,7 +155,7 @@ private fun NeonBar(
     Column (
         modifier = modifier
             .fillMaxWidth()
-            .background(color = MaterialTheme.popKnowColors.accent)
+            .background(color = MaterialTheme.popKnowColors.accent),
     ) {
         HorizontalDivider(
             modifier = Modifier
@@ -217,7 +217,7 @@ private fun Title(
         ) {
             Box(
                 modifier = Modifier
-                    .background(color = MaterialTheme.popKnowColors.accent)
+                    .background(color = MaterialTheme.popKnowColors.accent),
             ) {
                 Text(
                     text = UiText.Resource(Res.string.home_title_lower).asString().uppercase(),
@@ -277,43 +277,43 @@ private fun StatsSummary(
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.outline,
-                shape = MaterialTheme.shapes.small
+                shape = MaterialTheme.shapes.small,
             )
             .padding(
                 horizontal = MaterialTheme.spacing.lg,
                 vertical = MaterialTheme.spacing.md,
-            )
+            ),
     ) {
         StatsItem(
             label = stringResource(Res.string.home_stats_played),
             value = played.asString(),
             alignment = Alignment.Start,
             modifier = Modifier
-                .weight(1f)
+                .weight(1f),
         )
         VerticalDivider(
+            color = MaterialTheme.colorScheme.outline,
             modifier = Modifier
                 .height(48.dp),
-            color = MaterialTheme.colorScheme.outline,
         )
         StatsItem(
             label = stringResource(Res.string.home_stats_correct),
             value = correct.asString(),
             alignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .weight(1f)
+                .weight(1f),
         )
         VerticalDivider(
+            color = MaterialTheme.colorScheme.outline,
             modifier = Modifier
                 .height(48.dp),
-            color = MaterialTheme.colorScheme.outline,
         )
         StatsItem(
             label = stringResource(Res.string.home_stats_ratio),
             value = ratio.asString(),
             alignment = Alignment.End,
             modifier = Modifier
-                .weight(1f)
+                .weight(1f),
         )
     }
 }
@@ -362,7 +362,10 @@ private fun Skeleton() {
             targetValue = 0.85f,
             animationSpec =
                 infiniteRepeatable(
-                    animation = tween(durationMillis = 900, easing = LinearEasing),
+                    animation = tween(
+                        durationMillis = 900,
+                        easing = LinearEasing,
+                    ),
                     repeatMode = RepeatMode.Reverse,
                 ),
             label = "shimmer-alpha",
@@ -373,6 +376,6 @@ private fun Skeleton() {
             .fillMaxWidth()
             .height(72.dp)
             .clip(MaterialTheme.shapes.medium)
-            .background(MaterialTheme.popKnowColors.surface.copy(alpha = shimmerAlpha))
+            .background(MaterialTheme.popKnowColors.surface.copy(alpha = shimmerAlpha)),
     )
 }
