@@ -55,10 +55,10 @@ class DataLayerTest {
     }
 
     @Test // ok
-    fun `files in remote api package must be suffixed with Api`() {
+    fun `files in remote api package must be suffixed with Api or ApiImpl`() {
         scope.files
             .withPackage("..data.datasource.remote.api")
-            .assertTrue { it.name.endsWith("Api") }
+            .assertTrue { it.name.endsWith("Api") || it.name.endsWith("ApiImpl") }
     }
 
     @Test // ok

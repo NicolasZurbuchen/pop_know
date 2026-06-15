@@ -1,20 +1,20 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote
 
-import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.api.TriviaApi
-import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.mapper.toDomain
 import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.common.error.AppException
 import io.nicolaszurbuchen.pop_know.common.error.toAppError
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.api.TriviaApi
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.dto.CategoryDto
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.dto.TriviaQuestionDto
 import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.Category
-import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.TriviaQuestion
 
 class QuizRemoteDataSourceImpl(
     private val api: TriviaApi,
 ) : QuizRemoteDataSource {
 
-    override suspend fun fetchCategories(): List<Category> {
+    override suspend fun fetchCategories(): List<CategoryDto> {
         return try {
-            api.getCategories().triviaCategories.map { it.toDomain() }
+            api.getCategories().triviaCategories
         } catch (_: Exception) {
             throw AppException(AppError.Network.Unavailable)
         }
@@ -25,7 +25,7 @@ class QuizRemoteDataSourceImpl(
         amount: Int,
         categoryId: Int?,
         difficulty: String?
-    ): List<TriviaQuestion> {
+    ): List<TriviaQuestionDto> {
         return try {
             val response = api.getQuestions(
                 amount = amount,
@@ -37,7 +37,7 @@ class QuizRemoteDataSourceImpl(
                     response.responseCode.toAppError()
                 )
             }
-            response.results.map { it.toDomain(categories) }
+            response.results
         } catch (e: AppException) {
             throw e
         } catch (_: Exception) {

@@ -4,8 +4,8 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
-import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.model.CategoryResponseDto
-import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.model.TriviaResponseDto
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.dto.CategoryResponseDto
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.dto.TriviaResponseDto
 
 class TriviaApiImpl(
     private val client: HttpClient,

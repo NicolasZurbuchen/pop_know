@@ -1,5 +1,6 @@
 package io.nicolaszurbuchen.pop_know.infra.di
 
+import io.nicolaszurbuchen.pop_know.common.trivia.di.triviaModule
 import io.nicolaszurbuchen.pop_know.feature.home.di.homeModule
 import io.nicolaszurbuchen.pop_know.feature.quiz.di.quizModule
 import io.nicolaszurbuchen.pop_know.feature.stats.di.statsModule
@@ -14,4 +15,5 @@ val appModule = listOf(
     statsModule,
     storeModule,
     quizModule,
+    triviaModule,
 )

@@ -66,7 +66,7 @@ fun PopKnowErrorView(
 
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.xl))
 
-        PopKnowButton(
+        PopKnowPrimaryButton(
             text = UiText.Resource(Res.string.error_retry),
             onClick = onRetry,
         )

@@ -79,10 +79,9 @@ fun PopKnowErrorBanner(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             onRetry?.let {
-                PopKnowButton(
+                PopKnowSecondaryButton(
                     text = UiText.Resource(Res.string.error_retry),
                     onClick = it,
-                    variant = PopKnowButtonVariant.Secondary,
                     isFullWidth = false,
                     showArrow = false,
                     modifier = Modifier.height(40.dp)
@@ -90,10 +89,9 @@ fun PopKnowErrorBanner(
             }
 
             onDismiss?.let {
-                PopKnowButton(
+                PopKnowSecondaryButton(
                     text = UiText.Resource(Res.string.error_dismiss),
                     onClick = it,
-                    variant = PopKnowButtonVariant.Secondary,
                     isFullWidth = false,
                     showArrow = false,
                     modifier = Modifier

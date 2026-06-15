@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.model
+package io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

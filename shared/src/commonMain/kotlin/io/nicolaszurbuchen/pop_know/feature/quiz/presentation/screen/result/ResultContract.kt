@@ -1,7 +1,12 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result
 
 import io.nicolaszurbuchen.pop_know.common.error.AppError
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result.model.GameResultUi
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUi
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.toUi
+import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
+import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnsweredQuestionResult
+import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.GameResult
 
 sealed interface ResultIntent {
     data object NavigateHome : ResultIntent
@@ -30,4 +35,42 @@ data class ResultState(
     val isLoading: Boolean = false,
     val error: AppError? = null,
     val content: GameResultUi? = null,
+)
+
+data class GameResultUi(
+    val questions: List<AnsweredQuestionResultUi>,
+    val correctCount: Int,
+    val incorrectCount: Int,
+    val timeoutCount: Int,
+    val score: AnswerStatsUi,
+)
+
+fun GameResult.toUi() = GameResultUi(
+    questions = questions.map { it.toUi() },
+    correctCount = correctCount,
+    incorrectCount = incorrectCount,
+    timeoutCount = timeoutCount,
+    score = AnswerStatsUi(
+        totalAnswered = score.totalAnswered,
+        totalCorrect = score.totalCorrect,
+        accuracy = score.accuracy,
+    )
+)
+
+data class AnsweredQuestionResultUi(
+    val question: String,
+    val correctAnswer: String,
+    val selectedAnswer: String?,
+    val status: AnswerStatus,
+    val categoryName: String,
+    val difficulty: DifficultyUi,
+)
+
+fun AnsweredQuestionResult.toUi() = AnsweredQuestionResultUi(
+    question = question,
+    correctAnswer = correctAnswer,
+    selectedAnswer = selectedAnswer,
+    status = status,
+    categoryName = categoryName,
+    difficulty = difficulty.toUi(),
 )

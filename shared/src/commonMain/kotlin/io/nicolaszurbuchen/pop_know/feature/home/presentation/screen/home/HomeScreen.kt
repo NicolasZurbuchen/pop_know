@@ -33,9 +33,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.nicolaszurbuchen.pop_know.common.error.AppError
-import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButton
-import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButtonVariant
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowErrorBanner
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowPrimaryButton
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowSecondaryButton
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowSectionLabel
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowTopBar
 import io.nicolaszurbuchen.pop_know.infra.design.theme.JetBrainsMonoFontFamily
@@ -129,19 +129,17 @@ fun HomeScreen(
                 }
             }
 
-            PopKnowButton(
+            PopKnowPrimaryButton(
                 text = UiText.Resource(Res.string.home_start_round),
                 onClick = onStartRoundClick,
-                variant = PopKnowButtonVariant.Primary,
                 modifier = Modifier
                     .padding(top = MaterialTheme.spacing.sm),
             )
 
             if (state.hasHistory) {
-                PopKnowButton(
+                PopKnowSecondaryButton(
                     text = UiText.Resource(Res.string.home_view_stats),
                     onClick = onViewStatsClick,
-                    variant = PopKnowButtonVariant.Secondary,
                 )
             }
         }

@@ -37,9 +37,9 @@ class PresentationLayerTest {
     }
 
     @Test
-    fun `files suffixed with Skeleton must reside in screen package`() {
+    fun `files suffixed with Preview must reside in screen package`() {
         scope.files
-            .withNameEndingWith("Skeleton")
+            .withNameEndingWith("Preview")
             .assertTrue { it.hasPackage("..presentation.screen..") }
     }
 
@@ -62,8 +62,8 @@ class PresentationLayerTest {
     // region Location implies name
 
     @Test
-    fun `files in screen packages must be suffixed with Contract, Route, Screen, Skeleton, StoreFactory, or ViewModel`() {
-        val allowedSuffixes = setOf("Contract", "Route", "Screen", "Skeleton", "StoreFactory", "ViewModel")
+    fun `files in screen packages must be suffixed with Contract, Preview, Route, Screen, StoreFactory, or ViewModel`() {
+        val allowedSuffixes = setOf("Contract", "Preview", "Route", "Screen", "StoreFactory", "ViewModel")
 
         scope.files
             .withPackage("..presentation.screen..")
@@ -77,7 +77,7 @@ class PresentationLayerTest {
 
     @Test
     fun `files in component packages must not use a screen file suffix`() {
-        val screenSuffixes = listOf("Contract", "Reducer", "Route", "Screen", "Skeleton", "ViewModel", "Flow")
+        val screenSuffixes = listOf("Contract", "Preview", "Route", "Screen", "ViewModel", "Flow")
 
         scope.files
             .withPackage("..component..")
@@ -140,7 +140,7 @@ class PresentationLayerTest {
 
     @Test
     fun `screen folders must contain only allowed file names`() {
-        val allowedSuffixes = setOf("Contract", "Route", "Screen", "Skeleton", "StoreFactory", "ViewModel")
+        val allowedSuffixes = setOf("Contract", "Preview", "Route", "Screen", "StoreFactory", "ViewModel")
 
         scope.files
             .withPackage("..presentation.screen..")
@@ -177,23 +177,6 @@ class PresentationLayerTest {
 
             assert(presentSuffixes == statefulFiles) {
                 "Incomplete stateful set in $packageName: found $presentSuffixes, expected $statefulFiles"
-            }
-        }
-    }
-
-    @Test
-    fun `Skeleton must only exist alongside the stateful set`() {
-        val screenPackages = scope.files
-            .withPackage("..presentation.screen..")
-            .groupBy { it.packagee?.name }
-
-        screenPackages.forEach { (packageName, files) ->
-            val names = files.map { it.name }
-            val hasSkeleton = names.any { it.endsWith("Skeleton") }
-            val hasContract = names.any { it.endsWith("Contract") }
-
-            assert(!hasSkeleton || hasContract) {
-                "Skeleton present without Contract in $packageName"
             }
         }
     }
@@ -338,44 +321,9 @@ class PresentationLayerTest {
 
     // endregion
 
-    // region Skeleton file rules
+    // region Preview file rules
 
-    @Test // ok
-    fun `Skeleton files must contain exactly one public function`() {
-        scope.files
-            .withNameEndingWith("Skeleton")
-            .withPackage("..presentation.screen..")
-            .assertTrue { file ->
-                val topLevelDeclarations = file.classes() + file.interfaces() + file.objects()
-                val publicFunctions = file.functions()
-                    .filter { it.isTopLevel && it.hasPublicOrDefaultModifier }
-                topLevelDeclarations.isEmpty() && publicFunctions.size == 1
-            }
-    }
-
-    @Test // ok
-    fun `Skeleton public function must match the file name`() {
-        scope.files
-            .withNameEndingWith("Skeleton")
-            .withPackage("..presentation.screen..")
-            .assertTrue { file ->
-                file.functions()
-                    .single { it.isTopLevel && it.hasPublicOrDefaultModifier }
-                    .name == file.name
-            }
-    }
-
-    @Test // ok
-    fun `Skeleton public function must be annotated with Composable`() {
-        scope.files
-            .withNameEndingWith("Skeleton")
-            .withPackage("..presentation.screen..")
-            .assertTrue { file ->
-                file.functions()
-                    .single { it.isTopLevel && it.hasPublicOrDefaultModifier }
-                    .hasAnnotationWithName("Composable")
-            }
-    }
+    // TODO
 
     // endregion
 

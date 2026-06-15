@@ -1,7 +1,7 @@
 package io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.api
 
-import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.model.CategoryResponseDto
-import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.model.TriviaResponseDto
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.dto.CategoryResponseDto
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.dto.TriviaResponseDto
 
 interface TriviaApi {
     suspend fun getQuestions(

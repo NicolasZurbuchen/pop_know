@@ -7,7 +7,6 @@ import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.GetLastGameResultUseCase
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result.model.toUi
 import kotlinx.coroutines.launch
 
 interface ResultStore : Store<ResultIntent, ResultState, ResultLabel>

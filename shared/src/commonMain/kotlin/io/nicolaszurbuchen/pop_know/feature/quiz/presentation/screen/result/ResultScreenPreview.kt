@@ -9,8 +9,6 @@ import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUi
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result.model.AnsweredQuestionResultUi
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result.model.GameResultUi
 import io.nicolaszurbuchen.pop_know.infra.design.theme.PopKnowTheme
 
 class ResultStateProvider : PreviewParameterProvider<ResultState> {

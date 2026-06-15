@@ -20,6 +20,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,20 +31,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result.model.GameResultUi
-import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButton
-import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowButtonVariant
+import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowErrorView
-import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowPerformanceTag
-import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowQuestionResultDot
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowPrimaryButton
+import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowSecondaryButton
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowSectionLabel
 import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowTopBar
 import io.nicolaszurbuchen.pop_know.infra.design.theme.SpaceGroteskFontFamily
 import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowColors
+import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowGameColors
 import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.infra.ui.asString
@@ -177,16 +181,75 @@ private fun ActionButtons(
             .padding(bottom = MaterialTheme.spacing.lg),
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm),
     ) {
-        PopKnowButton(
+        PopKnowPrimaryButton(
             text = UiText.Resource(Res.string.result_play_again),
             onClick = onPlayAgainClick,
-            variant = PopKnowButtonVariant.Primary,
         )
 
-        PopKnowButton(
+        PopKnowSecondaryButton(
             text = UiText.Resource(Res.string.home_view_stats),
             onClick = onViewStatsClick,
-            variant = PopKnowButtonVariant.Secondary,
+        )
+    }
+}
+
+@Composable
+private fun PopKnowPerformanceTag(
+    text: String,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .background(
+                color = MaterialTheme.popKnowColors.accent,
+                shape = RectangleShape
+            )
+            .padding(
+                horizontal = MaterialTheme.spacing.sm,
+                vertical = MaterialTheme.spacing.xs
+            )
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.popKnowColors.onAccent
+        )
+    }
+}
+
+@Composable
+private fun PopKnowQuestionResultDot(
+    status: AnswerStatus,
+    modifier: Modifier = Modifier
+) {
+    val backgroundColor = when (status) {
+        AnswerStatus.CORRECT -> MaterialTheme.popKnowGameColors.correct
+        AnswerStatus.INCORRECT -> MaterialTheme.popKnowGameColors.wrong
+        AnswerStatus.TIMEOUT -> MaterialTheme.popKnowGameColors.timeout
+    }
+    val contentColor = when (status) {
+        AnswerStatus.CORRECT -> MaterialTheme.popKnowGameColors.onCorrect
+        AnswerStatus.INCORRECT -> MaterialTheme.popKnowGameColors.onWrong
+        AnswerStatus.TIMEOUT -> MaterialTheme.popKnowGameColors.onTimeout
+    }
+
+    Box(
+        modifier = modifier
+            .size(24.dp)
+            .background(
+                color = backgroundColor,
+                shape = MaterialTheme.shapes.extraSmall
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            imageVector = when (status) {
+                AnswerStatus.CORRECT -> Icons.Default.Check
+                AnswerStatus.INCORRECT, AnswerStatus.TIMEOUT -> Icons.Default.Close
+            },
+            contentDescription = null,
+            tint = contentColor,
+            modifier = Modifier.size(14.dp)
         )
     }
 }
