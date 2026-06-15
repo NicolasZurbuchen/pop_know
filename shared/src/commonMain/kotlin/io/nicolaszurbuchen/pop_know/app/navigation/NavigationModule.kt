@@ -1,8 +1,8 @@
-package io.nicolaszurbuchen.pop_know.app.di
+package io.nicolaszurbuchen.pop_know.app.navigation
 
-import io.nicolaszurbuchen.pop_know.app.navigation.HomeNavigatorImpl
-import io.nicolaszurbuchen.pop_know.app.navigation.QuizNavigatorImpl
-import io.nicolaszurbuchen.pop_know.app.navigation.StatsNavigatorImpl
+import io.nicolaszurbuchen.pop_know.app.navigation.impl.HomeNavigatorImpl
+import io.nicolaszurbuchen.pop_know.app.navigation.impl.QuizNavigatorImpl
+import io.nicolaszurbuchen.pop_know.app.navigation.impl.StatsNavigatorImpl
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.navigation.HomeMainDestination
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.navigation.HomeNavKeyHandler
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.navigation.HomeNavigator

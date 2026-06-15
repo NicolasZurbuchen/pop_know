@@ -1,6 +1,6 @@
-package io.nicolaszurbuchen.pop_know.infra.di
+package io.nicolaszurbuchen.pop_know.app.di
 
-import io.nicolaszurbuchen.pop_know.app.di.appNavigationModule
+import io.nicolaszurbuchen.pop_know.app.navigation.appNavigationModule
 import io.nicolaszurbuchen.pop_know.common.trivia.di.triviaModule
 import io.nicolaszurbuchen.pop_know.feature.home.di.homeModule
 import io.nicolaszurbuchen.pop_know.feature.quiz.di.quizModule

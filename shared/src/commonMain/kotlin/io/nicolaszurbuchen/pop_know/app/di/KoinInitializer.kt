@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.infra.di
+package io.nicolaszurbuchen.pop_know.app.di
 
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module

@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.app.navigation
+package io.nicolaszurbuchen.pop_know.app.navigation.impl
 
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.navigation.HomeMainDestination
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.navigation.QuizMainDestination

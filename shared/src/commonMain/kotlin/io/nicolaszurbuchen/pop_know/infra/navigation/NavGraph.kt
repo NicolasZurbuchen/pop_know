@@ -12,6 +12,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import io.nicolaszurbuchen.pop_know.app.navigation.navConfig
 import org.koin.compose.getKoin
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
@@ -33,7 +34,7 @@ fun NavGraph(modifier: Modifier = Modifier) {
 
     NavDisplay(
         backStack = backStack,
-        modifier = Modifier
+        modifier = modifier
             .background(color = MaterialTheme.colorScheme.background)
             .systemBarsPadding(),
         onBack = { backStack.removeLastOrNull() },

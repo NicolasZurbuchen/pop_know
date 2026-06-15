@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.infra.navigation
+package io.nicolaszurbuchen.pop_know.app.navigation
 
 import androidx.navigation3.runtime.NavKey
 import androidx.savedstate.serialization.SavedStateConfiguration
