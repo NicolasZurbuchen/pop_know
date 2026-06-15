@@ -49,8 +49,13 @@ class QuizLocalDataSourceImpl(
         }.executeAsList()
     }
 
-    override fun getCategories(): List<io.nicolaszurbuchen.pop_know.cache.Category> {
-        return categoryQueries.getAllCategories().executeAsList()
+    override fun getCategories(): List<Category> {
+        return categoryQueries.getAllCategories { id, name ->
+            Category(
+                id = id.toInt(),
+                category = name
+            )
+        }.executeAsList()
     }
 
     override fun saveCategories(categories: List<Category>) {

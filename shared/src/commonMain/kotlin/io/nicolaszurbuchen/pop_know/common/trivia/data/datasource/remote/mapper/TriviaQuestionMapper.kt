@@ -7,29 +7,28 @@ import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.QuestionType
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.TriviaQuestion
 import io.nicolaszurbuchen.pop_know.util.decodeHtml
 
-class TriviaQuestionMapper {
 
-    fun toDomain(dto: TriviaQuestionDto, categories: List<Category>): TriviaQuestion {
+
+    fun TriviaQuestionDto.toDomain(categories: List<Category>): TriviaQuestion {
         return TriviaQuestion(
-            questionType = when (dto.type) {
+            questionType = when (type) {
                 "multiple" -> QuestionType.MULTIPLE
                 "boolean" -> QuestionType.BOOLEAN
-                else -> throw IllegalArgumentException("Unknown question type: ${dto.type}")
+                else -> throw IllegalArgumentException("Unknown question type: $type")
             },
-            difficulty = when (dto.difficulty) {
+            difficulty = when (difficulty) {
                 "easy" -> Difficulty.EASY
                 "medium" -> Difficulty.MEDIUM
                 "hard" -> Difficulty.HARD
-                else -> throw IllegalArgumentException("Unknown difficulty: ${dto.difficulty}")
+                else -> throw IllegalArgumentException("Unknown difficulty: $difficulty")
             },
-            category = categories.find { it.category == dto.category }
+            category = categories.find { it.category == category }
                 ?: Category(
                     id = -1,
-                    category = dto.category
+                    category = category
                 ),
-            question = dto.question.decodeHtml(),
-            correctAnswer = dto.correctAnswer.decodeHtml(),
-            incorrectAnswers = dto.incorrectAnswers.map { it.decodeHtml() }
+            question = question.decodeHtml(),
+            correctAnswer = correctAnswer.decodeHtml(),
+            incorrectAnswers = incorrectAnswers.map { it.decodeHtml() }
         )
     }
-}

@@ -8,6 +8,6 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.TriviaQuestion
 interface QuizLocalDataSource {
     fun saveAnswer(gameId: Long, question: TriviaQuestion, selectedAnswer: String?, status: AnswerStatus)
     fun getLastGame(): List<AnsweredQuestionResult>
-    fun getCategories(): List<io.nicolaszurbuchen.pop_know.cache.Category>
+    fun getCategories(): List<Category>
     fun saveCategories(categories: List<Category>)
 }

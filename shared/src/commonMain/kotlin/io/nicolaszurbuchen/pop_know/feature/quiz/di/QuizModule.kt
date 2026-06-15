@@ -20,7 +20,7 @@ import org.koin.dsl.module
 val quizModule = module {
     single<QuizRemoteDataSource> { QuizRemoteDataSourceImpl(get()) }
     single<QuizLocalDataSource> { QuizLocalDataSourceImpl(get(), get()) }
-    single<QuizRepository> { QuizRepositoryImpl(get(), get(), get(), get()) }
+    single<QuizRepository> { QuizRepositoryImpl(get(), get()) }
     factoryOf(::StartQuizUseCase)
     factoryOf(::SubmitAnswerUseCase)
     factoryOf(::AdvanceQuestionUseCase)
