@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.infra.design.component
+package io.nicolaszurbuchen.pop_know.app.design.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -26,8 +26,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.nicolaszurbuchen.pop_know.infra.design.theme.JetBrainsMonoFontFamily
-import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
+import io.nicolaszurbuchen.pop_know.app.design.theme.JetBrainsMonoFontFamily
+import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.infra.ui.asString
 

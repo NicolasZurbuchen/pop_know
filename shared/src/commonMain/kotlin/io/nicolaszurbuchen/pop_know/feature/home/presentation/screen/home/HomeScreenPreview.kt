@@ -7,7 +7,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUi
-import io.nicolaszurbuchen.pop_know.infra.design.theme.PopKnowTheme
+import io.nicolaszurbuchen.pop_know.app.design.theme.PopKnowTheme
 
 class HomeStateProvider : PreviewParameterProvider<HomeState> {
     override val values = sequenceOf(

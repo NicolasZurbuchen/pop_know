@@ -46,13 +46,13 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
-import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowConfirmDialog
-import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowErrorBanner
-import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowErrorView
-import io.nicolaszurbuchen.pop_know.infra.design.component.PopKnowTopBar
-import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowColors
-import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowGameColors
-import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
+import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowConfirmDialog
+import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowErrorBanner
+import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowErrorView
+import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowTopBar
+import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowColors
+import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowGameColors
+import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 
 @Composable

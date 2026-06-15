@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.Color
 import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
-import io.nicolaszurbuchen.pop_know.infra.design.theme.popKnowGameColors
+import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowGameColors
 
 sealed interface QuizIntent {
     data class SelectAnswer(val answer: String) : QuizIntent

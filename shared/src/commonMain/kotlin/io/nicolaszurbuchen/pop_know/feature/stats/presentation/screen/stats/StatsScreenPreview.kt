@@ -12,7 +12,7 @@ import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyU
 import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.CategoryStatsUi
 import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.DifficultyStatsUi
 import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.FullStatsUi
-import io.nicolaszurbuchen.pop_know.infra.design.theme.PopKnowTheme
+import io.nicolaszurbuchen.pop_know.app.design.theme.PopKnowTheme
 
 class StatsStateProvider : PreviewParameterProvider<StatsState> {
     override val values = sequenceOf(

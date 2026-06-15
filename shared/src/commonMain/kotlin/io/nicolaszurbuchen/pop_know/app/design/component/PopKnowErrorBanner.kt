@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.infra.design.component
+package io.nicolaszurbuchen.pop_know.app.design.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,8 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.nicolaszurbuchen.pop_know.infra.design.theme.SpaceGroteskFontFamily
-import io.nicolaszurbuchen.pop_know.infra.design.theme.spacing
+import io.nicolaszurbuchen.pop_know.app.design.theme.SpaceGroteskFontFamily
+import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import popknow.shared.generated.resources.Res
 import popknow.shared.generated.resources.error_dismiss

@@ -8,7 +8,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
-import io.nicolaszurbuchen.pop_know.infra.design.theme.PopKnowTheme
+import io.nicolaszurbuchen.pop_know.app.design.theme.PopKnowTheme
 
 class QuizStateProvider : PreviewParameterProvider<QuizState> {
     override val values = sequenceOf(

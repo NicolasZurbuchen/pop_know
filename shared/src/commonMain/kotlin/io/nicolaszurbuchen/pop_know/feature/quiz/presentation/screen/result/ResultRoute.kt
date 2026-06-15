@@ -5,7 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.nicolaszurbuchen.pop_know.infra.ui.BackHandler
+import io.nicolaszurbuchen.pop_know.infra.platform.BackHandler
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
