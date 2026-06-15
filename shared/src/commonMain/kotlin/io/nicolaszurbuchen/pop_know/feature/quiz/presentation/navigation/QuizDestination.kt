@@ -7,9 +7,6 @@ import kotlinx.serialization.Serializable
 sealed interface QuizDestination : NavKey
 
 @Serializable
-data object QuizGraph : QuizDestination
-
-@Serializable
 internal data class QuizMainDestination(
     val gameId: Long,
 ) : QuizDestination

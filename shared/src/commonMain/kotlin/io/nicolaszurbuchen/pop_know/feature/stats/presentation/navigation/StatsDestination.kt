@@ -7,7 +7,4 @@ import kotlinx.serialization.Serializable
 sealed interface StatsDestination : NavKey
 
 @Serializable
-data object StatsGraph : StatsDestination
-
-@Serializable
-internal data object StatsMainDestination : StatsDestination
+data object StatsMainDestination : StatsDestination

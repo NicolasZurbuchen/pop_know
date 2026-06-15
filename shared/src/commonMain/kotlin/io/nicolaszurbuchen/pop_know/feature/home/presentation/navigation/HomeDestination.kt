@@ -7,7 +7,4 @@ import kotlinx.serialization.Serializable
 sealed interface HomeDestination : NavKey
 
 @Serializable
-data object HomeGraph : HomeDestination
-
-@Serializable
-internal data object HomeMainDestination : HomeDestination
+data object HomeMainDestination : HomeDestination
