@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.util
+package io.nicolaszurbuchen.pop_know.infra.platform
 
 import android.text.Html
 

@@ -5,7 +5,7 @@ import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.Category
 import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.Difficulty
 import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.QuestionType
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.TriviaQuestion
-import io.nicolaszurbuchen.pop_know.util.decodeHtml
+import io.nicolaszurbuchen.pop_know.infra.platform.decodeHtml
 
 
 

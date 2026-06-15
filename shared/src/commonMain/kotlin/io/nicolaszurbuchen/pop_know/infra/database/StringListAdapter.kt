@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.util
+package io.nicolaszurbuchen.pop_know.infra.database
 
 import app.cash.sqldelight.ColumnAdapter
 import kotlinx.serialization.builtins.ListSerializer
