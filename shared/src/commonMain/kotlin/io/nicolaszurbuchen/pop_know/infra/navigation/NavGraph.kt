@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
@@ -32,7 +33,10 @@ fun NavGraph() {
             .background(color = MaterialTheme.colorScheme.background)
             .systemBarsPadding(),
         onBack = { backStack.removeLastOrNull() },
-        entryDecorators = listOf(rememberSaveableStateHolderNavEntryDecorator()),
+        entryDecorators = listOf(
+            rememberSaveableStateHolderNavEntryDecorator(),
+            rememberViewModelStoreNavEntryDecorator()
+        ),
         entryProvider = { key ->
             when (key) {
                 HomeGraph -> {
