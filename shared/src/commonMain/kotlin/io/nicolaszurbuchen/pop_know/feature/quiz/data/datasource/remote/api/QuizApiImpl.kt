@@ -1,15 +1,15 @@
-package io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.api
+package io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.api
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
-import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.dto.CategoryResponseDto
-import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.dto.TriviaResponseDto
+import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.dto.CategoryResponseDto
+import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.dto.TriviaResponseDto
 
-class TriviaApiImpl(
+class QuizApiImpl(
     private val client: HttpClient,
-) : TriviaApi {
+) : QuizApi {
 
     override suspend fun getQuestions(
         amount: Int,

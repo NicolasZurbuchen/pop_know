@@ -1,4 +1,4 @@
-CREATE TABLE QuestionHistory (
+CREATE TABLE QuestionHistoryEntity (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     game_id INTEGER NOT NULL,
     type TEXT NOT NULL,
@@ -10,18 +10,18 @@ CREATE TABLE QuestionHistory (
     selected_answer TEXT,
     status TEXT NOT NULL,
     answered_at INTEGER NOT NULL,
-    FOREIGN KEY (category_id) REFERENCES Category(id)
+    FOREIGN KEY (category_id) REFERENCES CategoryEntity(id)
 );
 
 insertHistory:
-INSERT INTO QuestionHistory(game_id, type, difficulty, category_id, question, correct_answer, incorrect_answers, selected_answer, status, answered_at)
+INSERT INTO QuestionHistoryEntity(game_id, type, difficulty, category_id, question, correct_answer, incorrect_answers, selected_answer, status, answered_at)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 countAllHistory:
-SELECT COUNT(*) FROM QuestionHistory;
+SELECT COUNT(*) FROM QuestionHistoryEntity;
 
 countCorrectAnswers:
-SELECT COUNT(*) FROM QuestionHistory
+SELECT COUNT(*) FROM QuestionHistoryEntity
 WHERE selected_answer = correct_answer;
 
 statsByDifficulty:
@@ -29,7 +29,7 @@ SELECT
     difficulty,
     COUNT(*) AS total,
     SUM(CASE WHEN selected_answer = correct_answer THEN 1 ELSE 0 END) AS correct
-FROM QuestionHistory
+FROM QuestionHistoryEntity
 GROUP BY difficulty;
 
 statsByCategory:
@@ -38,8 +38,8 @@ SELECT
     c.name,
     COUNT(*) AS total,
     SUM(CASE WHEN h.selected_answer = h.correct_answer THEN 1 ELSE 0 END) AS correct
-FROM QuestionHistory h
-JOIN Category c ON h.category_id = c.id
+FROM QuestionHistoryEntity h
+JOIN CategoryEntity c ON h.category_id = c.id
 GROUP BY h.category_id;
 
 getLastGame:
@@ -48,10 +48,10 @@ SELECT
     h.question, h.correct_answer, h.incorrect_answers,
     h.selected_answer, h.status, h.answered_at,
     c.name AS category_name
-FROM QuestionHistory h
-JOIN Category c ON h.category_id = c.id
-WHERE h.game_id = (SELECT MAX(game_id) FROM QuestionHistory)
+FROM QuestionHistoryEntity h
+JOIN CategoryEntity c ON h.category_id = c.id
+WHERE h.game_id = (SELECT MAX(game_id) FROM QuestionHistoryEntity)
 ORDER BY h.id ASC;
 
 deleteAllHistory:
-DELETE FROM QuestionHistory;
+DELETE FROM QuestionHistoryEntity;

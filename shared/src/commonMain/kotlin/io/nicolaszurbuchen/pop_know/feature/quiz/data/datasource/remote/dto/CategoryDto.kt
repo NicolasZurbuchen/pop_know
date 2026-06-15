@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.remote.dto
+package io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -9,6 +9,4 @@ data class CategoryDto(
     val id: Int,
     @SerialName("name")
     val category: String,
-) {
-
-}
+)

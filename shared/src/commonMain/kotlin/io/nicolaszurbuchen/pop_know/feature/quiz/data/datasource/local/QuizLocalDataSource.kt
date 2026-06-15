@@ -1,13 +1,21 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.local
 
-import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.Category
-import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
-import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnsweredQuestionResult
-import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.TriviaQuestion
+import io.nicolaszurbuchen.pop_know.cache.CategoryEntity
+import io.nicolaszurbuchen.pop_know.cache.GetLastGame
 
 interface QuizLocalDataSource {
-    fun saveAnswer(gameId: Long, question: TriviaQuestion, selectedAnswer: String?, status: AnswerStatus)
-    fun getLastGame(): List<AnsweredQuestionResult>
-    fun getCategories(): List<Category>
-    fun saveCategories(categories: List<Category>)
+    fun saveAnswer(
+        gameId: Long,
+        type: String,
+        difficulty: String,
+        categoryId: Long,
+        question: String,
+        correctAnswer: String,
+        incorrectAnswers: List<String>,
+        selectedAnswer: String?,
+        status: String,
+    )
+    fun getLastGame(): List<GetLastGame>
+    fun getCategories(): List<CategoryEntity>
+    fun saveCategories(categories: List<CategoryEntity>)
 }

@@ -1,18 +1,18 @@
-CREATE TABLE Category (
+CREATE TABLE CategoryEntity (
     id INTEGER NOT NULL PRIMARY KEY,
     name TEXT NOT NULL
 );
 
 insertCategory:
-INSERT OR REPLACE INTO Category(id, name)
+INSERT OR REPLACE INTO CategoryEntity(id, name)
 VALUES (?, ?);
 
 getAllCategories:
-SELECT * FROM Category;
+SELECT * FROM CategoryEntity;
 
 getCategoryById:
-SELECT * FROM Category
+SELECT * FROM CategoryEntity
 WHERE id = ?;
 
 deleteAllCategories:
-DELETE FROM Category;
+DELETE FROM CategoryEntity;
