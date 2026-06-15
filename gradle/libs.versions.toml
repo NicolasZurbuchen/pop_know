@@ -25,7 +25,7 @@ ktor = "3.5.0"
 material3 = "1.9.0"
 materialIconsExtended = "1.7.3"
 mvikotlin = "4.4.0"
-navigation = "2.9.2"
+navigation3 = "1.1.1"
 sqlDelight = "2.3.2"
 
 [libraries]
@@ -71,7 +71,7 @@ mvikotlin = { module = "com.arkivanov.mvikotlin:mvikotlin", version.ref = "mviko
 mvikotlin-extensions-coroutines = { module = "com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines", version.ref = "mvikotlin" }
 mvikotlin-main = { module = "com.arkivanov.mvikotlin:mvikotlin-main", version.ref = "mvikotlin" }
 native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation" }
+navigation3-ui = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
 runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqlDelight" }
 
 [plugins]
