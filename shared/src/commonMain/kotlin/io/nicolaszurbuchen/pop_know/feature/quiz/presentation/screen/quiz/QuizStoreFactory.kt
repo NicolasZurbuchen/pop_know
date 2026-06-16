@@ -68,7 +68,10 @@ class QuizStoreFactory(
                 QuizIntent.Retry -> performStartQuiz()
                 QuizIntent.DismissInsertionError -> dispatch(QuizMessage.InsertionError(null))
                 is QuizIntent.ShowQuitDialog -> dispatch(QuizMessage.ToggleQuitDialog(intent.show))
-                QuizIntent.ConfirmQuit -> publish(QuizLabel.NavigateBack)
+                QuizIntent.ConfirmQuit -> {
+                    dispatch(QuizMessage.ToggleQuitDialog(false))
+                    publish(QuizLabel.NavigateBack)
+                }
             }
         }
 
