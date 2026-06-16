@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.nicolaszurbuchen.pop_know.app.design.theme.SpaceGroteskFontFamily
+import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.infra.ui.asString
 
@@ -45,7 +46,7 @@ fun PopKnowPrimaryButton(
     ) {
         Row(
             modifier = if (isFullWidth) Modifier.fillMaxWidth() else Modifier,
-            horizontalArrangement = if (isFullWidth) Arrangement.SpaceBetween else Arrangement.Center,
+            horizontalArrangement = if (isFullWidth) Arrangement.SpaceBetween else Arrangement.spacedBy(MaterialTheme.spacing.md),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(

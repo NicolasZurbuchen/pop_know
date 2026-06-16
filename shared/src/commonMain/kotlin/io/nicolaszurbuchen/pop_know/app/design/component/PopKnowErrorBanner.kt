@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -79,24 +78,19 @@ fun PopKnowErrorBanner(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             onRetry?.let {
-                PopKnowSecondaryButton(
+                PopKnowTextButton(
                     text = UiText.Resource(Res.string.error_retry),
                     onClick = it,
-                    isFullWidth = false,
-                    showArrow = false,
-                    modifier = Modifier.height(40.dp)
+                    contentColor = MaterialTheme.colorScheme.error,
                 )
             }
 
             onDismiss?.let {
-                PopKnowSecondaryButton(
+                PopKnowTextButton(
                     text = UiText.Resource(Res.string.error_dismiss),
                     onClick = it,
-                    isFullWidth = false,
-                    showArrow = false,
-                    modifier = Modifier
-                        .padding(start = MaterialTheme.spacing.sm)
-                        .height(40.dp)
+                    contentColor = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.padding(start = MaterialTheme.spacing.sm)
                 )
             }
         }

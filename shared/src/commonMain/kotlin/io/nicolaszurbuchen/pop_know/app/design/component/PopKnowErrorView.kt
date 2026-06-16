@@ -69,6 +69,7 @@ fun PopKnowErrorView(
         PopKnowPrimaryButton(
             text = UiText.Resource(Res.string.error_retry),
             onClick = onRetry,
+            isFullWidth = false,
         )
     }
 }

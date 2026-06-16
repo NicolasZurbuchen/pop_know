@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.nicolaszurbuchen.pop_know.app.design.theme.SpaceGroteskFontFamily
+import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.infra.ui.asString
 
@@ -41,14 +42,14 @@ fun PopKnowSecondaryButton(
         shape = MaterialTheme.shapes.extraLarge,
         border = BorderStroke(
             width = 1.5.dp,
-            color = MaterialTheme.colorScheme.primary,
+            color = MaterialTheme.colorScheme.onBackground,
         ),
         colors = ButtonDefaults.outlinedButtonColors(
-            contentColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onBackground,
         ),
     ) {
         Row(
-            horizontalArrangement = if (isFullWidth) Arrangement.SpaceBetween else Arrangement.Center,
+            horizontalArrangement = if (isFullWidth) Arrangement.SpaceBetween else Arrangement.spacedBy(MaterialTheme.spacing.md),
             verticalAlignment = Alignment.CenterVertically,
             modifier = if (isFullWidth) Modifier.fillMaxWidth() else Modifier,
         ) {
