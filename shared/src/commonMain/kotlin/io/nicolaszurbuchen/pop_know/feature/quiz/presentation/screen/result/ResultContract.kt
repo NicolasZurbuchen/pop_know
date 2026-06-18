@@ -2,8 +2,8 @@ package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result
 
 import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUiModel
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.toUi
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUiModel
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.toUiModel
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnsweredQuestionResult
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.GameResult
@@ -63,7 +63,7 @@ data class AnsweredQuestionResultUi(
     val selectedAnswer: String?,
     val status: AnswerStatus,
     val categoryName: String,
-    val difficulty: DifficultyUi,
+    val difficulty: DifficultyUiModel,
 )
 
 fun AnsweredQuestionResult.toUi() = AnsweredQuestionResultUi(
@@ -72,5 +72,5 @@ fun AnsweredQuestionResult.toUi() = AnsweredQuestionResultUi(
     selectedAnswer = selectedAnswer,
     status = status,
     categoryName = categoryName,
-    difficulty = difficulty.toUi(),
+    difficulty = difficulty.toUiModel(),
 )

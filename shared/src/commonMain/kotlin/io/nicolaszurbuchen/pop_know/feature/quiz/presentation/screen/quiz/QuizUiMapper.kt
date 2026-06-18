@@ -1,6 +1,6 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz
 
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.toUi
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.toUiModel
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuestionProgress
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuizSession
@@ -60,7 +60,7 @@ private fun QuizSession.toDataUiModel(
     return QuizDataUiModel(
         questionText = question.question,
         categoryText = question.category.category.uppercase(),
-        difficulty = question.difficulty.toUi(),
+        difficulty = question.difficulty.toUiModel(),
         progressText = "${(currentIndex + 1).twoDigits()}/${total.twoDigits()}",
         scoreText = "${scoreValue.totalCorrect}/${scoreValue.totalAnswered}",
         choices = choices,

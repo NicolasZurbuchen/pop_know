@@ -45,7 +45,7 @@ import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowGameColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUiModel
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUiModel
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.infra.ui.asString
 import popknow.shared.generated.resources.Res
@@ -203,9 +203,9 @@ private fun DifficultyRings(perDifficulty: List<StatsDifficultyUiModel>) {
         perDifficulty.asReversed().forEachIndexed { index, diffStats ->
             val radius = size.minDimension / 2 - (index * (strokeWidth + spacing)) - strokeWidth / 2
             val color = when (diffStats.difficulty) {
-                DifficultyUi.EASY -> gameColors.difficultyEasy
-                DifficultyUi.MEDIUM -> gameColors.difficultyMedium
-                DifficultyUi.HARD -> gameColors.difficultyHard
+                DifficultyUiModel.EASY -> gameColors.difficultyEasy
+                DifficultyUiModel.MEDIUM -> gameColors.difficultyMedium
+                DifficultyUiModel.HARD -> gameColors.difficultyHard
             }
             
             // Inactive ring
@@ -232,9 +232,9 @@ private fun DifficultyRings(perDifficulty: List<StatsDifficultyUiModel>) {
 @Composable
 private fun DifficultySummaryRow(stats: StatsDifficultyUiModel) {
     val color = when (stats.difficulty) {
-        DifficultyUi.EASY -> MaterialTheme.popKnowGameColors.difficultyEasy
-        DifficultyUi.MEDIUM -> MaterialTheme.popKnowGameColors.difficultyMedium
-        DifficultyUi.HARD -> MaterialTheme.popKnowGameColors.difficultyHard
+        DifficultyUiModel.EASY -> MaterialTheme.popKnowGameColors.difficultyEasy
+        DifficultyUiModel.MEDIUM -> MaterialTheme.popKnowGameColors.difficultyMedium
+        DifficultyUiModel.HARD -> MaterialTheme.popKnowGameColors.difficultyHard
     }
     val accuracy = (stats.answerStats.accuracy * 100).roundToInt()
     val accuracyColor = when {

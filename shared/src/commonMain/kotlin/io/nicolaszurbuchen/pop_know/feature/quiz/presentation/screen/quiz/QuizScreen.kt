@@ -53,7 +53,7 @@ import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowTopBar
 import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowGameColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUiModel
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 
 @Composable
@@ -406,10 +406,10 @@ private fun ResultBar(
 }
 
 @Composable
-private fun difficultyColor(difficulty: DifficultyUi): Color = when (difficulty) {
-    DifficultyUi.EASY -> MaterialTheme.popKnowGameColors.difficultyEasy
-    DifficultyUi.MEDIUM -> MaterialTheme.popKnowGameColors.difficultyMedium
-    DifficultyUi.HARD -> MaterialTheme.popKnowGameColors.difficultyHard
+private fun difficultyColor(difficulty: DifficultyUiModel): Color = when (difficulty) {
+    DifficultyUiModel.EASY -> MaterialTheme.popKnowGameColors.difficultyEasy
+    DifficultyUiModel.MEDIUM -> MaterialTheme.popKnowGameColors.difficultyMedium
+    DifficultyUiModel.HARD -> MaterialTheme.popKnowGameColors.difficultyHard
 }
 
 @Composable

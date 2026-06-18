@@ -7,7 +7,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import io.nicolaszurbuchen.pop_know.app.design.theme.PopKnowTheme
 import io.nicolaszurbuchen.pop_know.common.error.AppError
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUiModel
 
 class QuizUiModelProvider : PreviewParameterProvider<QuizUiModel> {
     override val values = sequenceOf(
@@ -25,7 +25,7 @@ class QuizUiModelProvider : PreviewParameterProvider<QuizUiModel> {
             quizData = QuizDataUiModel(
                 questionText = "Which of the following is NOT a primary color?",
                 categoryText = "Art",
-                difficulty = DifficultyUi.EASY,
+                difficulty = DifficultyUiModel.EASY,
                 progressText = "01/10",
                 scoreText = "0",
                 choices = listOf(
@@ -51,7 +51,7 @@ class QuizUiModelProvider : PreviewParameterProvider<QuizUiModel> {
             quizData = QuizDataUiModel(
                 questionText = "Which of the following is NOT a primary color?",
                 categoryText = "Art",
-                difficulty = DifficultyUi.HARD,
+                difficulty = DifficultyUiModel.HARD,
                 progressText = "01/10",
                 scoreText = "0",
                 choices = listOf(
@@ -77,7 +77,7 @@ class QuizUiModelProvider : PreviewParameterProvider<QuizUiModel> {
             quizData = QuizDataUiModel(
                 questionText = "Which of the following is NOT a primary color?",
                 categoryText = "Art",
-                difficulty = DifficultyUi.EASY,
+                difficulty = DifficultyUiModel.EASY,
                 progressText = "01/10",
                 scoreText = "0",
                 choices = listOf(
@@ -103,7 +103,7 @@ class QuizUiModelProvider : PreviewParameterProvider<QuizUiModel> {
             quizData = QuizDataUiModel(
                 questionText = "The sky is green.",
                 categoryText = "Science",
-                difficulty = DifficultyUi.EASY,
+                difficulty = DifficultyUiModel.EASY,
                 progressText = "02/10",
                 scoreText = "0/1",
                 choices = listOf(
@@ -127,7 +127,7 @@ class QuizUiModelProvider : PreviewParameterProvider<QuizUiModel> {
             quizData = QuizDataUiModel(
                 questionText = "What is the capital of France?",
                 categoryText = "Geography",
-                difficulty = DifficultyUi.MEDIUM,
+                difficulty = DifficultyUiModel.MEDIUM,
                 progressText = "03/10",
                 scoreText = "1/2",
                 choices = listOf(

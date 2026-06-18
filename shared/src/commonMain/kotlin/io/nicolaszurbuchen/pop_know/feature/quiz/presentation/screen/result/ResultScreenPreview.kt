@@ -8,7 +8,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import io.nicolaszurbuchen.pop_know.app.design.theme.PopKnowTheme
 import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUiModel
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUiModel
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 
 class ResultStateProvider : PreviewParameterProvider<ResultState> {
@@ -17,11 +17,11 @@ class ResultStateProvider : PreviewParameterProvider<ResultState> {
         ResultState(
             content = GameResultUi(
                 questions = listOf(
-                    AnsweredQuestionResultUi("Q1", "A1", "A1", AnswerStatus.CORRECT, "Cat", DifficultyUi.EASY),
-                    AnsweredQuestionResultUi("Q2", "A2", "W2", AnswerStatus.INCORRECT, "Cat", DifficultyUi.EASY),
-                    AnsweredQuestionResultUi("Q3", "A3", null, AnswerStatus.TIMEOUT, "Cat", DifficultyUi.EASY),
-                    AnsweredQuestionResultUi("Q4", "A4", "A4", AnswerStatus.CORRECT, "Cat", DifficultyUi.EASY),
-                    AnsweredQuestionResultUi("Q5", "A5", "A5", AnswerStatus.CORRECT, "Cat", DifficultyUi.EASY),
+                    AnsweredQuestionResultUi("Q1", "A1", "A1", AnswerStatus.CORRECT, "Cat", DifficultyUiModel.EASY),
+                    AnsweredQuestionResultUi("Q2", "A2", "W2", AnswerStatus.INCORRECT, "Cat", DifficultyUiModel.EASY),
+                    AnsweredQuestionResultUi("Q3", "A3", null, AnswerStatus.TIMEOUT, "Cat", DifficultyUiModel.EASY),
+                    AnsweredQuestionResultUi("Q4", "A4", "A4", AnswerStatus.CORRECT, "Cat", DifficultyUiModel.EASY),
+                    AnsweredQuestionResultUi("Q5", "A5", "A5", AnswerStatus.CORRECT, "Cat", DifficultyUiModel.EASY),
                 ),
                 correctCount = 3,
                 incorrectCount = 1,

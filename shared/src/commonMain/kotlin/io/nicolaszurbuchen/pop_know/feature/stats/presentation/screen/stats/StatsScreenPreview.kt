@@ -8,8 +8,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import io.nicolaszurbuchen.pop_know.app.design.theme.PopKnowTheme
 import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUiModel
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.CategoryUi
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.CategoryUiModel
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUiModel
 
 class StatsUiModelProvider : PreviewParameterProvider<StatsUiModel> {
     override val values = sequenceOf(
@@ -20,14 +20,14 @@ class StatsUiModelProvider : PreviewParameterProvider<StatsUiModel> {
             stats = StatsDataUiModel(
                 summary = AnswerStatsUiModel(100, 75, 0.75f),
                 perDifficulty = listOf(
-                    StatsDifficultyUiModel(DifficultyUi.EASY, AnswerStatsUiModel(40, 35, 0.875f)),
-                    StatsDifficultyUiModel(DifficultyUi.MEDIUM, AnswerStatsUiModel(40, 30, 0.75f)),
-                    StatsDifficultyUiModel(DifficultyUi.HARD, AnswerStatsUiModel(20, 10, 0.5f)),
+                    StatsDifficultyUiModel(DifficultyUiModel.EASY, AnswerStatsUiModel(40, 35, 0.875f)),
+                    StatsDifficultyUiModel(DifficultyUiModel.MEDIUM, AnswerStatsUiModel(40, 30, 0.75f)),
+                    StatsDifficultyUiModel(DifficultyUiModel.HARD, AnswerStatsUiModel(20, 10, 0.5f)),
                 ),
                 perCategory = listOf(
-                    StatsCategoryUiModel(CategoryUi(1, "General Knowledge"), AnswerStatsUiModel(30, 25, 0.83f)),
-                    StatsCategoryUiModel(CategoryUi(2, "Science"), AnswerStatsUiModel(20, 15, 0.75f)),
-                    StatsCategoryUiModel(CategoryUi(3, "History"), AnswerStatsUiModel(50, 35, 0.7f)),
+                    StatsCategoryUiModel(CategoryUiModel(1, "General Knowledge"), AnswerStatsUiModel(30, 25, 0.83f)),
+                    StatsCategoryUiModel(CategoryUiModel(2, "Science"), AnswerStatsUiModel(20, 15, 0.75f)),
+                    StatsCategoryUiModel(CategoryUiModel(3, "History"), AnswerStatsUiModel(50, 35, 0.7f)),
                 ),
             )
         ),
