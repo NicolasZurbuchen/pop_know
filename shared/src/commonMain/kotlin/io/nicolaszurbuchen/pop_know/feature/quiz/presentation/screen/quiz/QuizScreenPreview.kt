@@ -8,23 +8,31 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import io.nicolaszurbuchen.pop_know.app.design.theme.PopKnowTheme
 import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
-import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 
-class QuizStateProvider : PreviewParameterProvider<QuizState> {
+class QuizUiModelProvider : PreviewParameterProvider<QuizUiModel> {
     override val values = sequenceOf(
-        QuizState(isLoading = true),
-        QuizState(
-            content = QuizUi(
+        QuizUiModel(
+            isLoading = true,
+            initialError = null,
+            insertionError = null,
+            quizData = null,
+            isQuitDialogOpen = false
+        ),
+        QuizUiModel(
+            isLoading = false,
+            initialError = null,
+            insertionError = null,
+            quizData = QuizDataUiModel(
                 questionText = "Which of the following is NOT a primary color?",
                 categoryText = "Art",
                 difficulty = DifficultyUi.EASY,
                 progressText = "01/10",
                 scoreText = "0",
                 choices = listOf(
-                    QuizChoiceUi("A", "Red", null),
-                    QuizChoiceUi("B", "Blue", null),
-                    QuizChoiceUi("C", "Green", null),
-                    QuizChoiceUi("D", "Yellow", null),
+                    QuizChoiceUiModel("A", "Red", null),
+                    QuizChoiceUiModel("B", "Blue", null),
+                    QuizChoiceUiModel("C", "Green", null),
+                    QuizChoiceUiModel("D", "Yellow", null),
                 ),
                 resultChoice = null,
                 totalQuestions = 10,
@@ -32,44 +40,51 @@ class QuizStateProvider : PreviewParameterProvider<QuizState> {
                 isAnswered = false,
                 isLastQuestion = false,
                 timerSeconds = 15,
-                maxTimerSeconds = 30,
-            )
+                maxTimerSeconds = 15,
+            ),
+            isQuitDialogOpen = false
         ),
-        QuizState(
-            content = QuizUi(
+        QuizUiModel(
+            isLoading = false,
+            initialError = null,
+            insertionError = AppError.Database.InsertFailed(Exception("Failed to save answer")),
+            quizData = QuizDataUiModel(
                 questionText = "Which of the following is NOT a primary color?",
                 categoryText = "Art",
                 difficulty = DifficultyUi.HARD,
                 progressText = "01/10",
                 scoreText = "0",
                 choices = listOf(
-                    QuizChoiceUi("A", "Red", null),
-                    QuizChoiceUi("B", "Blue", null),
-                    QuizChoiceUi("C", "Green", AnswerStatus.CORRECT),
-                    QuizChoiceUi("D", "Yellow", null),
+                    QuizChoiceUiModel("A", "Red", null),
+                    QuizChoiceUiModel("B", "Blue", null),
+                    QuizChoiceUiModel("C", "Green", QuizAnswerStatusUi.CORRECT),
+                    QuizChoiceUiModel("D", "Yellow", null),
                 ),
-                resultChoice = QuizChoiceUi("C", "Green", AnswerStatus.CORRECT),
+                resultChoice = QuizChoiceUiModel("C", "Green", QuizAnswerStatusUi.CORRECT),
                 totalQuestions = 10,
                 currentIndex = 0,
                 isAnswered = true,
                 isLastQuestion = false,
                 timerSeconds = 10,
-                maxTimerSeconds = 30,
+                maxTimerSeconds = 15,
             ),
-            insertionError = AppError.Database.InsertFailed(Exception("Failed to save answer")),
+            isQuitDialogOpen = false,
         ),
-        QuizState(
-            content = QuizUi(
+        QuizUiModel(
+            isLoading = false,
+            initialError = null,
+            insertionError = null,
+            quizData = QuizDataUiModel(
                 questionText = "Which of the following is NOT a primary color?",
                 categoryText = "Art",
                 difficulty = DifficultyUi.EASY,
                 progressText = "01/10",
                 scoreText = "0",
                 choices = listOf(
-                    QuizChoiceUi("A", "Red", null),
-                    QuizChoiceUi("B", "Blue", null),
-                    QuizChoiceUi("C", "Green", null),
-                    QuizChoiceUi("D", "Yellow", null),
+                    QuizChoiceUiModel("A", "Red", null),
+                    QuizChoiceUiModel("B", "Blue", null),
+                    QuizChoiceUiModel("C", "Green", null),
+                    QuizChoiceUiModel("D", "Yellow", null),
                 ),
                 resultChoice = null,
                 totalQuestions = 10,
@@ -77,53 +92,67 @@ class QuizStateProvider : PreviewParameterProvider<QuizState> {
                 isAnswered = false,
                 isLastQuestion = false,
                 timerSeconds = 15,
-                maxTimerSeconds = 30,
+                maxTimerSeconds = 15,
             ),
             isQuitDialogOpen = true,
         ),
-        QuizState(
-            content = QuizUi(
+        QuizUiModel(
+            isLoading = false,
+            initialError = null,
+            insertionError = null,
+            quizData = QuizDataUiModel(
                 questionText = "The sky is green.",
                 categoryText = "Science",
                 difficulty = DifficultyUi.EASY,
                 progressText = "02/10",
-                scoreText = "100",
+                scoreText = "0/1",
                 choices = listOf(
-                    QuizChoiceUi("A", "True", AnswerStatus.INCORRECT),
-                    QuizChoiceUi("B", "False", AnswerStatus.CORRECT),
+                    QuizChoiceUiModel("A", "True", QuizAnswerStatusUi.INCORRECT),
+                    QuizChoiceUiModel("B", "False", QuizAnswerStatusUi.CORRECT),
                 ),
-                resultChoice = QuizChoiceUi("A", "True", AnswerStatus.INCORRECT),
+                resultChoice = QuizChoiceUiModel("A", "True", QuizAnswerStatusUi.INCORRECT),
                 totalQuestions = 10,
                 currentIndex = 1,
                 isAnswered = true,
                 isLastQuestion = false,
                 timerSeconds = 12,
-                maxTimerSeconds = 30,
-            )
+                maxTimerSeconds = 15,
+            ),
+            isQuitDialogOpen = false
         ),
-        QuizState(
-            content = QuizUi(
+        QuizUiModel(
+            isLoading = false,
+            initialError = null,
+            insertionError = null,
+            quizData = QuizDataUiModel(
                 questionText = "What is the capital of France?",
                 categoryText = "Geography",
                 difficulty = DifficultyUi.MEDIUM,
                 progressText = "03/10",
-                scoreText = "100",
+                scoreText = "1/2",
                 choices = listOf(
-                    QuizChoiceUi("A", "Berlin", null),
-                    QuizChoiceUi("B", "Paris", AnswerStatus.CORRECT),
-                    QuizChoiceUi("C", "London", null),
-                    QuizChoiceUi("D", "Madrid", null),
+                    QuizChoiceUiModel("A", "Berlin", null),
+                    QuizChoiceUiModel("B", "Paris", QuizAnswerStatusUi.CORRECT),
+                    QuizChoiceUiModel("C", "London", null),
+                    QuizChoiceUiModel("D", "Madrid", null),
                 ),
-                resultChoice = QuizChoiceUi("", "", AnswerStatus.TIMEOUT),
+                resultChoice = QuizChoiceUiModel("", "", QuizAnswerStatusUi.TIMEOUT),
                 totalQuestions = 10,
                 currentIndex = 2,
                 isAnswered = true,
                 isLastQuestion = false,
                 timerSeconds = 0,
-                maxTimerSeconds = 30,
-            )
+                maxTimerSeconds = 15,
+            ),
+            isQuitDialogOpen = false
         ),
-        QuizState(initialError = AppError.Network.Unavailable),
+        QuizUiModel(
+            isLoading = false,
+            initialError = AppError.Network.Unavailable,
+            insertionError = null,
+            quizData = null,
+            isQuitDialogOpen = false
+        ),
     )
 }
 
@@ -131,7 +160,7 @@ class QuizStateProvider : PreviewParameterProvider<QuizState> {
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES, name = "Dark Mode")
 @Composable
 fun QuizScreenPreview(
-    @PreviewParameter(QuizStateProvider::class) state: QuizState,
+    @PreviewParameter(QuizUiModelProvider::class) state: QuizUiModel,
 ) {
     PopKnowTheme {
         QuizScreen(

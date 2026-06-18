@@ -42,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
@@ -52,12 +53,12 @@ import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowTopBar
 import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowGameColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
-import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 
 @Composable
 fun QuizScreen(
-    state: QuizState,
+    state: QuizUiModel,
     onSelectAnswer: (String) -> Unit,
     onNextClick: () -> Unit,
     onSeeResultClick: () -> Unit,
@@ -89,7 +90,7 @@ fun QuizScreen(
                 onRetry = onRetryClick,
             )
 
-            state.content != null -> Column {
+            state.quizData != null -> Column {
                 PopKnowTopBar(
                     left = UiText.Raw("Quit"),
                     center = UiText.Raw("On Air"),
@@ -105,7 +106,7 @@ fun QuizScreen(
                     )
                 }
                 SessionContent(
-                    ui = state.content,
+                    ui = state.quizData,
                     onSelectAnswer = onSelectAnswer,
                     onNextClick = onNextClick,
                     onSeeResultClick = onSeeResultClick,
@@ -117,12 +118,12 @@ fun QuizScreen(
 
 @Composable
 private fun SessionContent(
-    ui: QuizUi,
+    ui: QuizDataUiModel,
     onSelectAnswer: (String) -> Unit,
     onNextClick: () -> Unit,
     onSeeResultClick: () -> Unit,
 ) {
-    val dotColor = ui.difficultyColor()
+    val dotColor = difficultyColor(ui.difficulty)
 
     Column(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -174,7 +175,7 @@ private fun SessionContent(
                 }
                 Spacer(Modifier.width(MaterialTheme.spacing.xs))
                 Text(
-                    text = "${ui.difficultyName()} · ${ui.categoryText}",
+                    text = "${ui.difficulty.name} · ${ui.categoryText}",
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.secondary,
                 )
@@ -257,19 +258,14 @@ private fun Timer(seconds: Int, maxSeconds: Int) {
 
 @Composable
 private fun Answers(
-    choice: QuizChoiceUi,
+    choice: QuizChoiceUiModel,
     isAnswered: Boolean,
     onSelect: () -> Unit,
 ) {
-    val isHighlighted = choice.answerStatus != null
-    val backgroundColor = choice.color()
+    val isHighlighted = choice.status != null
+    val backgroundColor = choice.backgroundColor()
     val showBorder = !isHighlighted
-    val contentColor = when (choice.answerStatus) {
-        AnswerStatus.CORRECT -> MaterialTheme.popKnowGameColors.onCorrect
-        AnswerStatus.INCORRECT -> MaterialTheme.popKnowGameColors.onWrong
-        AnswerStatus.TIMEOUT -> MaterialTheme.popKnowGameColors.onTimeout
-        null -> MaterialTheme.colorScheme.onBackground
-    }
+    val contentColor = choice.contentColor()
 
     Row(
         modifier = Modifier
@@ -310,9 +306,9 @@ private fun Answers(
                 color = contentColor,
             )
         }
-        if (choice.showCheckmark) {
+        if (choice.status == QuizAnswerStatusUi.CORRECT) {
             Icon(Icons.Default.Check, contentDescription = null, tint = contentColor)
-        } else if (choice.showCloseIcon) {
+        } else if (choice.status == QuizAnswerStatusUi.INCORRECT) {
             Icon(Icons.Default.Close, contentDescription = null, tint = contentColor)
         }
     }
@@ -352,18 +348,13 @@ private fun StoryBar(
 
 @Composable
 private fun ResultBar(
-    resultChoice: QuizChoiceUi,
+    resultChoice: QuizChoiceUiModel,
     isLastQuestion: Boolean,
     onNextClick: () -> Unit,
     onSeeResultClick: () -> Unit,
 ) {
-    val barColor = resultChoice.color()
-    val barContentColor = when (resultChoice.answerStatus) {
-        AnswerStatus.CORRECT -> MaterialTheme.popKnowGameColors.onCorrect
-        AnswerStatus.INCORRECT -> MaterialTheme.popKnowGameColors.onWrong
-        AnswerStatus.TIMEOUT -> MaterialTheme.popKnowGameColors.onTimeout
-        null -> MaterialTheme.colorScheme.onBackground
-    }
+    val barColor = resultChoice.backgroundColor()
+    val barContentColor = resultChoice.contentColor()
 
     Row(
         modifier = Modifier
@@ -412,6 +403,43 @@ private fun ResultBar(
             }
         }
     }
+}
+
+@Composable
+private fun difficultyColor(difficulty: DifficultyUi): Color = when (difficulty) {
+    DifficultyUi.EASY -> MaterialTheme.popKnowGameColors.difficultyEasy
+    DifficultyUi.MEDIUM -> MaterialTheme.popKnowGameColors.difficultyMedium
+    DifficultyUi.HARD -> MaterialTheme.popKnowGameColors.difficultyHard
+}
+
+@Composable
+private fun QuizChoiceUiModel.backgroundColor(): Color = when (status) {
+    QuizAnswerStatusUi.CORRECT -> MaterialTheme.popKnowGameColors.correct
+    QuizAnswerStatusUi.INCORRECT -> MaterialTheme.popKnowGameColors.wrong
+    QuizAnswerStatusUi.TIMEOUT -> MaterialTheme.popKnowGameColors.timeout
+    null -> MaterialTheme.colorScheme.background
+}
+
+@Composable
+private fun QuizChoiceUiModel.contentColor(): Color = when (status) {
+    QuizAnswerStatusUi.CORRECT -> MaterialTheme.popKnowGameColors.onCorrect
+    QuizAnswerStatusUi.INCORRECT -> MaterialTheme.popKnowGameColors.onWrong
+    QuizAnswerStatusUi.TIMEOUT -> MaterialTheme.popKnowGameColors.onTimeout
+    null -> MaterialTheme.colorScheme.onBackground
+}
+
+private fun QuizChoiceUiModel.label(): String = when (status) {
+    QuizAnswerStatusUi.CORRECT -> "· POINTS WON"
+    QuizAnswerStatusUi.INCORRECT -> "· POINTS LOST"
+    QuizAnswerStatusUi.TIMEOUT -> "· TIMED OUT"
+    null -> ""
+}
+
+private fun QuizChoiceUiModel.headline(): String = when (status) {
+    QuizAnswerStatusUi.CORRECT -> "NICE."
+    QuizAnswerStatusUi.INCORRECT -> "NOPE."
+    QuizAnswerStatusUi.TIMEOUT -> "SLOW."
+    null -> ""
 }
 
 @Composable

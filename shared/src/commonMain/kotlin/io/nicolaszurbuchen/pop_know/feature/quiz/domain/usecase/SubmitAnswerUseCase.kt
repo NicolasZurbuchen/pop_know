@@ -1,5 +1,7 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase
 
+import io.nicolaszurbuchen.pop_know.common.error.AppError
+import io.nicolaszurbuchen.pop_know.common.error.AppException
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuestionProgress
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuizSession
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.repository.QuizRepository
@@ -7,21 +9,21 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.domain.repository.QuizRepositor
 class SubmitAnswerUseCase(
     private val repository: QuizRepository,
 ) {
-    suspend operator fun invoke(session: QuizSession, answer: String?) {
-        if (answer != null) session.submitAnswer(answer) else session.timeout()
+    suspend operator fun invoke(session: QuizSession, answer: String?): QuizSession {
+        val nextSession = session.submitAnswer(answer)
+        val answered = nextSession.currentQuestion as? QuestionProgress.Answered ?: return nextSession
 
-        val allAnswered = session.state.value.questionStates.all { it is QuestionProgress.Answered }
-        if (allAnswered) {
-            session.state.value.questionStates
-                .filterIsInstance<QuestionProgress.Answered>()
-                .forEach { progress ->
-                    repository.saveAnswer(
-                        gameId = session.gameId,
-                        question = progress.question,
-                        selectedAnswer = progress.selectedAnswer,
-                        status = progress.status,
-                    )
-                }
+        try {
+            repository.saveAnswer(
+                gameId = nextSession.gameId,
+                question = answered.question,
+                selectedAnswer = answered.selectedAnswer,
+                status = answered.status,
+            )
+        } catch (e: Exception) {
+            throw AppException(AppError.Database.InsertFailed(e))
         }
+
+        return nextSession
     }
 }

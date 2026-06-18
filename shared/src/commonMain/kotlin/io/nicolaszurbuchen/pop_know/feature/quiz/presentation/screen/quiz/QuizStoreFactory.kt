@@ -9,16 +9,10 @@ import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.common.error.AppException
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuestionProgress
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuizSession
-import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.AdvanceQuestionUseCase
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.StartQuizUseCase
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.SubmitAnswerUseCase
-import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.mapper.QuizUiMapper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 interface QuizStore : Store<QuizIntent, QuizState, QuizLabel>
@@ -27,7 +21,6 @@ class QuizStoreFactory(
     private val storeFactory: StoreFactory,
     private val startQuiz: StartQuizUseCase,
     private val submitAnswer: SubmitAnswerUseCase,
-    private val advanceQuestion: AdvanceQuestionUseCase,
 ) {
     fun create(gameId: Long): QuizStore =
         object :
@@ -49,9 +42,6 @@ class QuizStoreFactory(
     private inner class ExecutorImpl(private val gameId: Long) :
         CoroutineExecutor<QuizIntent, QuizAction, QuizState, QuizMessage, QuizLabel>() {
 
-        private var session: QuizSession? = null
-        private var shuffledAnswers: List<List<String>> = emptyList()
-        private val timerSeconds = MutableStateFlow(15)
         private var timerJob: Job? = null
 
         override fun executeAction(action: QuizAction) {
@@ -61,9 +51,10 @@ class QuizStoreFactory(
         }
 
         override fun executeIntent(intent: QuizIntent) {
+            val session = state().session
             when (intent) {
-                is QuizIntent.SelectAnswer -> handleSelectAnswer(intent.answer)
-                QuizIntent.Next -> handleNext()
+                is QuizIntent.SelectAnswer -> handleSelectAnswer(session, intent.answer)
+                QuizIntent.Next -> handleNext(session)
                 QuizIntent.SeeResult -> handleSeeResult()
                 QuizIntent.Retry -> performStartQuiz()
                 QuizIntent.DismissInsertionError -> dispatch(QuizMessage.InsertionError(null))
@@ -76,16 +67,15 @@ class QuizStoreFactory(
         }
 
         private fun performStartQuiz() {
-            dispatch(QuizMessage.QuizStarted)
+            dispatch(QuizMessage.QuizLoading)
             scope.launch {
                 try {
                     val quiz = startQuiz(gameId)
-                    session = quiz
-                    shuffledAnswers = quiz.state.value.questionStates.map { progress ->
+                    val shuffled = quiz.questionStates.map { progress ->
                         val question = (progress as QuestionProgress.Unanswered).question
                         (question.incorrectAnswers + question.correctAnswer).shuffled()
                     }
-                    observeSession(quiz)
+                    dispatch(QuizMessage.QuizLoaded(quiz, shuffled))
                     startTimer()
                 } catch (e: Exception) {
                     val appError = when (e) {
@@ -97,30 +87,27 @@ class QuizStoreFactory(
             }
         }
 
-        private fun observeSession(quiz: QuizSession) {
-            combine(quiz.state, timerSeconds) { sessionState, seconds ->
-                QuizUiMapper.map(sessionState, seconds, shuffledAnswers)
-            }.onEach { ui ->
-                dispatch(QuizMessage.QuizDataLoaded(ui))
-            }.launchIn(scope)
-        }
+        private fun handleSelectAnswer(session: QuizSession?, answer: String?) {
+            if (session == null) return
+            if (session.currentQuestion is QuestionProgress.Answered) return
 
-        private fun handleSelectAnswer(answer: String) {
-            val quiz = session ?: return
-            if (state().content?.isAnswered == true) return
             timerJob?.cancel()
             scope.launch {
                 try {
-                    submitAnswer(quiz, answer)
+                    val updatedSession = submitAnswer(session, answer)
+                    dispatch(QuizMessage.SessionUpdated(updatedSession))
+                } catch (e: AppException) {
+                    dispatch(QuizMessage.InsertionError(e.error))
                 } catch (e: Exception) {
                     dispatch(QuizMessage.InsertionError(AppError.Database.InsertFailed(e)))
                 }
             }
         }
 
-        private fun handleNext() {
-            val quiz = session ?: return
-            advanceQuestion(quiz)
+        private fun handleNext(session: QuizSession?) {
+            if (session == null) return
+            val updatedSession = session.advance()
+            dispatch(QuizMessage.SessionUpdated(updatedSession))
             startTimer()
         }
 
@@ -131,18 +118,14 @@ class QuizStoreFactory(
 
         private fun startTimer() {
             timerJob?.cancel()
-            timerSeconds.value = 15
+            dispatch(QuizMessage.TimerTick(15))
             timerJob = scope.launch {
                 for (remaining in 14 downTo 0) {
                     delay(1000)
-                    if (state().content?.isAnswered == true) return@launch
-                    timerSeconds.value = remaining
+                    dispatch(QuizMessage.TimerTick(remaining))
                 }
                 delay(1000)
-                val quiz = session ?: return@launch
-                if (state().content?.isAnswered == false) {
-                    submitAnswer(quiz, null)
-                }
+                handleSelectAnswer(state().session, null)
             }
         }
     }
@@ -150,10 +133,21 @@ class QuizStoreFactory(
     private object ReducerImpl : Reducer<QuizState, QuizMessage> {
         override fun QuizState.reduce(msg: QuizMessage): QuizState =
             when (msg) {
-                is QuizMessage.QuizDataLoaded -> copy(
-                    isLoading = false,
-                    content = msg.content,
+                QuizMessage.QuizLoading -> copy(
+                    isLoading = true,
                     initialError = null,
+                )
+                is QuizMessage.QuizLoaded -> copy(
+                    isLoading = false,
+                    session = msg.session,
+                    shuffledAnswers = msg.shuffledAnswers,
+                    timerSeconds = 15,
+                )
+                is QuizMessage.SessionUpdated -> copy(
+                    session = msg.session,
+                )
+                is QuizMessage.TimerTick -> copy(
+                    timerSeconds = msg.secondsRemaining,
                 )
                 is QuizMessage.ErrorOccurred -> copy(
                     isLoading = false,
@@ -165,7 +159,6 @@ class QuizStoreFactory(
                 is QuizMessage.ToggleQuitDialog -> copy(
                     isQuitDialogOpen = msg.show,
                 )
-                QuizMessage.QuizStarted -> copy(isLoading = true, initialError = null)
             }
     }
 }

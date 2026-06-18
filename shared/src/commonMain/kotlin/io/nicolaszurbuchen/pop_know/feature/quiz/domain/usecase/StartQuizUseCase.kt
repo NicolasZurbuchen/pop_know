@@ -1,5 +1,6 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase
 
+import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuestionProgress
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuizSession
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.repository.QuizRepository
 
@@ -8,6 +9,9 @@ class StartQuizUseCase(
 ) {
     suspend operator fun invoke(gameId: Long): QuizSession {
         val questions = repository.fetchQuestions(amount = 10)
-        return QuizSession(gameId = gameId, questions = questions)
+        return QuizSession(
+            gameId = gameId,
+            questionStates = questions.map { QuestionProgress.Unanswered(it) }
+        )
     }
 }

@@ -20,7 +20,7 @@ fun QuizRoute(
     val onNavigateToResultUpdated by rememberUpdatedState(onNavigateToResult)
     val onNavigateBackUpdated by rememberUpdatedState(onNavigateBack)
 
-    BackHandler(enabled = state.content != null) {
+    BackHandler(enabled = state.quizData != null) {
         viewModel.onIntent(QuizIntent.ShowQuitDialog(true))
     }
 

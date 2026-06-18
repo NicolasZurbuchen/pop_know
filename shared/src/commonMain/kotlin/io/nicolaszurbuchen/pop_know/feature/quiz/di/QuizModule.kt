@@ -8,7 +8,6 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.QuizRemo
 import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.mapper.QuizRemoteMapper
 import io.nicolaszurbuchen.pop_know.feature.quiz.data.repository.QuizRepositoryImpl
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.repository.QuizRepository
-import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.AdvanceQuestionUseCase
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.GetLastGameResultUseCase
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.StartQuizUseCase
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.SubmitAnswerUseCase
@@ -27,7 +26,6 @@ val quizModule = module {
     single<QuizRepository> { QuizRepositoryImpl(get(), get(), get(), get()) }
     factoryOf(::StartQuizUseCase)
     factoryOf(::SubmitAnswerUseCase)
-    factoryOf(::AdvanceQuestionUseCase)
     factoryOf(::GetLastGameResultUseCase)
     factoryOf(::QuizStoreFactory)
     factoryOf(::ResultStoreFactory)

@@ -1,11 +1,15 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 
 class QuizViewModel(
     gameId: Long,
@@ -14,7 +18,9 @@ class QuizViewModel(
     private val store = factory.create(gameId)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val state: StateFlow<QuizState> = store.stateFlow
+    val state: StateFlow<QuizUiModel> = store.stateFlow
+        .map { it.toUiModel() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), QuizState().toUiModel())
 
     val labels: Flow<QuizLabel> = store.labels
 

@@ -1,60 +1,56 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.domain.model
 
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.AnswerStats
 
-class QuizSession(
+data class QuizSession(
     val gameId: Long,
-    questions: List<TriviaQuestion>,
+    val questionStates: List<QuestionProgress>,
+    val currentIndex: Int = 0,
 ) {
-    private val _state = MutableStateFlow(
-        QuizSessionState(questionStates = questions.map { QuestionProgress.Unanswered(it) })
-    )
-    val state: StateFlow<QuizSessionState> = _state.asStateFlow()
+    val currentQuestion: QuestionProgress
+        get() = questionStates[currentIndex]
 
-    fun submitAnswer(answer: String) {
-        _state.update { current ->
-            val progress = current.questionStates[current.currentIndex] as? QuestionProgress.Unanswered
-                ?: return
-            val status = if (answer == progress.question.correctAnswer) AnswerStatus.CORRECT else AnswerStatus.INCORRECT
-            current.copy(
-                questionStates = current.questionStates.toMutableList().also {
-                    it[current.currentIndex] = QuestionProgress.Answered(
-                        question = progress.question,
-                        selectedAnswer = answer,
-                        status = status,
-                    )
-                }
+    val score: AnswerStats
+        get() {
+            val answered = questionStates.filterIsInstance<QuestionProgress.Answered>()
+            val correct = answered.count { it.status == AnswerStatus.CORRECT }
+            return AnswerStats(
+                totalAnswered = answered.size,
+                totalCorrect = correct,
+                accuracy = if (answered.isEmpty()) 0f else correct / answered.size.toFloat(),
             )
         }
-    }
 
-    fun timeout() {
-        _state.update { current ->
-            val progress = current.questionStates[current.currentIndex] as? QuestionProgress.Unanswered
-                ?: return
-            current.copy(
-                questionStates = current.questionStates.toMutableList().also {
-                    it[current.currentIndex] = QuestionProgress.Answered(
-                        question = progress.question,
-                        selectedAnswer = null,
-                        status = AnswerStatus.TIMEOUT,
-                    )
-                }
+    fun submitAnswer(answer: String?): QuizSession {
+        val progress = questionStates.getOrNull(currentIndex) as? QuestionProgress.Unanswered
+            ?: return this
+
+        val status = when (answer) {
+            null -> AnswerStatus.TIMEOUT
+            progress.question.correctAnswer -> AnswerStatus.CORRECT
+            else -> AnswerStatus.INCORRECT
+        }
+
+        val updatedStates = questionStates.toMutableList().also {
+            it[currentIndex] = QuestionProgress.Answered(
+                question = progress.question,
+                selectedAnswer = answer,
+                status = status,
             )
         }
+        return copy(questionStates = updatedStates)
     }
 
-    fun advance() {
-        _state.update { current ->
-            val answered = current.questionStates[current.currentIndex] as? QuestionProgress.Answered
-                ?: return
-            val updated = current.questionStates.toMutableList().also {
-                it[current.currentIndex] = answered.copy(advancedToNext = true)
-            }
-            current.copy(questionStates = updated, currentIndex = current.currentIndex + 1)
+    fun advance(): QuizSession {
+        val answered = questionStates.getOrNull(currentIndex) as? QuestionProgress.Answered
+            ?: return this
+
+        val updatedStates = questionStates.toMutableList().also {
+            it[currentIndex] = answered.copy(advancedToNext = true)
         }
+        return copy(
+            questionStates = updatedStates,
+            currentIndex = currentIndex + 1
+        )
     }
 }
