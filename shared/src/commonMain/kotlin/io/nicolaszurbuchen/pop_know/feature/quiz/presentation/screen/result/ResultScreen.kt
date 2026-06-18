@@ -64,7 +64,7 @@ import kotlin.math.roundToInt
 
 @Composable
 fun ResultScreen(
-    state: ResultState,
+    state: ResultUiModel,
     onNavigateHomeClick: () -> Unit,
     onPlayAgainClick: () -> Unit,
     onViewStatsClick: () -> Unit,
@@ -88,6 +88,9 @@ fun ResultScreen(
             when {
                 state.isLoading -> Skeleton()
                 state.error != null -> PopKnowErrorView(
+                    title = state.error.title,
+                    subtitle = state.error.subtitle,
+                    icon = state.error.icon,
                     onRetry = onRetryClick,
                 )
                 state.content == null -> Text(
@@ -110,7 +113,7 @@ fun ResultScreen(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun Content(
-    result: GameResultUi,
+    result: GameResultUiModel,
 ) {
     Column(
         modifier = Modifier

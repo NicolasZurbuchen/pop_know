@@ -1,36 +1,50 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Storage
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import io.nicolaszurbuchen.pop_know.app.design.theme.PopKnowTheme
-import io.nicolaszurbuchen.pop_know.common.error.AppError
+import io.nicolaszurbuchen.pop_know.common.error.AppErrorUiModel
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.AnswerStatsUiModel
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.DifficultyUiModel
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
+import io.nicolaszurbuchen.pop_know.infra.ui.UiText
+import popknow.shared.generated.resources.Res
+import popknow.shared.generated.resources.img_error_database
 
-class ResultStateProvider : PreviewParameterProvider<ResultState> {
+class ResultUiModelProvider : PreviewParameterProvider<ResultUiModel> {
     override val values = sequenceOf(
-        ResultState(isLoading = true),
-        ResultState(
-            content = GameResultUi(
+        ResultUiModel(isLoading = true, error = null, content = null),
+        ResultUiModel(
+            isLoading = false,
+            error = null,
+            content = GameResultUiModel(
                 questions = listOf(
-                    AnsweredQuestionResultUi("Q1", "A1", "A1", AnswerStatus.CORRECT, "Cat", DifficultyUiModel.EASY),
-                    AnsweredQuestionResultUi("Q2", "A2", "W2", AnswerStatus.INCORRECT, "Cat", DifficultyUiModel.EASY),
-                    AnsweredQuestionResultUi("Q3", "A3", null, AnswerStatus.TIMEOUT, "Cat", DifficultyUiModel.EASY),
-                    AnsweredQuestionResultUi("Q4", "A4", "A4", AnswerStatus.CORRECT, "Cat", DifficultyUiModel.EASY),
-                    AnsweredQuestionResultUi("Q5", "A5", "A5", AnswerStatus.CORRECT, "Cat", DifficultyUiModel.EASY),
+                    AnsweredQuestionResultUiModel("Q1", "A1", "A1", AnswerStatus.CORRECT, "Cat", DifficultyUiModel.EASY),
+                    AnsweredQuestionResultUiModel("Q2", "A2", "W2", AnswerStatus.INCORRECT, "Cat", DifficultyUiModel.EASY),
+                    AnsweredQuestionResultUiModel("Q3", "A3", null, AnswerStatus.TIMEOUT, "Cat", DifficultyUiModel.EASY),
+                    AnsweredQuestionResultUiModel("Q4", "A4", "A4", AnswerStatus.CORRECT, "Cat", DifficultyUiModel.EASY),
+                    AnsweredQuestionResultUiModel("Q5", "A5", "A5", AnswerStatus.CORRECT, "Cat", DifficultyUiModel.EASY),
                 ),
                 correctCount = 3,
                 incorrectCount = 1,
                 timeoutCount = 1,
-                score = AnswerStatsUiModel(5, 3, 0.6f)
+                score = AnswerStatsUiModel(5, 3, 0.6f),
             )
         ),
-        ResultState(
-            error = AppError.Database.QueryFailed(Exception("Failed to load results")),
+        ResultUiModel(
+            isLoading = false,
+            error = AppErrorUiModel(
+                title = UiText.Raw("Failed to load results"),
+                subtitle = UiText.Raw("An error occurred while fetching your game summary."),
+                icon = Icons.Outlined.Storage,
+                imageRes = Res.drawable.img_error_database,
+            ),
+            content = null,
         ),
     )
 }
@@ -39,7 +53,7 @@ class ResultStateProvider : PreviewParameterProvider<ResultState> {
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES, name = "Dark Mode")
 @Composable
 fun ResultScreenPreview(
-    @PreviewParameter(ResultStateProvider::class) state: ResultState,
+    @PreviewParameter(ResultUiModelProvider::class) state: ResultUiModel,
 ) {
     PopKnowTheme {
         ResultScreen(

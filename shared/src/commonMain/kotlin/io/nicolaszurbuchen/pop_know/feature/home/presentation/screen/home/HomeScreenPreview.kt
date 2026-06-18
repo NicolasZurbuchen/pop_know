@@ -1,7 +1,7 @@
 package io.nicolaszurbuchen.pop_know.feature.home.presentation.screen.home
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.WifiOff
+import androidx.compose.material.icons.outlined.Storage
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,7 +32,7 @@ class HomeUiModelProvider : PreviewParameterProvider<HomeUiModel> {
             error = AppErrorUiModel(
                 title = UiText.Raw("Database connection lost"),
                 subtitle = UiText.Raw("Please check your internet connection or try again later."),
-                icon = Icons.Outlined.WifiOff,
+                icon = Icons.Outlined.Storage,
                 imageRes = Res.drawable.img_error_database,
             ),
             stats = null,

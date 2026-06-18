@@ -54,7 +54,7 @@ class ResultStoreFactory(
             scope.launch {
                 try {
                     val result = getLastGameResult()
-                    dispatch(ResultMessage.ResultLoaded(result?.toUi()))
+                    dispatch(ResultMessage.ResultLoaded(result))
                 } catch (e: Exception) {
                     dispatch(ResultMessage.Error(AppError.Database.QueryFailed(e)))
                 }
