@@ -80,6 +80,9 @@ fun StatsScreen(
                 state.isLoading -> Skeleton()
 
                 state.error != null -> PopKnowErrorView(
+                    title = state.error.title,
+                    subtitle = state.error.subtitle,
+                    icon = state.error.icon,
                     onRetry = onRetryClick,
                 )
 

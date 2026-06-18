@@ -87,6 +87,9 @@ fun QuizScreen(
             state.isLoading -> Skeleton()
 
             state.initialError != null -> PopKnowErrorView(
+                title = state.initialError.title,
+                subtitle = state.initialError.subtitle,
+                icon = state.initialError.icon,
                 onRetry = onRetryClick,
             )
 
@@ -100,7 +103,8 @@ fun QuizScreen(
                 )
                 state.insertionError?.let {
                     PopKnowErrorBanner(
-                        text = "Failed to save answer locally",
+                        text = state.insertionError.title,
+                        icon = state.insertionError.icon,
                         onRetry = null,
                         onDismiss = onDismissInsertionErrorClick
                     )

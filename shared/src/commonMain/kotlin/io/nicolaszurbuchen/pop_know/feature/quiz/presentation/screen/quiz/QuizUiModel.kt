@@ -1,12 +1,12 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz
 
-import io.nicolaszurbuchen.pop_know.common.error.AppError
+import io.nicolaszurbuchen.pop_know.common.error.AppErrorUiModel
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.DifficultyUiModel
 
 data class QuizUiModel(
     val isLoading: Boolean,
-    val initialError: AppError?,
-    val insertionError: AppError?,
+    val initialError: AppErrorUiModel?,
+    val insertionError: AppErrorUiModel?,
     val quizData: QuizDataUiModel?,
     val isQuitDialogOpen: Boolean,
 )

@@ -1,5 +1,6 @@
 package io.nicolaszurbuchen.pop_know.feature.stats.presentation.screen.stats
 
+import io.nicolaszurbuchen.pop_know.common.error.toUiModel
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.toUiModel
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.CategoryStats
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.DifficultyStats
@@ -7,7 +8,7 @@ import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.FullStats
 
 fun StatsState.toUiModel() = StatsUiModel(
     isLoading = isLoading,
-    error = error,
+    error = error?.toUiModel(),
     stats = stats?.toUiModel()
 )
 

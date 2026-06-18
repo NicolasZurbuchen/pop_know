@@ -1,15 +1,20 @@
 package io.nicolaszurbuchen.pop_know.feature.stats.presentation.screen.stats
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Storage
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import io.nicolaszurbuchen.pop_know.app.design.theme.PopKnowTheme
-import io.nicolaszurbuchen.pop_know.common.error.AppError
+import io.nicolaszurbuchen.pop_know.common.error.AppErrorUiModel
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.AnswerStatsUiModel
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.CategoryUiModel
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.DifficultyUiModel
+import io.nicolaszurbuchen.pop_know.infra.ui.UiText
+import popknow.shared.generated.resources.Res
+import popknow.shared.generated.resources.img_error_database
 
 class StatsUiModelProvider : PreviewParameterProvider<StatsUiModel> {
     override val values = sequenceOf(
@@ -33,7 +38,12 @@ class StatsUiModelProvider : PreviewParameterProvider<StatsUiModel> {
         ),
         StatsUiModel(
             isLoading = false,
-            error = AppError.Database.QueryFailed(Exception("Database connection error")),
+            error = AppErrorUiModel(
+                title = UiText.Raw("Database connection error"),
+                subtitle = UiText.Raw("An error occurred while loading your statistics."),
+                icon = Icons.Outlined.Storage,
+                imageRes = Res.drawable.img_error_database,
+            ),
             stats = null
         ),
     )

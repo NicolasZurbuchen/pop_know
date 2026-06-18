@@ -41,7 +41,6 @@ import io.nicolaszurbuchen.pop_know.app.design.theme.JetBrainsMonoFontFamily
 import io.nicolaszurbuchen.pop_know.app.design.theme.SpaceGroteskFontFamily
 import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
-import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.infra.ui.asString
 import org.jetbrains.compose.resources.stringResource
@@ -81,12 +80,9 @@ fun HomeScreen(
         )
 
         state.error?.let { error ->
-            val errorMessage = when (error) {
-                is AppError.Database.QueryFailed -> "Failed to load statistics from database."
-                else -> "An unexpected error occurred."
-            }
             PopKnowErrorBanner(
-                text = errorMessage,
+                text = error.subtitle,
+                icon = error.icon,
                 onRetry = onRetryClick,
                 onDismiss = onDismissErrorClick
             )

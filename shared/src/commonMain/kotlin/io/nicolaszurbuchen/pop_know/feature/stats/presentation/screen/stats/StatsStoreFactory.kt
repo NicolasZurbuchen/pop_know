@@ -6,6 +6,7 @@ import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import io.nicolaszurbuchen.pop_know.common.error.AppError
+import io.nicolaszurbuchen.pop_know.common.error.AppException
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.usecase.GetFullStatsUseCase
 import kotlinx.coroutines.launch
 
@@ -54,7 +55,8 @@ class StatsStoreFactory(
                     val stats = getFullStats()
                     dispatch(StatsMessage.StatsLoaded(stats))
                 } catch (e: Exception) {
-                    dispatch(StatsMessage.Error(AppError.Database.QueryFailed(e)))
+                    val error = (e as? AppException)?.error ?: AppError.Unexpected(e)
+                    dispatch(StatsMessage.Error(error))
                 }
             }
         }

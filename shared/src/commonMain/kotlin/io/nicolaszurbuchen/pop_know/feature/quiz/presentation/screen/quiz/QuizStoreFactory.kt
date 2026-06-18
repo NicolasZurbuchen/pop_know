@@ -78,11 +78,8 @@ class QuizStoreFactory(
                     dispatch(QuizMessage.QuizLoaded(quiz, shuffled))
                     startTimer()
                 } catch (e: Exception) {
-                    val appError = when (e) {
-                        is AppException -> e.error
-                        else -> AppError.Unexpected(e)
-                    }
-                    dispatch(QuizMessage.ErrorOccurred(appError))
+                    val error = (e as? AppException)?.error ?: AppError.Unexpected(e)
+                    dispatch(QuizMessage.ErrorOccurred(error))
                 }
             }
         }
@@ -96,10 +93,9 @@ class QuizStoreFactory(
                 try {
                     val updatedSession = submitAnswer(session, answer)
                     dispatch(QuizMessage.SessionUpdated(updatedSession))
-                } catch (e: AppException) {
-                    dispatch(QuizMessage.InsertionError(e.error))
                 } catch (e: Exception) {
-                    dispatch(QuizMessage.InsertionError(AppError.Database.InsertFailed(e)))
+                    val error = (e as? AppException)?.error ?: AppError.Unexpected(e)
+                    dispatch(QuizMessage.InsertionError(error))
                 }
             }
         }

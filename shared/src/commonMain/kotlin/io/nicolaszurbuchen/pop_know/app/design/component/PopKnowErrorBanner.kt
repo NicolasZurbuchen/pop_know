@@ -18,57 +18,60 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.nicolaszurbuchen.pop_know.app.design.theme.SpaceGroteskFontFamily
 import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
+import io.nicolaszurbuchen.pop_know.infra.ui.asString
 import popknow.shared.generated.resources.Res
 import popknow.shared.generated.resources.error_dismiss
 import popknow.shared.generated.resources.error_retry
 
 @Composable
 fun PopKnowErrorBanner(
-    text: String,
+    text: UiText,
     modifier: Modifier = Modifier,
+    icon: ImageVector = Icons.Default.ErrorOutline,
     onRetry: (() -> Unit)? = null,
     onDismiss: (() -> Unit)? = null,
 ) {
     Column(
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm),
         modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.errorContainer)
             .padding(MaterialTheme.spacing.md),
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm)
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.md)
+            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.md),
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Box(
+                contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .size(40.dp)
                     .clip(CircleShape)
                     .background(MaterialTheme.colorScheme.error),
-                contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = Icons.Default.ErrorOutline,
+                    imageVector = icon,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onError,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(24.dp),
                 )
             }
 
             Text(
-                text = text,
+                text = text.asString(),
                 style = MaterialTheme.typography.bodyMedium.copy(
                     fontFamily = SpaceGroteskFontFamily,
                     fontSize = 14.sp,
                 ),
                 color = MaterialTheme.colorScheme.onErrorContainer,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             )
         }
 

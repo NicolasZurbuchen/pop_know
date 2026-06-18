@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
@@ -22,14 +23,15 @@ import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.infra.ui.asString
 import popknow.shared.generated.resources.Res
 import popknow.shared.generated.resources.error_retry
-import popknow.shared.generated.resources.error_subtitle
-import popknow.shared.generated.resources.error_title
+import popknow.shared.generated.resources.error_unexpected_subtitle
+import popknow.shared.generated.resources.error_unexpected_title
 
 @Composable
 fun PopKnowErrorView(
     modifier: Modifier = Modifier,
-    title: UiText = UiText.Resource(Res.string.error_title),
-    subtitle: UiText = UiText.Resource(Res.string.error_subtitle),
+    title: UiText = UiText.Resource(Res.string.error_unexpected_title),
+    subtitle: UiText = UiText.Resource(Res.string.error_unexpected_subtitle),
+    icon: ImageVector = Icons.Default.ErrorOutline,
     onRetry: () -> Unit,
 ) {
     Column(
@@ -40,7 +42,7 @@ fun PopKnowErrorView(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Icon(
-            imageVector = Icons.Default.ErrorOutline,
+            imageVector = icon,
             contentDescription = null,
             modifier = Modifier.size(80.dp),
             tint = MaterialTheme.colorScheme.error,

@@ -49,8 +49,6 @@
     <string name="stats_section_difficulty">Accuracy by Difficulty</string>
     <string name="stats_section_category">By Category</string>
 
-    <string name="error_title">Something went wrong</string>
-    <string name="error_subtitle">An unexpected error occurred. Please try again.</string>
     <string name="error_retry">Retry</string>
     <string name="error_dismiss">Dismiss</string>
 

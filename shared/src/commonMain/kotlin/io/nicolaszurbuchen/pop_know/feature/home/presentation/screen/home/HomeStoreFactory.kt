@@ -56,23 +56,8 @@ class HomeStoreFactory(
                     val stats = getAnswerStats()
                     dispatch(HomeMessage.StatsLoaded(stats))
                 } catch (e: Exception) {
-                    val error = when (e) {
-                        is AppException -> e.error
-                        else -> AppError.Unexpected(e)
-                    }
-                    
-                    // We specifically want to handle database query errors on home
-                    // But for this requirement, we'll map any exception that isn't
-                    // explicitly a known AppError as Unexpected, and if it's a 
-                    // database error we might want to log it or handle it specifically.
-                    // The user asked to separate error handling between query error and the rest.
-                    
-                    val finalError = when (error) {
-                        is AppError.Database.QueryFailed -> error
-                        else -> AppError.Unexpected(e)
-                    }
-                    
-                    dispatch(HomeMessage.Error(finalError))
+                    val error = (e as? AppException)?.error ?: AppError.Unexpected(e)
+                    dispatch(HomeMessage.Error(error))
                 }
             }
         }

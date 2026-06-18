@@ -1,5 +1,6 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz
 
+import io.nicolaszurbuchen.pop_know.common.error.toUiModel
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.toUiModel
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuestionProgress
@@ -8,8 +9,8 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuizSession
 fun QuizState.toUiModel(): QuizUiModel {
     return QuizUiModel(
         isLoading = isLoading,
-        initialError = initialError,
-        insertionError = insertionError,
+        initialError = initialError?.toUiModel(),
+        insertionError = insertionError?.toUiModel(),
         quizData = session?.toDataUiModel(timerSeconds, shuffledAnswers),
         isQuitDialogOpen = isQuitDialogOpen
     )

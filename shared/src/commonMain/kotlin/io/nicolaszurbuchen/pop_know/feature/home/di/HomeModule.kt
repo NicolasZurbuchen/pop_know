@@ -8,13 +8,19 @@ import io.nicolaszurbuchen.pop_know.feature.home.domain.usecase.GetAnswerStatsUs
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.screen.home.HomeStoreFactory
 import io.nicolaszurbuchen.pop_know.feature.home.presentation.screen.home.HomeViewModel
 import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val homeModule = module {
-    single<HomeLocalDataSource> { HomeLocalDataSourceImpl(get()) }
-    single<HomeRepository> { HomeRepositoryImpl(get()) }
+    singleOf(::HomeLocalDataSourceImpl) bind HomeLocalDataSource::class
+
+    singleOf(::HomeRepositoryImpl) bind HomeRepository::class
+
     factoryOf(::GetAnswerStatsUseCase)
+
     factoryOf(::HomeStoreFactory)
+
     viewModelOf(::HomeViewModel)
 }
