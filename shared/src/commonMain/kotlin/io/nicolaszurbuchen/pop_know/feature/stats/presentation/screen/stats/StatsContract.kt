@@ -1,7 +1,7 @@
 package io.nicolaszurbuchen.pop_know.feature.stats.presentation.screen.stats
 
 import io.nicolaszurbuchen.pop_know.common.error.AppError
-import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.FullStatsUi
+import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.FullStats
 
 sealed interface StatsIntent {
     data object NavigateBack : StatsIntent
@@ -18,12 +18,12 @@ sealed interface StatsAction {
 
 sealed interface StatsMessage {
     data object StatsLoading : StatsMessage
-    data class StatsLoaded(val stats: FullStatsUi?) : StatsMessage
+    data class StatsLoaded(val stats: FullStats?) : StatsMessage
     data class Error(val error: AppError) : StatsMessage
 }
 
 data class StatsState(
     val isLoading: Boolean = false,
     val error: AppError? = null,
-    val stats: FullStatsUi? = null,
+    val stats: FullStats? = null,
 )

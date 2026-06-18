@@ -10,29 +10,32 @@ import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUiModel
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.CategoryUi
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
-import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.CategoryStatsUi
-import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.DifficultyStatsUi
-import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.FullStatsUi
 
-class StatsStateProvider : PreviewParameterProvider<StatsState> {
+class StatsUiModelProvider : PreviewParameterProvider<StatsUiModel> {
     override val values = sequenceOf(
-        StatsState(isLoading = true),
-        StatsState(
-            stats = FullStatsUi(
+        StatsUiModel(isLoading = true, error = null, stats = null),
+        StatsUiModel(
+            isLoading = false,
+            error = null,
+            stats = StatsDataUiModel(
                 summary = AnswerStatsUiModel(100, 75, 0.75f),
                 perDifficulty = listOf(
-                    DifficultyStatsUi(DifficultyUi.EASY, AnswerStatsUiModel(40, 35, 0.875f)),
-                    DifficultyStatsUi(DifficultyUi.MEDIUM, AnswerStatsUiModel(40, 30, 0.75f)),
-                    DifficultyStatsUi(DifficultyUi.HARD, AnswerStatsUiModel(20, 10, 0.5f)),
+                    StatsDifficultyUiModel(DifficultyUi.EASY, AnswerStatsUiModel(40, 35, 0.875f)),
+                    StatsDifficultyUiModel(DifficultyUi.MEDIUM, AnswerStatsUiModel(40, 30, 0.75f)),
+                    StatsDifficultyUiModel(DifficultyUi.HARD, AnswerStatsUiModel(20, 10, 0.5f)),
                 ),
                 perCategory = listOf(
-                    CategoryStatsUi(CategoryUi(1, "General Knowledge"), AnswerStatsUiModel(30, 25, 0.83f)),
-                    CategoryStatsUi(CategoryUi(2, "Science"), AnswerStatsUiModel(20, 15, 0.75f)),
-                    CategoryStatsUi(CategoryUi(3, "History"), AnswerStatsUiModel(50, 35, 0.7f)),
+                    StatsCategoryUiModel(CategoryUi(1, "General Knowledge"), AnswerStatsUiModel(30, 25, 0.83f)),
+                    StatsCategoryUiModel(CategoryUi(2, "Science"), AnswerStatsUiModel(20, 15, 0.75f)),
+                    StatsCategoryUiModel(CategoryUi(3, "History"), AnswerStatsUiModel(50, 35, 0.7f)),
                 ),
             )
         ),
-        StatsState(error = AppError.Database.QueryFailed(Exception("Database connection error"))),
+        StatsUiModel(
+            isLoading = false,
+            error = AppError.Database.QueryFailed(Exception("Database connection error")),
+            stats = null
+        ),
     )
 }
 
@@ -40,7 +43,7 @@ class StatsStateProvider : PreviewParameterProvider<StatsState> {
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES, name = "Dark Mode")
 @Composable
 fun StatsScreenPreview(
-    @PreviewParameter(StatsStateProvider::class) state: StatsState,
+    @PreviewParameter(StatsUiModelProvider::class) state: StatsUiModel,
 ) {
     PopKnowTheme {
         StatsScreen(

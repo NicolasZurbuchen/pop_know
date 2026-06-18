@@ -46,9 +46,6 @@ import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowGameColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUiModel
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
-import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.CategoryStatsUi
-import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.DifficultyStatsUi
-import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.FullStatsUi
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.infra.ui.asString
 import popknow.shared.generated.resources.Res
@@ -62,7 +59,7 @@ import kotlin.math.roundToInt
 
 @Composable
 fun StatsScreen(
-    state: StatsState,
+    state: StatsUiModel,
     onBackClick: () -> Unit,
     onRetryClick: () -> Unit,
 ) {
@@ -96,7 +93,7 @@ fun StatsScreen(
 
 @Composable
 private fun Content(
-    stats: FullStatsUi,
+    stats: StatsDataUiModel,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -137,7 +134,7 @@ private fun Content(
 @Composable
 private fun OverallSummary(
     summary: AnswerStatsUiModel,
-    perDifficulty: List<DifficultyStatsUi>
+    perDifficulty: List<StatsDifficultyUiModel>
 ) {
     Row(
         modifier = Modifier
@@ -195,7 +192,7 @@ private fun OverallSummary(
 }
 
 @Composable
-private fun DifficultyRings(perDifficulty: List<DifficultyStatsUi>) {
+private fun DifficultyRings(perDifficulty: List<StatsDifficultyUiModel>) {
     val gameColors = MaterialTheme.popKnowGameColors
     val inactiveColor = MaterialTheme.colorScheme.outlineVariant
 
@@ -233,7 +230,7 @@ private fun DifficultyRings(perDifficulty: List<DifficultyStatsUi>) {
 }
 
 @Composable
-private fun DifficultySummaryRow(stats: DifficultyStatsUi) {
+private fun DifficultySummaryRow(stats: StatsDifficultyUiModel) {
     val color = when (stats.difficulty) {
         DifficultyUi.EASY -> MaterialTheme.popKnowGameColors.difficultyEasy
         DifficultyUi.MEDIUM -> MaterialTheme.popKnowGameColors.difficultyMedium
@@ -293,7 +290,7 @@ private fun DifficultySummaryRow(stats: DifficultyStatsUi) {
 @Composable
 private fun CategoryRow(
     index: Int,
-    stats: CategoryStatsUi
+    stats: StatsCategoryUiModel
 ) {
     val accuracy = (stats.answerStats.accuracy * 100).roundToInt()
     val accuracyColor = when {
