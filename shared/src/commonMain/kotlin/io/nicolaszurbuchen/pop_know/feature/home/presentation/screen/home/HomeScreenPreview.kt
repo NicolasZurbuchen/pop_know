@@ -11,8 +11,6 @@ import io.nicolaszurbuchen.pop_know.app.design.theme.PopKnowTheme
 import io.nicolaszurbuchen.pop_know.common.error.AppErrorUiModel
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.AnswerStatsUiModel
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
-import popknow.shared.generated.resources.Res
-import popknow.shared.generated.resources.img_error_database
 
 class HomeUiModelProvider : PreviewParameterProvider<HomeUiModel> {
     override val values = sequenceOf(
@@ -33,7 +31,6 @@ class HomeUiModelProvider : PreviewParameterProvider<HomeUiModel> {
                 title = UiText.Raw("Database connection lost"),
                 subtitle = UiText.Raw("Please check your internet connection or try again later."),
                 icon = Icons.Outlined.Storage,
-                imageRes = Res.drawable.img_error_database,
             ),
             stats = null,
             hasHistory = false,

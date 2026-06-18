@@ -13,8 +13,6 @@ import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.AnswerSta
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.DifficultyUiModel
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
-import popknow.shared.generated.resources.Res
-import popknow.shared.generated.resources.img_error_database
 
 class ResultUiModelProvider : PreviewParameterProvider<ResultUiModel> {
     override val values = sequenceOf(
@@ -42,7 +40,6 @@ class ResultUiModelProvider : PreviewParameterProvider<ResultUiModel> {
                 title = UiText.Raw("Failed to load results"),
                 subtitle = UiText.Raw("An error occurred while fetching your game summary."),
                 icon = Icons.Outlined.Storage,
-                imageRes = Res.drawable.img_error_database,
             ),
             content = null,
         ),

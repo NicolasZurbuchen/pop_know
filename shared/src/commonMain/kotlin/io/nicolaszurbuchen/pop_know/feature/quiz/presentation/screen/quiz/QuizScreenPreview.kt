@@ -12,9 +12,6 @@ import io.nicolaszurbuchen.pop_know.app.design.theme.PopKnowTheme
 import io.nicolaszurbuchen.pop_know.common.error.AppErrorUiModel
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.DifficultyUiModel
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
-import popknow.shared.generated.resources.Res
-import popknow.shared.generated.resources.img_error_database
-import popknow.shared.generated.resources.img_error_network
 
 class QuizUiModelProvider : PreviewParameterProvider<QuizUiModel> {
     override val values = sequenceOf(
@@ -58,7 +55,6 @@ class QuizUiModelProvider : PreviewParameterProvider<QuizUiModel> {
                 title = UiText.Raw("Failed to save answer"),
                 subtitle = UiText.Raw("An error occurred while saving your progress."),
                 icon = Icons.Outlined.Storage,
-                imageRes = Res.drawable.img_error_database,
             ),
             quizData = QuizDataUiModel(
                 questionText = "Which of the following is NOT a primary color?",
@@ -164,7 +160,6 @@ class QuizUiModelProvider : PreviewParameterProvider<QuizUiModel> {
                 title = UiText.Raw("No internet connection"),
                 subtitle = UiText.Raw("Please check your network settings."),
                 icon = Icons.Outlined.WifiOff,
-                imageRes = Res.drawable.img_error_network,
             ),
             insertionError = null,
             quizData = null,
