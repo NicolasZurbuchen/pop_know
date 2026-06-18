@@ -53,7 +53,7 @@ import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowTopBar
 import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowGameColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUiModel
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.DifficultyUiModel
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 
 @Composable

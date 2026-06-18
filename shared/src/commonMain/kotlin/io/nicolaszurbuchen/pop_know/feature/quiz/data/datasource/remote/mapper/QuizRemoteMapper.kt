@@ -9,35 +9,33 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.dto.Triv
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.TriviaQuestion
 import io.nicolaszurbuchen.pop_know.infra.platform.decodeHtml
 
-class QuizRemoteMapper {
-    fun mapDtoToEntity(dto: CategoryDto): CategoryEntity {
-        return CategoryEntity(
-            id = dto.id.toLong(),
-            name = dto.category
-        )
-    }
+fun CategoryDto.toEntity(): CategoryEntity {
+    return CategoryEntity(
+        id = id.toLong(),
+        name = category
+    )
+}
 
-    fun mapDtoToDomain(dto: TriviaQuestionDto, categories: List<Category>): TriviaQuestion {
-        return TriviaQuestion(
-            questionType = when (dto.type) {
-                "multiple" -> QuestionType.MULTIPLE
-                "boolean" -> QuestionType.BOOLEAN
-                else -> throw IllegalArgumentException("Unknown question type: ${dto.type}")
-            },
-            difficulty = when (dto.difficulty) {
-                "easy" -> Difficulty.EASY
-                "medium" -> Difficulty.MEDIUM
-                "hard" -> Difficulty.HARD
-                else -> throw IllegalArgumentException("Unknown difficulty: ${dto.difficulty}")
-            },
-            category = categories.find { it.category == dto.category }
-                ?: Category(
-                    id = -1,
-                    category = dto.category
-                ),
-            question = dto.question.decodeHtml(),
-            correctAnswer = dto.correctAnswer.decodeHtml(),
-            incorrectAnswers = dto.incorrectAnswers.map { it.decodeHtml() }
-        )
-    }
+fun TriviaQuestionDto.toDomain(categories: List<Category>): TriviaQuestion {
+    return TriviaQuestion(
+        questionType = when (type) {
+            "multiple" -> QuestionType.MULTIPLE
+            "boolean" -> QuestionType.BOOLEAN
+            else -> throw IllegalArgumentException("Unknown question type: $type")
+        },
+        difficulty = when (difficulty) {
+            "easy" -> Difficulty.EASY
+            "medium" -> Difficulty.MEDIUM
+            "hard" -> Difficulty.HARD
+            else -> throw IllegalArgumentException("Unknown difficulty: $difficulty")
+        },
+        category = categories.find { it.category == category }
+            ?: Category(
+                id = -1,
+                category = category
+            ),
+        question = question.decodeHtml(),
+        correctAnswer = correctAnswer.decodeHtml(),
+        incorrectAnswers = incorrectAnswers.map { it.decodeHtml() }
+    )
 }

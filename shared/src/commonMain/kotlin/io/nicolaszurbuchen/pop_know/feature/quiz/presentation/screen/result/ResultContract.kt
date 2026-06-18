@@ -1,9 +1,9 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result
 
 import io.nicolaszurbuchen.pop_know.common.error.AppError
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUiModel
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUiModel
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.toUiModel
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.AnswerStatsUiModel
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.DifficultyUiModel
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.toUiModel
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnsweredQuestionResult
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.GameResult

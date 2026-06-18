@@ -1,9 +1,9 @@
 package io.nicolaszurbuchen.pop_know.feature.stats.presentation.screen.stats
 
 import io.nicolaszurbuchen.pop_know.common.error.AppError
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUiModel
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.CategoryUiModel
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUiModel
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.AnswerStatsUiModel
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.CategoryUiModel
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.DifficultyUiModel
 
 data class StatsUiModel(
     val isLoading: Boolean,

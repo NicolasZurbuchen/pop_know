@@ -1,7 +1,7 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz
 
 import io.nicolaszurbuchen.pop_know.common.error.AppError
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUiModel
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.DifficultyUiModel
 
 data class QuizUiModel(
     val isLoading: Boolean,

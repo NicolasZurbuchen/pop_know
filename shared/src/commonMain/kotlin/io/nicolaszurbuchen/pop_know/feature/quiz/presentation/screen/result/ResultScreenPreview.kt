@@ -7,8 +7,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import io.nicolaszurbuchen.pop_know.app.design.theme.PopKnowTheme
 import io.nicolaszurbuchen.pop_know.common.error.AppError
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUiModel
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUiModel
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.AnswerStatsUiModel
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.DifficultyUiModel
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 
 class ResultStateProvider : PreviewParameterProvider<ResultState> {

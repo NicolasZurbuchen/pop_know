@@ -8,51 +8,49 @@ import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.QuestionType
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnsweredQuestionResult
 
-class QuizLocalMapper {
-    fun mapEntityToDomain(entity: CategoryEntity): Category {
-        return Category(
-            id = entity.id.toInt(),
-            category = entity.name
-        )
-    }
+fun CategoryEntity.toDomain(): Category {
+    return Category(
+        id = id.toInt(),
+        category = name
+    )
+}
 
-    fun mapEntityToDomain(entity: GetLastGame): AnsweredQuestionResult {
-        return AnsweredQuestionResult(
-            question = entity.question,
-            correctAnswer = entity.correct_answer,
-            selectedAnswer = entity.selected_answer,
-            status = mapToAnswerStatus(entity.status),
-            categoryName = entity.category_name,
-            difficulty = mapToDifficulty(entity.difficulty),
-        )
-    }
+fun GetLastGame.toDomain(): AnsweredQuestionResult {
+    return AnsweredQuestionResult(
+        question = question,
+        correctAnswer = correct_answer,
+        selectedAnswer = selected_answer,
+        status = status.toAnswerStatusEnum(),
+        categoryName = category_name,
+        difficulty = difficulty.toDifficultyEnum(),
+    )
+}
 
-    fun mapToDbString(type: QuestionType): String = when (type) {
-        QuestionType.MULTIPLE -> "multiple"
-        QuestionType.BOOLEAN -> "boolean"
-    }
+fun QuestionType.toValue(): String = when (this) {
+    QuestionType.MULTIPLE -> "multiple"
+    QuestionType.BOOLEAN -> "boolean"
+}
 
-    fun mapToDbString(difficulty: Difficulty): String = when (difficulty) {
-        Difficulty.EASY -> "easy"
-        Difficulty.MEDIUM -> "medium"
-        Difficulty.HARD -> "hard"
-    }
+fun Difficulty.toValue(): String = when (this) {
+    Difficulty.EASY -> "easy"
+    Difficulty.MEDIUM -> "medium"
+    Difficulty.HARD -> "hard"
+}
 
-    fun mapToDbString(status: AnswerStatus): String = when (status) {
-        AnswerStatus.CORRECT -> "CORRECT"
-        AnswerStatus.INCORRECT -> "INCORRECT"
-        AnswerStatus.TIMEOUT -> "TIMEOUT"
-    }
+fun AnswerStatus.toValue(): String = when (this) {
+    AnswerStatus.CORRECT -> "CORRECT"
+    AnswerStatus.INCORRECT -> "INCORRECT"
+    AnswerStatus.TIMEOUT -> "TIMEOUT"
+}
 
-    private fun mapToAnswerStatus(status: String): AnswerStatus = when (status) {
-        "CORRECT" -> AnswerStatus.CORRECT
-        "INCORRECT" -> AnswerStatus.INCORRECT
-        else -> AnswerStatus.TIMEOUT
-    }
+fun String.toAnswerStatusEnum(): AnswerStatus = when (this) {
+    "CORRECT" -> AnswerStatus.CORRECT
+    "INCORRECT" -> AnswerStatus.INCORRECT
+    else -> AnswerStatus.TIMEOUT
+}
 
-    private fun mapToDifficulty(difficulty: String): Difficulty = when (difficulty) {
-        "easy" -> Difficulty.EASY
-        "medium" -> Difficulty.MEDIUM
-        else -> Difficulty.HARD
-    }
+fun String.toDifficultyEnum(): Difficulty = when (this) {
+    "easy" -> Difficulty.EASY
+    "medium" -> Difficulty.MEDIUM
+    else -> Difficulty.HARD
 }

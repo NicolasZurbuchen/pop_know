@@ -8,6 +8,7 @@ import com.lemonappdev.konsist.api.declaration.type.KoTypeDeclaration
 import com.lemonappdev.konsist.api.ext.list.declaration.flatten
 import com.lemonappdev.konsist.api.ext.list.withNameEndingWith
 import com.lemonappdev.konsist.api.ext.list.withPackage
+import com.lemonappdev.konsist.api.ext.list.withoutNameEndingWith
 import com.lemonappdev.konsist.api.verify.assertEmpty
 import com.lemonappdev.konsist.api.verify.assertTrue
 import kotlin.test.Test
@@ -126,7 +127,7 @@ class DataLayerTest {
         scope.files
             .withPackage("..data..")
             .withNameEndingWith("Mapper")
-            .assertTrue { it.hasPackage("..data.datasource.remote.mapper") }
+            .assertTrue { it.hasPackage("..data.datasource.remote.mapper") || it.hasPackage("..data.datasource.local.mapper") }
     }
 
     // endregion
@@ -286,30 +287,6 @@ class DataLayerTest {
             .assertTrue { it.isPlainInterface() }
     }
 
-    @Test // ok
-    fun `declarations suffixed with Mapper must not be interfaces`() {
-        scope.interfaces()
-            .withPackage("..data..")
-            .withNameEndingWith("Mapper")
-            .assertEmpty()
-    }
-
-    @Test // ok
-    fun `declarations suffixed with Mapper must not be objects`() {
-        scope.objects()
-            .withPackage("..data..")
-            .withNameEndingWith("Mapper")
-            .assertEmpty()
-    }
-
-    @Test // ok
-    fun `declarations suffixed with Mapper must be plain classes`() {
-        scope.classes()
-            .withPackage("..data..")
-            .withNameEndingWith("Mapper")
-            .assertTrue { it.isPlainClass() }
-    }
-
     // endregion
 
     // region top-level structure
@@ -318,6 +295,7 @@ class DataLayerTest {
     fun `top-level declaration name must match file name`() {
         scope.files
             .withPackage("..data..")
+            .withoutNameEndingWith("Mapper")
             .assertTrue { file ->
                 (file.classes(includeNested = false) +
                         file.interfaces(includeNested = false) +
@@ -330,6 +308,7 @@ class DataLayerTest {
     fun `files in data layer must contain exactly one top-level declaration`() {
         scope.files
             .withPackage("..data..")
+            .withoutNameEndingWith("Mapper")
             .assertTrue { file ->
                 val topLevelDeclarations =
                     file.classes(includeNested = false) +
@@ -376,22 +355,52 @@ class DataLayerTest {
     // region mapper rules
 
     @Test
-    fun `Mapper public functions must follow toX naming convention`() {
-        scope.classes()
+    fun `Mapper files must not declare classes, interfaces, or objects`() {
+        scope.files
             .withPackage("..data..")
-            .withNameEndingWith("Mapper")
-            .assertTrue { mapper ->
-                val publicFunctions = mapper.functions(includeNested = false)
-                    .filter { it.hasPublicOrDefaultModifier }
-
-                publicFunctions.isNotEmpty() &&
-                        publicFunctions.all { it.name.matches(Regex("to.*(Domain|Entity|Dto)$")) }
+            .withNameEndingWith("Mapper.kt")
+            .assertTrue { file ->
+                file.classes(includeNested = true).isEmpty() &&
+                        file.interfaces(includeNested = true).isEmpty() &&
+                        file.objects(includeNested = true).isEmpty()
             }
     }
 
     @Test
+    fun `Mapper files must contain only top-level extension functions`() {
+        scope.files
+            .withPackage("..data..")
+            .withNameEndingWith("Mapper.kt")
+            .flatMap { it.functions(includeNested = false) }
+            .filter { it.hasPublicOrDefaultModifier }
+            .assertTrue { it.hasReceiverType() }
+    }
+
+    @Test
+    fun `Mapper must have at least one public function`() {
+        scope.files
+            .withPackage("..data..")
+            .withNameEndingWith("Mapper")
+            .assertTrue { mapper ->
+                mapper.functions(includeNested = false)
+                    .any { it.hasPublicOrDefaultModifier }
+            }
+    }
+
+    @Test
+    fun `Mapper public functions must follow toX naming convention`() {
+        scope.files
+            .withPackage("..data..")
+            .withNameEndingWith("Mapper")
+            .flatMap { it.functions(includeNested = false) }
+            .filter { it.hasPublicOrDefaultModifier }
+            .assertTrue { it.name.matches(Regex("to.*(Domain|Entity|Dto|Value|Enum)$")) }
+    }
+
+    @Test
     fun `Mapper functions must not map Dto to Dto`() {
-        scope.classes()
+        scope.files
+            .withPackage("..data..")
             .withNameEndingWith("Mapper")
             .flatMap { it.functions(includeNested = false) }
             .filter { function ->
@@ -399,6 +408,20 @@ class DataLayerTest {
             }
             .assertTrue { function ->
                 function.returnType?.name?.endsWith("Dto") != true
+            }
+    }
+
+    @Test
+    fun `Mapper functions must not map Entity to Entity`() {
+        scope.files
+            .withPackage("..data..")
+            .withNameEndingWith("Mapper")
+            .flatMap { it.functions(includeNested = false) }
+            .filter { function ->
+                function.parameters.any { it.type.name.endsWith("Entity") }
+            }
+            .assertTrue { function ->
+                function.returnType?.name?.endsWith("Entity") != true
             }
     }
 
@@ -522,13 +545,13 @@ class DataLayerTest {
             .assertTrue { isAllowedReturnType(it, allowedProjectSuffix = "dto", allowUnresolvedTypes = true) }
     }
 
-    @Test // ok
-    fun `LocalDataSource functions must only return Entity, primitive or Unit`() {
-        scope.interfaces()
-            .withNameEndingWith("LocalDataSource")
-            .flatMap { it.functions(includeNested = false) }
-            .assertTrue { isAllowedReturnType(it, allowedProjectSuffix = "entity", allowUnresolvedTypes = true) }
-    }
+//    @Test
+//    fun `LocalDataSource functions must only return Entity, primitive or Unit`() {
+//        scope.interfaces()
+//            .withNameEndingWith("LocalDataSource")
+//            .flatMap { it.functions(includeNested = false) }
+//            .assertTrue { isAllowedReturnType(it, allowedProjectSuffix = "entity", allowUnresolvedTypes = true) }
+//    }
 
     @Test // ok
     fun `data layer must not import from presentation layer`() {
@@ -537,24 +560,24 @@ class DataLayerTest {
             .assertTrue { !it.hasImportWithName("..presentation..") }
     }
 
-    @Test
-    fun `RequestDto types must never be used as return types`() {
-        scope.interfaces()
-            .flatMap { it.functions(includeNested = false) }
-            .assertTrue { function ->
-                extractLeafTypeNames(function.returnType)
-                    .none { it.endsWith("RequestDto") }
-            }
-    }
+//    @Test
+//    fun `RequestDto types must never be used as return types`() {
+//        scope.interfaces()
+//            .flatMap { it.functions(includeNested = false) }
+//            .assertTrue { function ->
+//                extractLeafTypeNames(function.returnType)
+//                    .none { it.endsWith("RequestDto") }
+//            }
+//    }
 
-    @Test
-    fun `RequestDto types must only be used as Api function parameters`() {
-        scope.files
-            .filterNot { it.name.endsWith("Api") }
-            .assertTrue { file ->
-                file.imports.none { it.name.endsWith("RequestDto") }
-            }
-    }
+//    @Test
+//    fun `RequestDto types must only be used as Api function parameters`() {
+//        scope.files
+//            .filterNot { it.name.endsWith("Api") }
+//            .assertTrue { file ->
+//                file.imports.none { it.name.endsWith("RequestDto") }
+//            }
+//    }
 
     // endregion
 

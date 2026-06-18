@@ -24,7 +24,7 @@ class PackageHierarchyTest {
 
     @Test // ok
     fun `Direct children of presentation must be in allowed list`() {
-        val allowed = listOf("screen", "component", "navigation", "model", "flow")
+        val allowed = listOf("screen", "component", "navigation", "uimodel", "flow")
 
         scope.packages
             .filter { it.name.matches(Regex(".*\\.(feature|common)\\.[^.]+\\.presentation\\.[^.]+$")) }
@@ -60,7 +60,7 @@ class PackageHierarchyTest {
 
     @Test // ok
     fun `Direct children of data datasource must be in allowed list`() {
-        val allowed = listOf("remote", "local", "cache")
+        val allowed = listOf("remote", "local")
 
         scope.packages
             .filter { it.name.matches(Regex(".*\\.(feature|common)\\.[^.]+\\.data\\.datasource\\.[^.]+$")) }
@@ -83,11 +83,11 @@ class PackageHierarchyTest {
     }
 
     @Test // ok
-    fun `Direct children of presentation screen screenName must be in allowed list`() {
-        val allowed = listOf("component")
+    fun `Direct children of data datasource local must be in allowed list`() {
+        val allowed = listOf("entity", "mapper")
 
         scope.packages
-            .filter { it.name.matches(Regex(".*\\.(feature|common)\\.[^.]+\\.presentation\\.screen\\.[^.]+\\.[^.]+$")) }
+            .filter { it.name.matches(Regex(".*\\.(feature|common)\\.[^.]+\\.data\\.datasource\\.remote\\.[^.]+$")) }
             .assertTrue { pkg ->
                 val segments = pkg.name.split(Regex("\\.(feature|common)\\.")).last().split(".")
                 allowed.contains(segments.last())
@@ -96,7 +96,7 @@ class PackageHierarchyTest {
 
     @Test // ok
     fun `Top level packages must be in allowed list`() {
-        val allowed = listOf("common", "feature", "infra")
+        val allowed = listOf("app", "common", "feature", "infra")
 
         val allPackages = Konsist.scopeFromDirectory("shared/src/commonMain/kotlin").packages
         val allPackageNames = allPackages.map { it.name }
@@ -115,7 +115,7 @@ class PackageHierarchyTest {
 
     @Test // ok
     fun `Leaf packages must not have child packages`() {
-        val leafPackageNames = setOf("api", "cache", "component", "di", "dto", "flow", "local", "mapper", "model", "navigation", "repository", "usecase")
+        val leafPackageNames = setOf("api", "cache", "component", "di", "dto", "flow", "mapper", "model", "navigation", "repository", "usecase", "uimodel")
 
         val allPackages = Konsist.scopeFromProject().packages
         val allPackageNames = allPackages.map { it.name }.toSet()
@@ -127,6 +127,17 @@ class PackageHierarchyTest {
             }
             .assertTrue { pkg ->
                 allPackageNames.none { it.startsWith("${pkg.name}.") }
+            }
+    }
+
+    @Test // ok
+    fun `Screen name packages must not have child packages`() {
+        scope.files
+            .filter { file ->
+                file.packagee?.name?.contains(".presentation.screen.") == true
+            }
+            .assertTrue { file ->
+                file.packagee?.name?.matches(Regex(".*\\.(feature|common)\\.[^.]+\\.presentation\\.screen\\.[^.]+$")) == true
             }
     }
 }
