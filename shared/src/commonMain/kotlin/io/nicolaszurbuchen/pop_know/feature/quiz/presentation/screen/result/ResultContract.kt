@@ -1,7 +1,7 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result
 
 import io.nicolaszurbuchen.pop_know.common.error.AppError
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUi
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUiModel
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.toUi
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
@@ -42,7 +42,7 @@ data class GameResultUi(
     val correctCount: Int,
     val incorrectCount: Int,
     val timeoutCount: Int,
-    val score: AnswerStatsUi,
+    val score: AnswerStatsUiModel,
 )
 
 fun GameResult.toUi() = GameResultUi(
@@ -50,7 +50,7 @@ fun GameResult.toUi() = GameResultUi(
     correctCount = correctCount,
     incorrectCount = incorrectCount,
     timeoutCount = timeoutCount,
-    score = AnswerStatsUi(
+    score = AnswerStatsUiModel(
         totalAnswered = score.totalAnswered,
         totalCorrect = score.totalCorrect,
         accuracy = score.accuracy,

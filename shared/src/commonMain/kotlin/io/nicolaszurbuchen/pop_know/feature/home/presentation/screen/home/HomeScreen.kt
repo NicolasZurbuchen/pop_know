@@ -32,7 +32,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowErrorBanner
 import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowPrimaryButton
 import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowSecondaryButton
@@ -42,6 +41,7 @@ import io.nicolaszurbuchen.pop_know.app.design.theme.JetBrainsMonoFontFamily
 import io.nicolaszurbuchen.pop_know.app.design.theme.SpaceGroteskFontFamily
 import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
+import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.infra.ui.asString
 import org.jetbrains.compose.resources.stringResource
@@ -63,7 +63,7 @@ import kotlin.math.roundToInt
 
 @Composable
 fun HomeScreen(
-    state: HomeState,
+    state: HomeUiModel,
     onStartRoundClick: () -> Unit,
     onViewStatsClick: () -> Unit,
     onRetryClick: () -> Unit,

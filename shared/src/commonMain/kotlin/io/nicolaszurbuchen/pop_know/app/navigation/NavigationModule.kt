@@ -1,5 +1,6 @@
 package io.nicolaszurbuchen.pop_know.app.navigation
 
+import androidx.navigation3.runtime.NavKey
 import io.nicolaszurbuchen.pop_know.app.navigation.impl.HomeNavigatorImpl
 import io.nicolaszurbuchen.pop_know.app.navigation.impl.QuizNavigatorImpl
 import io.nicolaszurbuchen.pop_know.app.navigation.impl.StatsNavigatorImpl
@@ -11,7 +12,6 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.navigation.QuizNav
 import io.nicolaszurbuchen.pop_know.feature.stats.presentation.navigation.StatsNavKeyHandler
 import io.nicolaszurbuchen.pop_know.feature.stats.presentation.navigation.StatsNavigator
 import io.nicolaszurbuchen.pop_know.infra.navigation.NavKeyHandler
-import androidx.navigation3.runtime.NavKey
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module

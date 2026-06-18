@@ -36,11 +36,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUi
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
-import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.CategoryStatsUi
-import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.DifficultyStatsUi
-import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.FullStatsUi
 import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowErrorView
 import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowSectionLabel
 import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowTopBar
@@ -49,6 +44,11 @@ import io.nicolaszurbuchen.pop_know.app.design.theme.SpaceGroteskFontFamily
 import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowGameColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUiModel
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
+import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.CategoryStatsUi
+import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.DifficultyStatsUi
+import io.nicolaszurbuchen.pop_know.feature.stats.presentation.model.FullStatsUi
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.infra.ui.asString
 import popknow.shared.generated.resources.Res
@@ -136,7 +136,7 @@ private fun Content(
 
 @Composable
 private fun OverallSummary(
-    summary: AnswerStatsUi,
+    summary: AnswerStatsUiModel,
     perDifficulty: List<DifficultyStatsUi>
 ) {
     Row(

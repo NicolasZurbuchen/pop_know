@@ -3,9 +3,9 @@ package io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote
 import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.common.error.AppException
 import io.nicolaszurbuchen.pop_know.common.error.toAppError
+import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.api.QuizApi
 import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.dto.CategoryDto
 import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.dto.TriviaQuestionDto
-import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.api.QuizApi
 
 class QuizRemoteDataSourceImpl(
     private val api: QuizApi,

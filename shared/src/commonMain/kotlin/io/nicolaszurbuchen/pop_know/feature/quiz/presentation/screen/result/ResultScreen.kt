@@ -36,7 +36,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowErrorView
 import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowPrimaryButton
 import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowSecondaryButton
@@ -46,6 +45,7 @@ import io.nicolaszurbuchen.pop_know.app.design.theme.SpaceGroteskFontFamily
 import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowGameColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
+import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.infra.ui.asString
 import popknow.shared.generated.resources.Res

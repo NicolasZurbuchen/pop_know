@@ -5,11 +5,11 @@ import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import io.nicolaszurbuchen.pop_know.app.design.theme.PopKnowTheme
 import io.nicolaszurbuchen.pop_know.common.error.AppError
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUi
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.AnswerStatsUiModel
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.model.DifficultyUi
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
-import io.nicolaszurbuchen.pop_know.app.design.theme.PopKnowTheme
 
 class ResultStateProvider : PreviewParameterProvider<ResultState> {
     override val values = sequenceOf(
@@ -26,7 +26,7 @@ class ResultStateProvider : PreviewParameterProvider<ResultState> {
                 correctCount = 3,
                 incorrectCount = 1,
                 timeoutCount = 1,
-                score = AnswerStatsUi(5, 3, 0.6f)
+                score = AnswerStatsUiModel(5, 3, 0.6f)
             )
         ),
         ResultState(
