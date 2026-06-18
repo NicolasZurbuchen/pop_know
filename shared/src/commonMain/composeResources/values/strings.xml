@@ -53,4 +53,28 @@
     <string name="error_subtitle">An unexpected error occurred. Please try again.</string>
     <string name="error_retry">Retry</string>
     <string name="error_dismiss">Dismiss</string>
+
+    <!-- Network -->
+    <string name="error_network_unavailable_title">No Internet Connection</string>
+    <string name="error_network_unavailable_subtitle">Please check your connection and try again.</string>
+    <string name="error_network_timeout_title">Connection Timed Out</string>
+    <string name="error_network_timeout_subtitle">The request took too long. Please try again.</string>
+    <string name="error_network_http_title">Something Went Wrong</string>
+    <string name="error_network_http_subtitle_default">An error occurred while contacting the server.</string>
+
+    <!-- Database -->
+    <string name="error_database_query_failed_title">Couldn't Load Your Data</string>
+    <string name="error_database_insert_failed_title">Couldn't Save Your Data</string>
+    <string name="error_database_generic_subtitle">Something went wrong on our end. Please try again.</string>
+
+    <!-- Trivia -->
+    <string name="error_trivia_no_results_title">No Questions Found</string>
+    <string name="error_trivia_no_results_subtitle">We couldn't find any trivia for this selection. Try a different category.</string>
+    <string name="error_trivia_generic_title">Trivia Unavailable</string>
+    <string name="error_trivia_invalid_parameter_subtitle">There was a problem with the quiz request. Please try again.</string>
+    <string name="error_trivia_rate_limit_subtitle">Too many requests right now. Please wait a moment and try again.</string>
+
+    <!-- Unexpected -->
+    <string name="error_unexpected_title">Unexpected Error</string>
+    <string name="error_unexpected_subtitle">Something went wrong. Please try again.</string>
 </resources>
