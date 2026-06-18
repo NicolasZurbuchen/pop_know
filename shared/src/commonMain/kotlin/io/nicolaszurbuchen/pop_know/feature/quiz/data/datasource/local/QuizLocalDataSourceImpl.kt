@@ -1,9 +1,9 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.local
 
-import io.nicolaszurbuchen.pop_know.cache.CategoryEntity
-import io.nicolaszurbuchen.pop_know.cache.CategoryQueries
-import io.nicolaszurbuchen.pop_know.cache.GetLastGame
-import io.nicolaszurbuchen.pop_know.cache.QuestionHistoryQueries
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.local.CategoryEntity
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.local.CategoryQueries
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.local.GetLastGame
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.local.QuestionHistoryQueries
 import kotlin.time.Clock
 
 class QuizLocalDataSourceImpl(

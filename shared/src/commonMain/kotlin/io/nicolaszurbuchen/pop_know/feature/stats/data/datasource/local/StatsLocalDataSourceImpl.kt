@@ -1,6 +1,6 @@
 package io.nicolaszurbuchen.pop_know.feature.stats.data.datasource.local
 
-import io.nicolaszurbuchen.pop_know.cache.QuestionHistoryQueries
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.local.QuestionHistoryQueries
 import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.AnswerStats
 import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.Category
 import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.Difficulty

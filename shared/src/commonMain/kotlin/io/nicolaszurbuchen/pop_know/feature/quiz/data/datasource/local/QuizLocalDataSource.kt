@@ -1,7 +1,7 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.local
 
-import io.nicolaszurbuchen.pop_know.cache.CategoryEntity
-import io.nicolaszurbuchen.pop_know.cache.GetLastGame
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.local.CategoryEntity
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.local.GetLastGame
 
 interface QuizLocalDataSource {
     fun saveAnswer(

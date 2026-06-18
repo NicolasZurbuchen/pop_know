@@ -1,7 +1,7 @@
 package io.nicolaszurbuchen.pop_know.infra.database
 
 import io.nicolaszurbuchen.pop_know.cache.AppDatabase
-import io.nicolaszurbuchen.pop_know.cache.QuestionHistoryEntity
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.local.QuestionHistoryEntity
 
 fun createDatabase(driverFactory: DatabaseDriverFactory): AppDatabase {
     val driver = driverFactory.createDriver()

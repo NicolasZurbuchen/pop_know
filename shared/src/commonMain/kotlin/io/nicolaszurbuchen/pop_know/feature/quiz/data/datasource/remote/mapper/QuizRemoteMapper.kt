@@ -1,6 +1,6 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.mapper
 
-import io.nicolaszurbuchen.pop_know.cache.CategoryEntity
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.local.CategoryEntity
 import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.Category
 import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.Difficulty
 import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.QuestionType

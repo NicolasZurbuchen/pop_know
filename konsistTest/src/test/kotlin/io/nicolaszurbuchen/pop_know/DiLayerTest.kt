@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.turnstile
+package io.nicolaszurbuchen.pop_know
 
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.ext.list.withNameEndingWith

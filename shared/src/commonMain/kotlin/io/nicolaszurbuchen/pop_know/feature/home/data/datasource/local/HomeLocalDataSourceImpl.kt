@@ -1,6 +1,6 @@
 package io.nicolaszurbuchen.pop_know.feature.home.data.datasource.local
 
-import io.nicolaszurbuchen.pop_know.cache.QuestionHistoryQueries
+import io.nicolaszurbuchen.pop_know.common.trivia.data.datasource.local.QuestionHistoryQueries
 
 class HomeLocalDataSourceImpl(
     private val queries: QuestionHistoryQueries,
