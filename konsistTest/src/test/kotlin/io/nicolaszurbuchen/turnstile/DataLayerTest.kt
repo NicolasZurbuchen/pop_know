@@ -354,11 +354,11 @@ class DataLayerTest {
 
     // region mapper rules
 
-    @Test
+    @Test // ok
     fun `Mapper files must not declare classes, interfaces, or objects`() {
         scope.files
             .withPackage("..data..")
-            .withNameEndingWith("Mapper.kt")
+            .withNameEndingWith("Mapper")
             .assertTrue { file ->
                 file.classes(includeNested = true).isEmpty() &&
                         file.interfaces(includeNested = true).isEmpty() &&
@@ -366,17 +366,16 @@ class DataLayerTest {
             }
     }
 
-    @Test
+    @Test // ok
     fun `Mapper files must contain only top-level extension functions`() {
         scope.files
             .withPackage("..data..")
-            .withNameEndingWith("Mapper.kt")
+            .withNameEndingWith("Mapper")
             .flatMap { it.functions(includeNested = false) }
-            .filter { it.hasPublicOrDefaultModifier }
             .assertTrue { it.hasReceiverType() }
     }
 
-    @Test
+    @Test // ok
     fun `Mapper must have at least one public function`() {
         scope.files
             .withPackage("..data..")
@@ -387,17 +386,16 @@ class DataLayerTest {
             }
     }
 
-    @Test
-    fun `Mapper public functions must follow toX naming convention`() {
+    @Test // ok
+    fun `Mapper functions must follow toX naming convention`() {
         scope.files
             .withPackage("..data..")
             .withNameEndingWith("Mapper")
             .flatMap { it.functions(includeNested = false) }
-            .filter { it.hasPublicOrDefaultModifier }
             .assertTrue { it.name.matches(Regex("to.*(Domain|Entity|Dto|Value|Enum)$")) }
     }
 
-    @Test
+    @Test // ok
     fun `Mapper functions must not map Dto to Dto`() {
         scope.files
             .withPackage("..data..")
@@ -411,7 +409,7 @@ class DataLayerTest {
             }
     }
 
-    @Test
+    @Test // ok
     fun `Mapper functions must not map Entity to Entity`() {
         scope.files
             .withPackage("..data..")
@@ -462,7 +460,7 @@ class DataLayerTest {
 
     @Test // ok
     fun `project types injected into data layer classes must respect feature boundaries`() {
-        val projectPackagePrefix = "io.nicolaszurbuchen.turnstile"
+        val projectPackagePrefix = "io.nicolaszurbuchen.pop_know"
         val classesToCheck = scope.classes()
             .filter { it.name.endsWith("RepositoryImpl") || it.name.endsWith("DataSourceImpl") }
 
