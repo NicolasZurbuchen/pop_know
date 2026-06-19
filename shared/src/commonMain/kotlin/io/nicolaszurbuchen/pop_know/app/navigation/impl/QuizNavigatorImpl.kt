@@ -6,6 +6,7 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.navigation.QuizNav
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.navigation.ResultDestination
 import io.nicolaszurbuchen.pop_know.feature.stats.presentation.navigation.StatsMainDestination
 import io.nicolaszurbuchen.pop_know.infra.navigation.AppNavigator
+import kotlin.time.Clock
 
 class QuizNavigatorImpl(
     private val appNavigator: AppNavigator
@@ -20,7 +21,7 @@ class QuizNavigatorImpl(
 
     override fun onPlayAgain() {
         appNavigator.popUpTo { it is HomeMainDestination }
-        appNavigator.navigateTo(QuizMainDestination)
+        appNavigator.navigateTo(QuizMainDestination(timestamp = Clock.System.now().toEpochMilliseconds()))
     }
 
     override fun navigateToStats() {
