@@ -7,7 +7,7 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result.Resu
 import io.nicolaszurbuchen.pop_know.infra.navigation.NavKeyHandler
 
 class QuizNavKeyHandler(
-    private val navigator: QuizNavigator
+    private val navigator: QuizNavigator,
 ) : NavKeyHandler {
     override fun EntryProviderScope<NavKey>.registerEntries() {
         entry<QuizMainDestination> {

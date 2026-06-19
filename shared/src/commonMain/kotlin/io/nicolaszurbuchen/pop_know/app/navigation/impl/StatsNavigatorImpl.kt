@@ -5,7 +5,7 @@ import io.nicolaszurbuchen.pop_know.feature.stats.presentation.navigation.StatsN
 import io.nicolaszurbuchen.pop_know.infra.navigation.AppNavigator
 
 class StatsNavigatorImpl(
-    private val appNavigator: AppNavigator
+    private val appNavigator: AppNavigator,
 ) : StatsNavigator {
     override fun navigateBack() {
         appNavigator.navigateBack()

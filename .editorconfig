@@ -30,6 +30,9 @@ compose_preview_naming_strategy = suffix
 # Compose — Route pattern (ViewModel forwarding is intentional in Routes)
 compose_allowed_forwarding = .*Route
 
+# Package naming — allow underscores
+ktlint_standard_package-name = disabled
+
 # Compose — unstable collections (enable when ready to adopt ImmutableList)
 # compose_disallow_unstable_collections = true
 

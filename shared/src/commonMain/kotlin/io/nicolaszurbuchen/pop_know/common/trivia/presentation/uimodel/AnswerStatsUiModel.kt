@@ -8,8 +8,9 @@ data class AnswerStatsUiModel(
     val accuracy: Float,
 )
 
-fun AnswerStats.toUiModel() = AnswerStatsUiModel(
-    totalAnswered = totalAnswered,
-    totalCorrect = totalCorrect,
-    accuracy = accuracy,
-)
+fun AnswerStats.toUiModel() =
+    AnswerStatsUiModel(
+        totalAnswered = totalAnswered,
+        totalCorrect = totalCorrect,
+        accuracy = accuracy,
+    )

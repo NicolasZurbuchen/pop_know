@@ -73,9 +73,10 @@ fun StatsScreen(
     onDismissClear: () -> Unit,
 ) {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background),
     ) {
         if (state.isClearDialogOpen) {
             PopKnowConfirmDialog(
@@ -99,18 +100,24 @@ fun StatsScreen(
 
             Box(modifier = Modifier.weight(1f)) {
                 when {
-                    state.isLoading -> Skeleton()
+                    state.isLoading -> {
+                        Skeleton()
+                    }
 
-                    state.error != null -> PopKnowErrorView(
-                        title = state.error.title,
-                        subtitle = state.error.subtitle,
-                        icon = state.error.icon,
-                        onRetry = onRetryClick,
-                    )
+                    state.error != null -> {
+                        PopKnowErrorView(
+                            title = state.error.title,
+                            subtitle = state.error.subtitle,
+                            icon = state.error.icon,
+                            onRetry = onRetryClick,
+                        )
+                    }
 
-                    state.stats != null -> Content(
-                        stats = state.stats,
-                    )
+                    state.stats != null -> {
+                        Content(
+                            stats = state.stats,
+                        )
+                    }
                 }
             }
         }
@@ -118,18 +125,17 @@ fun StatsScreen(
 }
 
 @Composable
-private fun Content(
-    stats: StatsDataUiModel,
-) {
+private fun Content(stats: StatsDataUiModel) {
     LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = MaterialTheme.spacing.md),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(horizontal = MaterialTheme.spacing.md),
     ) {
         item {
             OverallSummary(
                 summary = stats.summary,
-                perDifficulty = stats.perDifficulty
+                perDifficulty = stats.perDifficulty,
             )
         }
 
@@ -137,22 +143,22 @@ private fun Content(
             PopKnowSectionLabel(
                 text = UiText.Resource(Res.string.stats_section_category),
                 showSlashes = false,
-                modifier = Modifier.padding(top = MaterialTheme.spacing.xl)
+                modifier = Modifier.padding(top = MaterialTheme.spacing.xl),
             )
             HorizontalDivider(
                 modifier = Modifier.padding(top = MaterialTheme.spacing.sm),
-                color = MaterialTheme.colorScheme.outline
+                color = MaterialTheme.colorScheme.outline,
             )
         }
 
         itemsIndexed(stats.perCategory) { index, categoryStats ->
             CategoryRow(
                 index = index + 1,
-                stats = categoryStats
+                stats = categoryStats,
             )
             HorizontalDivider(color = MaterialTheme.colorScheme.outline)
         }
-        
+
         item { Spacer(Modifier.height(MaterialTheme.spacing.xl)) }
     }
 }
@@ -160,52 +166,57 @@ private fun Content(
 @Composable
 private fun OverallSummary(
     summary: AnswerStatsUiModel,
-    perDifficulty: List<StatsDifficultyUiModel>
+    perDifficulty: List<StatsDifficultyUiModel>,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = MaterialTheme.spacing.xl),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(top = MaterialTheme.spacing.xl),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
             modifier = Modifier.size(180.dp),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             DifficultyRings(perDifficulty)
         }
 
         Column(
-            modifier = Modifier
-                .padding(start = MaterialTheme.spacing.lg)
-                .weight(1f)
+            modifier =
+                Modifier
+                    .padding(start = MaterialTheme.spacing.lg)
+                    .weight(1f),
         ) {
             PopKnowSectionLabel(
                 text = UiText.Resource(Res.string.stats_overall),
-                showSlashes = false
+                showSlashes = false,
             )
 
             Text(
                 text = "${(summary.accuracy * 100).roundToInt()}%",
-                style = TextStyle(
-                    color = MaterialTheme.colorScheme.onBackground,
-                    fontSize = 72.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = SpaceGroteskFontFamily,
-                )
+                style =
+                    TextStyle(
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontSize = 72.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = SpaceGroteskFontFamily,
+                    ),
             )
 
             Text(
-                text = UiText.Resource(
-                    Res.string.stats_summary_correct,
-                    listOf(summary.totalCorrect, summary.totalAnswered)
-                ).asString().uppercase(),
-                style = TextStyle(
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    fontSize = 14.sp,
-                    fontFamily = JetBrainsMonoFontFamily,
-                    letterSpacing = 1.sp
-                )
+                text =
+                    UiText.Resource(
+                        Res.string.stats_summary_correct,
+                        listOf(summary.totalCorrect, summary.totalAnswered),
+                    ).asString().uppercase(),
+                style =
+                    TextStyle(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        fontSize = 14.sp,
+                        fontFamily = JetBrainsMonoFontFamily,
+                        letterSpacing = 1.sp,
+                    ),
             )
 
             Spacer(Modifier.height(MaterialTheme.spacing.md))
@@ -220,24 +231,25 @@ private fun OverallSummary(
 @Composable
 private fun DifficultyRings(perDifficulty: List<StatsDifficultyUiModel>) {
     val inactiveColor = MaterialTheme.colorScheme.outlineVariant
-    val ringData = perDifficulty.asReversed().map { 
-        it.difficulty.color() to it.answerStats.accuracy 
-    }
+    val ringData =
+        perDifficulty.asReversed().map {
+            it.difficulty.color() to it.answerStats.accuracy
+        }
 
     Canvas(modifier = Modifier.fillMaxSize()) {
         val strokeWidth = 10.dp.toPx()
         val spacing = 8.dp.toPx()
-        
+
         ringData.forEachIndexed { index, (color, accuracy) ->
             val radius = size.minDimension / 2 - (index * (strokeWidth + spacing)) - strokeWidth / 2
-            
+
             // Inactive ring
             drawCircle(
                 color = inactiveColor,
                 radius = radius,
-                style = Stroke(width = strokeWidth)
+                style = Stroke(width = strokeWidth),
             )
-            
+
             // Active arc
             drawArc(
                 color = color,
@@ -246,7 +258,7 @@ private fun DifficultyRings(perDifficulty: List<StatsDifficultyUiModel>) {
                 useCenter = false,
                 style = Stroke(width = strokeWidth, cap = StrokeCap.Round),
                 size = androidx.compose.ui.geometry.Size(radius * 2, radius * 2),
-                topLeft = androidx.compose.ui.geometry.Offset(center.x - radius, center.y - radius)
+                topLeft = androidx.compose.ui.geometry.Offset(center.x - radius, center.y - radius),
             )
         }
     }
@@ -255,55 +267,60 @@ private fun DifficultyRings(perDifficulty: List<StatsDifficultyUiModel>) {
 @Composable
 private fun DifficultySummaryRow(stats: StatsDifficultyUiModel) {
     val accuracy = (stats.answerStats.accuracy * 100).roundToInt()
-    val accuracyColor = when {
-        accuracy >= 80 -> MaterialTheme.popKnowGameColors.correct
-        accuracy >= 50 -> MaterialTheme.popKnowGameColors.difficultyMedium
-        else -> MaterialTheme.popKnowGameColors.wrong
-    }
+    val accuracyColor =
+        when {
+            accuracy >= 80 -> MaterialTheme.popKnowGameColors.correct
+            accuracy >= 50 -> MaterialTheme.popKnowGameColors.difficultyMedium
+            else -> MaterialTheme.popKnowGameColors.wrong
+        }
 
     Row(
         modifier = Modifier.padding(vertical = 2.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
-            modifier = Modifier
-                .size(8.dp)
-                .background(
-                    color = stats.difficulty.color(),
-                    shape = CircleShape,
-                ),
+            modifier =
+                Modifier
+                    .size(8.dp)
+                    .background(
+                        color = stats.difficulty.color(),
+                        shape = CircleShape,
+                    ),
         )
         Spacer(Modifier.width(MaterialTheme.spacing.sm))
         Text(
             text = stats.difficulty.toText().asString().uppercase(),
-            style = TextStyle(
-                color = MaterialTheme.colorScheme.onBackground,
-                fontSize = 12.sp,
-                fontFamily = JetBrainsMonoFontFamily,
-                fontWeight = FontWeight.Bold,
-                letterSpacing = 1.sp
-            ),
-            modifier = Modifier.weight(1f)
+            style =
+                TextStyle(
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontSize = 12.sp,
+                    fontFamily = JetBrainsMonoFontFamily,
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 1.sp,
+                ),
+            modifier = Modifier.weight(1f),
         )
         Text(
             text = "${stats.answerStats.totalCorrect}/${stats.answerStats.totalAnswered}",
-            style = TextStyle(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = 12.sp,
-                fontFamily = JetBrainsMonoFontFamily,
-            )
+            style =
+                TextStyle(
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontSize = 12.sp,
+                    fontFamily = JetBrainsMonoFontFamily,
+                ),
         )
         Spacer(Modifier.width(MaterialTheme.spacing.md))
         Text(
             text = "$accuracy%",
-            style = TextStyle(
-                color = accuracyColor,
-                fontSize = 12.sp,
-                fontFamily = JetBrainsMonoFontFamily,
-                fontWeight = FontWeight.Bold,
-            ),
+            style =
+                TextStyle(
+                    color = accuracyColor,
+                    fontSize = 12.sp,
+                    fontFamily = JetBrainsMonoFontFamily,
+                    fontWeight = FontWeight.Bold,
+                ),
             modifier = Modifier.width(36.dp),
-            textAlign = androidx.compose.ui.text.style.TextAlign.End
+            textAlign = androidx.compose.ui.text.style.TextAlign.End,
         )
     }
 }
@@ -311,60 +328,66 @@ private fun DifficultySummaryRow(stats: StatsDifficultyUiModel) {
 @Composable
 private fun CategoryRow(
     index: Int,
-    stats: StatsCategoryUiModel
+    stats: StatsCategoryUiModel,
 ) {
     val accuracy = (stats.answerStats.accuracy * 100).roundToInt()
-    val accuracyColor = when {
-        accuracy >= 80 -> MaterialTheme.popKnowGameColors.correct
-        accuracy >= 50 -> MaterialTheme.popKnowGameColors.difficultyMedium
-        else -> MaterialTheme.popKnowGameColors.wrong
-    }
+    val accuracyColor =
+        when {
+            accuracy >= 80 -> MaterialTheme.popKnowGameColors.correct
+            accuracy >= 50 -> MaterialTheme.popKnowGameColors.difficultyMedium
+            else -> MaterialTheme.popKnowGameColors.wrong
+        }
 
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = MaterialTheme.spacing.md),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = MaterialTheme.spacing.md),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = index.toString().padStart(2, '0'),
-            style = TextStyle(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = 12.sp,
-                fontFamily = JetBrainsMonoFontFamily,
-            )
+            style =
+                TextStyle(
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontSize = 12.sp,
+                    fontFamily = JetBrainsMonoFontFamily,
+                ),
         )
         Spacer(Modifier.width(MaterialTheme.spacing.md))
         Text(
             text = stats.category.category.uppercase(),
-            style = TextStyle(
-                color = MaterialTheme.colorScheme.onBackground,
-                fontSize = 14.sp,
-                fontFamily = JetBrainsMonoFontFamily,
-                fontWeight = FontWeight.Bold,
-                letterSpacing = 1.sp
-            ),
-            modifier = Modifier.weight(1f)
+            style =
+                TextStyle(
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontSize = 14.sp,
+                    fontFamily = JetBrainsMonoFontFamily,
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 1.sp,
+                ),
+            modifier = Modifier.weight(1f),
         )
         Text(
             text = "${stats.answerStats.totalCorrect}/${stats.answerStats.totalAnswered}",
-            style = TextStyle(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = 12.sp,
-                fontFamily = JetBrainsMonoFontFamily,
-            )
+            style =
+                TextStyle(
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontSize = 12.sp,
+                    fontFamily = JetBrainsMonoFontFamily,
+                ),
         )
         Spacer(Modifier.width(MaterialTheme.spacing.md))
         Text(
             text = "$accuracy%",
-            style = TextStyle(
-                color = accuracyColor,
-                fontSize = 14.sp,
-                fontFamily = JetBrainsMonoFontFamily,
-                fontWeight = FontWeight.Bold,
-            ),
+            style =
+                TextStyle(
+                    color = accuracyColor,
+                    fontSize = 14.sp,
+                    fontFamily = JetBrainsMonoFontFamily,
+                    fontWeight = FontWeight.Bold,
+                ),
             modifier = Modifier.width(48.dp),
-            textAlign = androidx.compose.ui.text.style.TextAlign.End
+            textAlign = androidx.compose.ui.text.style.TextAlign.End,
         )
     }
 }
@@ -387,72 +410,81 @@ private fun Skeleton() {
         )
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = spacing.md),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(horizontal = spacing.md),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = spacing.xl),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = spacing.xl),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(
-                modifier = Modifier
-                    .size(180.dp)
-                    .clip(CircleShape)
-                    .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+                modifier =
+                    Modifier
+                        .size(180.dp)
+                        .clip(CircleShape)
+                        .background(popKnowColors.surface.copy(alpha = shimmerAlpha)),
             )
 
             Column(
-                modifier = Modifier
-                    .padding(start = spacing.lg)
-                    .weight(1f),
-                verticalArrangement = Arrangement.spacedBy(spacing.sm)
+                modifier =
+                    Modifier
+                        .padding(start = spacing.lg)
+                        .weight(1f),
+                verticalArrangement = Arrangement.spacedBy(spacing.sm),
             ) {
                 Box(
-                    modifier = Modifier
-                        .width(80.dp)
-                        .height(20.dp)
-                        .clip(MaterialTheme.shapes.small)
-                        .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+                    modifier =
+                        Modifier
+                            .width(80.dp)
+                            .height(20.dp)
+                            .clip(MaterialTheme.shapes.small)
+                            .background(popKnowColors.surface.copy(alpha = shimmerAlpha)),
                 )
                 Box(
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(72.dp)
-                        .clip(MaterialTheme.shapes.small)
-                        .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+                    modifier =
+                        Modifier
+                            .width(100.dp)
+                            .height(72.dp)
+                            .clip(MaterialTheme.shapes.small)
+                            .background(popKnowColors.surface.copy(alpha = shimmerAlpha)),
                 )
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(20.dp)
-                        .clip(MaterialTheme.shapes.small)
-                        .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(20.dp)
+                            .clip(MaterialTheme.shapes.small)
+                            .background(popKnowColors.surface.copy(alpha = shimmerAlpha)),
                 )
             }
         }
 
         Box(
-            modifier = Modifier
-                .padding(top = spacing.xl)
-                .width(150.dp)
-                .height(20.dp)
-                .clip(MaterialTheme.shapes.small)
-                .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+            modifier =
+                Modifier
+                    .padding(top = spacing.xl)
+                    .width(150.dp)
+                    .height(20.dp)
+                    .clip(MaterialTheme.shapes.small)
+                    .background(popKnowColors.surface.copy(alpha = shimmerAlpha)),
         )
 
         Spacer(Modifier.height(spacing.sm))
 
         repeat(5) {
             Box(
-                modifier = Modifier
-                    .padding(vertical = spacing.xs)
-                    .fillMaxWidth()
-                    .height(48.dp)
-                    .clip(MaterialTheme.shapes.small)
-                    .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+                modifier =
+                    Modifier
+                        .padding(vertical = spacing.xs)
+                        .fillMaxWidth()
+                        .height(48.dp)
+                        .clip(MaterialTheme.shapes.small)
+                        .background(popKnowColors.surface.copy(alpha = shimmerAlpha)),
             )
         }
     }

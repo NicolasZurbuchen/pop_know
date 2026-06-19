@@ -39,9 +39,7 @@ class QuizStoreFactory(
         }
     }
 
-    private inner class ExecutorImpl :
-        CoroutineExecutor<QuizIntent, QuizAction, QuizState, QuizMessage, QuizLabel>() {
-
+    private inner class ExecutorImpl : CoroutineExecutor<QuizIntent, QuizAction, QuizState, QuizMessage, QuizLabel>() {
         private var timerJob: Job? = null
 
         override fun executeAction(action: QuizAction) {
@@ -53,12 +51,30 @@ class QuizStoreFactory(
         override fun executeIntent(intent: QuizIntent) {
             val session = state().session
             when (intent) {
-                is QuizIntent.SelectAnswer -> handleSelectAnswer(session, intent.answer)
-                QuizIntent.Next -> handleNext(session)
-                QuizIntent.SeeResult -> handleSeeResult()
-                QuizIntent.Retry -> performStartQuiz()
-                QuizIntent.DismissInsertionError -> dispatch(QuizMessage.InsertionError(null))
-                is QuizIntent.ShowQuitDialog -> dispatch(QuizMessage.ToggleQuitDialog(intent.show))
+                is QuizIntent.SelectAnswer -> {
+                    handleSelectAnswer(session, intent.answer)
+                }
+
+                QuizIntent.Next -> {
+                    handleNext(session)
+                }
+
+                QuizIntent.SeeResult -> {
+                    handleSeeResult()
+                }
+
+                QuizIntent.Retry -> {
+                    performStartQuiz()
+                }
+
+                QuizIntent.DismissInsertionError -> {
+                    dispatch(QuizMessage.InsertionError(null))
+                }
+
+                is QuizIntent.ShowQuitDialog -> {
+                    dispatch(QuizMessage.ToggleQuitDialog(intent.show))
+                }
+
                 QuizIntent.ConfirmQuit -> {
                     dispatch(QuizMessage.ToggleQuitDialog(false))
                     publish(QuizLabel.NavigateBack)
@@ -71,10 +87,11 @@ class QuizStoreFactory(
             scope.launch {
                 try {
                     val quiz = startQuiz()
-                    val shuffled = quiz.questionStates.map { progress ->
-                        val question = (progress as QuestionProgress.Unanswered).question
-                        (question.incorrectAnswers + question.correctAnswer).shuffled()
-                    }
+                    val shuffled =
+                        quiz.questionStates.map { progress ->
+                            val question = (progress as QuestionProgress.Unanswered).question
+                            (question.incorrectAnswers + question.correctAnswer).shuffled()
+                        }
                     dispatch(QuizMessage.QuizLoaded(quiz, shuffled))
                     startTimer()
                 } catch (e: Exception) {
@@ -84,7 +101,10 @@ class QuizStoreFactory(
             }
         }
 
-        private fun handleSelectAnswer(session: QuizSession?, answer: String?) {
+        private fun handleSelectAnswer(
+            session: QuizSession?,
+            answer: String?,
+        ) {
             if (session == null) return
             if (session.currentQuestion is QuestionProgress.Answered) return
 
@@ -115,46 +135,67 @@ class QuizStoreFactory(
         private fun startTimer() {
             timerJob?.cancel()
             dispatch(QuizMessage.TimerTick(15))
-            timerJob = scope.launch {
-                for (remaining in 14 downTo 0) {
+            timerJob =
+                scope.launch {
+                    for (remaining in 14 downTo 0) {
+                        delay(1000)
+                        dispatch(QuizMessage.TimerTick(remaining))
+                    }
                     delay(1000)
-                    dispatch(QuizMessage.TimerTick(remaining))
+                    handleSelectAnswer(state().session, null)
                 }
-                delay(1000)
-                handleSelectAnswer(state().session, null)
-            }
         }
     }
 
     private object ReducerImpl : Reducer<QuizState, QuizMessage> {
         override fun QuizState.reduce(msg: QuizMessage): QuizState =
             when (msg) {
-                QuizMessage.QuizLoading -> copy(
-                    isLoading = true,
-                    initialError = null,
-                )
-                is QuizMessage.QuizLoaded -> copy(
-                    isLoading = false,
-                    session = msg.session,
-                    shuffledAnswers = msg.shuffledAnswers,
-                    timerSeconds = 15,
-                )
-                is QuizMessage.SessionUpdated -> copy(
-                    session = msg.session,
-                )
-                is QuizMessage.TimerTick -> copy(
-                    timerSeconds = msg.secondsRemaining,
-                )
-                is QuizMessage.ErrorOccurred -> copy(
-                    isLoading = false,
-                    initialError = msg.error,
-                )
-                is QuizMessage.InsertionError -> copy(
-                    insertionError = msg.error,
-                )
-                is QuizMessage.ToggleQuitDialog -> copy(
-                    isQuitDialogOpen = msg.show,
-                )
+                QuizMessage.QuizLoading -> {
+                    copy(
+                        isLoading = true,
+                        initialError = null,
+                    )
+                }
+
+                is QuizMessage.QuizLoaded -> {
+                    copy(
+                        isLoading = false,
+                        session = msg.session,
+                        shuffledAnswers = msg.shuffledAnswers,
+                        timerSeconds = 15,
+                    )
+                }
+
+                is QuizMessage.SessionUpdated -> {
+                    copy(
+                        session = msg.session,
+                    )
+                }
+
+                is QuizMessage.TimerTick -> {
+                    copy(
+                        timerSeconds = msg.secondsRemaining,
+                    )
+                }
+
+                is QuizMessage.ErrorOccurred -> {
+                    copy(
+                        isLoading = false,
+                        initialError = msg.error,
+                    )
+                }
+
+                is QuizMessage.InsertionError -> {
+                    copy(
+                        insertionError = msg.error,
+                    )
+                }
+
+                is QuizMessage.ToggleQuitDialog -> {
+                    copy(
+                        isQuitDialogOpen = msg.show,
+                    )
+                }
             }
     }
 }

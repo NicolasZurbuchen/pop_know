@@ -39,10 +39,11 @@ fun PopKnowPrimaryButton(
         enabled = enabled,
         modifier = buttonModifier.height(56.dp),
         shape = MaterialTheme.shapes.extraLarge,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
-        ),
+        colors =
+            ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+            ),
     ) {
         Row(
             modifier = if (isFullWidth) Modifier.fillMaxWidth() else Modifier,
@@ -51,14 +52,15 @@ fun PopKnowPrimaryButton(
         ) {
             Text(
                 text = text.asString().uppercase(),
-                style = TextStyle(
-                    color = MaterialTheme.colorScheme.background,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = SpaceGroteskFontFamily,
-                    letterSpacing = 0.sp,
-                    lineHeight = 27.sp,
-                ),
+                style =
+                    TextStyle(
+                        color = MaterialTheme.colorScheme.background,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = SpaceGroteskFontFamily,
+                        letterSpacing = 0.sp,
+                        lineHeight = 27.sp,
+                    ),
             )
             if (showArrow) {
                 Icon(

@@ -6,7 +6,7 @@ import io.nicolaszurbuchen.pop_know.feature.home.presentation.screen.home.HomeRo
 import io.nicolaszurbuchen.pop_know.infra.navigation.NavKeyHandler
 
 class HomeNavKeyHandler(
-    private val navigator: HomeNavigator
+    private val navigator: HomeNavigator,
 ) : NavKeyHandler {
     override fun EntryProviderScope<NavKey>.registerEntries() {
         entry<HomeMainDestination> {

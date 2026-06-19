@@ -10,29 +10,28 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.dto.Triv
 class QuizRemoteDataSourceImpl(
     private val api: QuizApi,
 ) : QuizRemoteDataSource {
-
-    override suspend fun fetchCategories(): List<CategoryDto> {
-        return try {
+    override suspend fun fetchCategories(): List<CategoryDto> =
+        try {
             api.getCategories().triviaCategories
         } catch (_: Exception) {
             throw AppException(AppError.Network.Unavailable)
         }
-    }
 
     override suspend fun fetchQuestions(
         amount: Int,
         categoryId: Int?,
-        difficulty: String?
-    ): List<TriviaQuestionDto> {
-        return try {
-            val response = api.getQuestions(
-                amount = amount,
-                categoryId = categoryId,
-                difficulty = difficulty,
-            )
+        difficulty: String?,
+    ): List<TriviaQuestionDto> =
+        try {
+            val response =
+                api.getQuestions(
+                    amount = amount,
+                    categoryId = categoryId,
+                    difficulty = difficulty,
+                )
             if (response.responseCode != 0) {
                 throw AppException(
-                    response.responseCode.toAppError()
+                    response.responseCode.toAppError(),
                 )
             }
             response.results
@@ -41,5 +40,4 @@ class QuizRemoteDataSourceImpl(
         } catch (_: Exception) {
             throw AppException(AppError.Network.Unavailable)
         }
-    }
 }

@@ -5,5 +5,5 @@ import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.AnswerStats
 data class FullStats(
     val summary: AnswerStats,
     val perCategory: List<CategoryStats>,
-    val perDifficulty: List<DifficultyStats>
+    val perDifficulty: List<DifficultyStats>,
 )

@@ -17,9 +17,10 @@ class QuizViewModel(
     private val store = factory.create()
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val state: StateFlow<QuizUiModel> = store.stateFlow
-        .map { it.toUiModel() }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), QuizState().toUiModel())
+    val state: StateFlow<QuizUiModel> =
+        store.stateFlow
+            .map { it.toUiModel() }
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), QuizState().toUiModel())
 
     val labels: Flow<QuizLabel> = store.labels
 

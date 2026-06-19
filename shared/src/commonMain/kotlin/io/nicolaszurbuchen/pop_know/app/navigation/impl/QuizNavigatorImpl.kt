@@ -9,7 +9,7 @@ import io.nicolaszurbuchen.pop_know.infra.navigation.AppNavigator
 import kotlin.time.Clock
 
 class QuizNavigatorImpl(
-    private val appNavigator: AppNavigator
+    private val appNavigator: AppNavigator,
 ) : QuizNavigator {
     override fun navigateToResult() {
         appNavigator.navigateTo(ResultDestination)

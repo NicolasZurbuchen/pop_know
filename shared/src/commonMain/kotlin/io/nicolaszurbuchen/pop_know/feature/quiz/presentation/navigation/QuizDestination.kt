@@ -8,7 +8,7 @@ sealed interface QuizDestination : NavKey
 
 @Serializable
 internal data class QuizMainDestination(
-    val timestamp: Long = 0L
+    val timestamp: Long = 0L,
 ) : QuizDestination
 
 @Serializable

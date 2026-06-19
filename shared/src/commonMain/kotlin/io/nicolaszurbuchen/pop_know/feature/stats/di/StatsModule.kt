@@ -14,15 +14,16 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val statsModule = module {
-    singleOf(::StatsLocalDataSourceImpl) bind StatsLocalDataSource::class
+val statsModule =
+    module {
+        singleOf(::StatsLocalDataSourceImpl) bind StatsLocalDataSource::class
 
-    singleOf(::StatsRepositoryImpl) bind StatsRepository::class
+        singleOf(::StatsRepositoryImpl) bind StatsRepository::class
 
-    factoryOf(::GetFullStatsUseCase)
-    factoryOf(::ClearStatsUseCase)
+        factoryOf(::GetFullStatsUseCase)
+        factoryOf(::ClearStatsUseCase)
 
-    factoryOf(::StatsStoreFactory)
+        factoryOf(::StatsStoreFactory)
 
-    viewModelOf(::StatsViewModel)
-}
+        viewModelOf(::StatsViewModel)
+    }

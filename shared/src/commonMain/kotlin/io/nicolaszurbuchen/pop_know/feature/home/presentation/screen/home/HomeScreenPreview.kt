@@ -13,35 +13,38 @@ import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.AnswerSta
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 
 class HomeUiModelProvider : PreviewParameterProvider<HomeUiModel> {
-    override val values = sequenceOf(
-        HomeUiModel(isLoading = true, error = null, stats = null, hasHistory = false),
-        HomeUiModel(
-            isLoading = false,
-            error = null,
-            stats = AnswerStatsUiModel(
-                totalAnswered = 10,
-                totalCorrect = 8,
-                accuracy = 0.8f,
+    override val values =
+        sequenceOf(
+            HomeUiModel(isLoading = true, error = null, stats = null, hasHistory = false),
+            HomeUiModel(
+                isLoading = false,
+                error = null,
+                stats =
+                    AnswerStatsUiModel(
+                        totalAnswered = 10,
+                        totalCorrect = 8,
+                        accuracy = 0.8f,
+                    ),
+                hasHistory = true,
             ),
-            hasHistory = true,
-        ),
-        HomeUiModel(
-            isLoading = false,
-            error = AppErrorUiModel(
-                title = UiText.Raw("Database connection lost"),
-                subtitle = UiText.Raw("Please check your internet connection or try again later."),
-                icon = Icons.Outlined.Storage,
+            HomeUiModel(
+                isLoading = false,
+                error =
+                    AppErrorUiModel(
+                        title = UiText.Raw("Database connection lost"),
+                        subtitle = UiText.Raw("Please check your internet connection or try again later."),
+                        icon = Icons.Outlined.Storage,
+                    ),
+                stats = null,
+                hasHistory = false,
             ),
-            stats = null,
-            hasHistory = false,
-        ),
-    )
+        )
 }
 
 @Preview(name = "Light Mode", showBackground = true)
 @Preview(name = "Dark Mode", showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
-fun HomeScreenPreview(
+private fun HomeScreenPreview(
     @PreviewParameter(HomeUiModelProvider::class) state: HomeUiModel,
 ) {
     PopKnowTheme {

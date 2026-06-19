@@ -24,59 +24,79 @@ import popknow.shared.generated.resources.error_trivia_rate_limit_subtitle
 import popknow.shared.generated.resources.error_unexpected_subtitle
 import popknow.shared.generated.resources.error_unexpected_title
 
-fun AppError.toUiModel(): AppErrorUiModel = when (this) {
-    is AppError.Network.Unavailable -> AppErrorUiModel(
-        title = UiText.Resource(Res.string.error_network_unavailable_title),
-        subtitle = UiText.Resource(Res.string.error_network_unavailable_subtitle),
-        icon = Icons.Outlined.WifiOff,
-    )
+fun AppError.toUiModel(): AppErrorUiModel =
+    when (this) {
+        is AppError.Network.Unavailable -> {
+            AppErrorUiModel(
+                title = UiText.Resource(Res.string.error_network_unavailable_title),
+                subtitle = UiText.Resource(Res.string.error_network_unavailable_subtitle),
+                icon = Icons.Outlined.WifiOff,
+            )
+        }
 
-    is AppError.Network.Timeout -> AppErrorUiModel(
-        title = UiText.Resource(Res.string.error_network_timeout_title),
-        subtitle = UiText.Resource(Res.string.error_network_timeout_subtitle),
-        icon = Icons.Outlined.WifiOff,
-    )
+        is AppError.Network.Timeout -> {
+            AppErrorUiModel(
+                title = UiText.Resource(Res.string.error_network_timeout_title),
+                subtitle = UiText.Resource(Res.string.error_network_timeout_subtitle),
+                icon = Icons.Outlined.WifiOff,
+            )
+        }
 
-    is AppError.Network.Http -> AppErrorUiModel(
-        title = UiText.Resource(Res.string.error_network_http_title),
-        subtitle = serverMessage?.let { UiText.Raw(it) }
-            ?: UiText.Resource(Res.string.error_network_http_subtitle_default),
-        icon = Icons.Outlined.WifiOff,
-    )
+        is AppError.Network.Http -> {
+            AppErrorUiModel(
+                title = UiText.Resource(Res.string.error_network_http_title),
+                subtitle =
+                    serverMessage?.let { UiText.Raw(it) }
+                        ?: UiText.Resource(Res.string.error_network_http_subtitle_default),
+                icon = Icons.Outlined.WifiOff,
+            )
+        }
 
-    is AppError.Database.QueryFailed -> AppErrorUiModel(
-        title = UiText.Resource(Res.string.error_database_query_failed_title),
-        subtitle = UiText.Resource(Res.string.error_database_generic_subtitle),
-        icon = Icons.Outlined.Storage,
-    )
+        is AppError.Database.QueryFailed -> {
+            AppErrorUiModel(
+                title = UiText.Resource(Res.string.error_database_query_failed_title),
+                subtitle = UiText.Resource(Res.string.error_database_generic_subtitle),
+                icon = Icons.Outlined.Storage,
+            )
+        }
 
-    is AppError.Database.InsertFailed -> AppErrorUiModel(
-        title = UiText.Resource(Res.string.error_database_insert_failed_title),
-        subtitle = UiText.Resource(Res.string.error_database_generic_subtitle),
-        icon = Icons.Outlined.Storage,
-    )
+        is AppError.Database.InsertFailed -> {
+            AppErrorUiModel(
+                title = UiText.Resource(Res.string.error_database_insert_failed_title),
+                subtitle = UiText.Resource(Res.string.error_database_generic_subtitle),
+                icon = Icons.Outlined.Storage,
+            )
+        }
 
-    is AppError.Trivia.NoResults -> AppErrorUiModel(
-        title = UiText.Resource(Res.string.error_trivia_no_results_title),
-        subtitle = UiText.Resource(Res.string.error_trivia_no_results_subtitle),
-        icon = Icons.AutoMirrored.Outlined.HelpOutline,
-    )
+        is AppError.Trivia.NoResults -> {
+            AppErrorUiModel(
+                title = UiText.Resource(Res.string.error_trivia_no_results_title),
+                subtitle = UiText.Resource(Res.string.error_trivia_no_results_subtitle),
+                icon = Icons.AutoMirrored.Outlined.HelpOutline,
+            )
+        }
 
-    is AppError.Trivia.InvalidParameter -> AppErrorUiModel(
-        title = UiText.Resource(Res.string.error_trivia_generic_title),
-        subtitle = UiText.Resource(Res.string.error_trivia_invalid_parameter_subtitle),
-        icon = Icons.AutoMirrored.Outlined.HelpOutline,
-    )
+        is AppError.Trivia.InvalidParameter -> {
+            AppErrorUiModel(
+                title = UiText.Resource(Res.string.error_trivia_generic_title),
+                subtitle = UiText.Resource(Res.string.error_trivia_invalid_parameter_subtitle),
+                icon = Icons.AutoMirrored.Outlined.HelpOutline,
+            )
+        }
 
-    is AppError.Trivia.RateLimit -> AppErrorUiModel(
-        title = UiText.Resource(Res.string.error_trivia_generic_title),
-        subtitle = UiText.Resource(Res.string.error_trivia_rate_limit_subtitle),
-        icon = Icons.AutoMirrored.Outlined.HelpOutline,
-    )
+        is AppError.Trivia.RateLimit -> {
+            AppErrorUiModel(
+                title = UiText.Resource(Res.string.error_trivia_generic_title),
+                subtitle = UiText.Resource(Res.string.error_trivia_rate_limit_subtitle),
+                icon = Icons.AutoMirrored.Outlined.HelpOutline,
+            )
+        }
 
-    is AppError.Unexpected -> AppErrorUiModel(
-        title = UiText.Resource(Res.string.error_unexpected_title),
-        subtitle = UiText.Resource(Res.string.error_unexpected_subtitle),
-        icon = Icons.Outlined.ErrorOutline,
-    )
-}
+        is AppError.Unexpected -> {
+            AppErrorUiModel(
+                title = UiText.Resource(Res.string.error_unexpected_title),
+                subtitle = UiText.Resource(Res.string.error_unexpected_subtitle),
+                icon = Icons.Outlined.ErrorOutline,
+            )
+        }
+    }

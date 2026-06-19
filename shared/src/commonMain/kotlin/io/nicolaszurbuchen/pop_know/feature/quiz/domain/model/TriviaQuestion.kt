@@ -10,5 +10,5 @@ data class TriviaQuestion(
     val category: Category,
     val question: String,
     val correctAnswer: String,
-    val incorrectAnswers: List<String>
+    val incorrectAnswers: List<String>,
 )

@@ -44,27 +44,29 @@ fun PopKnowTopBar(
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(TopAppBarDefaults.MediumAppBarCollapsedHeight)
-                .padding(
-                    horizontal = MaterialTheme.spacing.md,
-                    vertical = MaterialTheme.spacing.sm,
-                ),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(TopAppBarDefaults.MediumAppBarCollapsedHeight)
+                    .padding(
+                        horizontal = MaterialTheme.spacing.md,
+                        vertical = MaterialTheme.spacing.sm,
+                    ),
         ) {
             Row(
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .then(
-                        if (onBack != null) {
-                            Modifier
-                                .clip(MaterialTheme.shapes.small)
-                                .clickable(onClick = onBack)
-                                .padding(vertical = 4.dp)
-                        } else {
-                            Modifier
-                        }
-                    ),
+                modifier =
+                    Modifier
+                        .align(Alignment.CenterStart)
+                        .then(
+                            if (onBack != null) {
+                                Modifier
+                                    .clip(MaterialTheme.shapes.small)
+                                    .clickable(onClick = onBack)
+                                    .padding(vertical = 4.dp)
+                            } else {
+                                Modifier
+                            },
+                        ),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 if (onBack != null) {
@@ -81,25 +83,27 @@ fun PopKnowTopBar(
             center?.let {
                 PopKnowTopBarText(
                     text = it.asString(),
-                    modifier = Modifier
-                        .align(Alignment.Center),
+                    modifier =
+                        Modifier
+                            .align(Alignment.Center),
                 )
             }
             right?.let {
                 PopKnowTopBarText(
                     text = it.asString(),
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .then(
-                            if (onRightClick != null) {
-                                Modifier
-                                    .clip(MaterialTheme.shapes.small)
-                                    .clickable(onClick = onRightClick)
-                                    .padding(vertical = 4.dp, horizontal = 4.dp)
-                            } else {
-                                Modifier
-                            }
-                        ),
+                    modifier =
+                        Modifier
+                            .align(Alignment.CenterEnd)
+                            .then(
+                                if (onRightClick != null) {
+                                    Modifier
+                                        .clip(MaterialTheme.shapes.small)
+                                        .clickable(onClick = onRightClick)
+                                        .padding(vertical = 4.dp, horizontal = 4.dp)
+                                } else {
+                                    Modifier
+                                },
+                            ),
                 )
             }
         }
@@ -116,14 +120,15 @@ private fun PopKnowTopBarText(
 ) {
     Text(
         text = text.uppercase(),
-        style = TextStyle(
-            color = MaterialTheme.colorScheme.onBackground,
-            fontSize = 11.sp,
-            fontWeight = FontWeight.SemiBold,
-            fontFamily = JetBrainsMonoFontFamily,
-            letterSpacing = 1.5.sp,
-            lineHeight = 16.sp,
-        ),
+        style =
+            TextStyle(
+                color = MaterialTheme.colorScheme.onBackground,
+                fontSize = 11.sp,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = JetBrainsMonoFontFamily,
+                letterSpacing = 1.5.sp,
+                lineHeight = 16.sp,
+            ),
         modifier = modifier,
     )
 }

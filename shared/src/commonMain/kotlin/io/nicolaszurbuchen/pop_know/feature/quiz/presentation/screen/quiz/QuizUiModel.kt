@@ -56,46 +56,49 @@ enum class AnswerStatusUiModel {
     TIMEOUT,
 }
 
-fun AnswerStatus.toUiModel() = when (this) {
-    AnswerStatus.CORRECT -> CORRECT
-    AnswerStatus.INCORRECT -> INCORRECT
-    AnswerStatus.TIMEOUT -> TIMEOUT
-}
+fun AnswerStatus.toUiModel() =
+    when (this) {
+        AnswerStatus.CORRECT -> CORRECT
+        AnswerStatus.INCORRECT -> INCORRECT
+        AnswerStatus.TIMEOUT -> TIMEOUT
+    }
 
-fun AnswerStatusUiModel.toLabel(): UiText = when (this) {
-    CORRECT -> UiText.Resource(Res.string.quiz_quiz_label_pointsWon)
-    INCORRECT -> UiText.Resource(Res.string.quiz_quiz_label_pointsLost)
-    TIMEOUT -> UiText.Resource(Res.string.quiz_quiz_label_timedOut)
-}
+fun AnswerStatusUiModel.toLabel(): UiText =
+    when (this) {
+        CORRECT -> UiText.Resource(Res.string.quiz_quiz_label_pointsWon)
+        INCORRECT -> UiText.Resource(Res.string.quiz_quiz_label_pointsLost)
+        TIMEOUT -> UiText.Resource(Res.string.quiz_quiz_label_timedOut)
+    }
 
-fun AnswerStatusUiModel.toHeadline(): UiText = when (this) {
-    CORRECT -> UiText.Resource(Res.string.quiz_headline_nice)
-    INCORRECT -> UiText.Resource(Res.string.quiz_headline_nope)
-    TIMEOUT -> UiText.Resource(Res.string.quiz_headline_slow)
-}
-
-@Composable
-@ReadOnlyComposable
-fun AnswerStatusUiModel.backgroundColor(): Color = when (this) {
-    CORRECT -> MaterialTheme.popKnowGameColors.correct
-    INCORRECT -> MaterialTheme.popKnowGameColors.wrong
-    TIMEOUT -> MaterialTheme.popKnowGameColors.timeout
-}
+fun AnswerStatusUiModel.toHeadline(): UiText =
+    when (this) {
+        CORRECT -> UiText.Resource(Res.string.quiz_headline_nice)
+        INCORRECT -> UiText.Resource(Res.string.quiz_headline_nope)
+        TIMEOUT -> UiText.Resource(Res.string.quiz_headline_slow)
+    }
 
 @Composable
 @ReadOnlyComposable
-fun AnswerStatusUiModel.contentColor(): Color = when (this) {
-    CORRECT -> MaterialTheme.popKnowGameColors.onCorrect
-    INCORRECT -> MaterialTheme.popKnowGameColors.onWrong
-    TIMEOUT -> MaterialTheme.popKnowGameColors.onTimeout
-}
+fun AnswerStatusUiModel.backgroundColor(): Color =
+    when (this) {
+        CORRECT -> MaterialTheme.popKnowGameColors.correct
+        INCORRECT -> MaterialTheme.popKnowGameColors.wrong
+        TIMEOUT -> MaterialTheme.popKnowGameColors.timeout
+    }
 
 @Composable
 @ReadOnlyComposable
-fun QuizChoiceUiModel.backgroundColor(): Color =
-    status?.backgroundColor() ?: MaterialTheme.colorScheme.background
+fun AnswerStatusUiModel.contentColor(): Color =
+    when (this) {
+        CORRECT -> MaterialTheme.popKnowGameColors.onCorrect
+        INCORRECT -> MaterialTheme.popKnowGameColors.onWrong
+        TIMEOUT -> MaterialTheme.popKnowGameColors.onTimeout
+    }
 
 @Composable
 @ReadOnlyComposable
-fun QuizChoiceUiModel.contentColor(): Color =
-    status?.contentColor() ?: MaterialTheme.colorScheme.onBackground
+fun QuizChoiceUiModel.backgroundColor(): Color = status?.backgroundColor() ?: MaterialTheme.colorScheme.background
+
+@Composable
+@ReadOnlyComposable
+fun QuizChoiceUiModel.contentColor(): Color = status?.contentColor() ?: MaterialTheme.colorScheme.onBackground

@@ -78,9 +78,10 @@ fun QuizScreen(
     onConfirmQuit: () -> Unit,
 ) {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background),
     ) {
         if (state.isQuitDialogOpen) {
             PopKnowConfirmDialog(
@@ -89,42 +90,48 @@ fun QuizScreen(
                 confirmText = UiText.Resource(Res.string.quiz_quit_dialog_confirm).asString(),
                 dismissText = UiText.Resource(Res.string.common_cancel).asString(),
                 onConfirm = onConfirmQuit,
-                onDismiss = { onShowQuitDialog(false) }
+                onDismiss = { onShowQuitDialog(false) },
             )
         }
 
         when {
-            state.isLoading -> Skeleton()
+            state.isLoading -> {
+                Skeleton()
+            }
 
-            state.initialError != null -> PopKnowErrorView(
-                title = state.initialError.title,
-                subtitle = state.initialError.subtitle,
-                icon = state.initialError.icon,
-                onRetry = onRetryClick,
-            )
-
-            state.quizData != null -> Column {
-                PopKnowTopBar(
-                    left = UiText.Resource(Res.string.quiz_appbar_left),
-                    center = UiText.Resource(Res.string.quiz_appbar_center),
-                    right = UiText.Resource(Res.string.quiz_appbar_right),
-                    backIcon = Icons.Default.Close,
-                    onBack = { onShowQuitDialog(true) }
+            state.initialError != null -> {
+                PopKnowErrorView(
+                    title = state.initialError.title,
+                    subtitle = state.initialError.subtitle,
+                    icon = state.initialError.icon,
+                    onRetry = onRetryClick,
                 )
-                state.insertionError?.let {
-                    PopKnowErrorBanner(
-                        text = state.insertionError.title,
-                        icon = state.insertionError.icon,
-                        onRetry = null,
-                        onDismiss = onDismissInsertionErrorClick
+            }
+
+            state.quizData != null -> {
+                Column {
+                    PopKnowTopBar(
+                        left = UiText.Resource(Res.string.quiz_appbar_left),
+                        center = UiText.Resource(Res.string.quiz_appbar_center),
+                        right = UiText.Resource(Res.string.quiz_appbar_right),
+                        backIcon = Icons.Default.Close,
+                        onBack = { onShowQuitDialog(true) },
+                    )
+                    state.insertionError?.let {
+                        PopKnowErrorBanner(
+                            text = state.insertionError.title,
+                            icon = state.insertionError.icon,
+                            onRetry = null,
+                            onDismiss = onDismissInsertionErrorClick,
+                        )
+                    }
+                    SessionContent(
+                        ui = state.quizData,
+                        onSelectAnswer = onSelectAnswer,
+                        onNextClick = onNextClick,
+                        onSeeResultClick = onSeeResultClick,
                     )
                 }
-                SessionContent(
-                    ui = state.quizData,
-                    onSelectAnswer = onSelectAnswer,
-                    onNextClick = onNextClick,
-                    onSeeResultClick = onSeeResultClick,
-                )
             }
         }
     }
@@ -139,13 +146,14 @@ private fun SessionContent(
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         Column(
-            modifier = Modifier
-                .weight(1f)
-                .verticalScroll(rememberScrollState())
-                .padding(
-                    horizontal = MaterialTheme.spacing.md,
-                    vertical = MaterialTheme.spacing.md,
-                ),
+            modifier =
+                Modifier
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState())
+                    .padding(
+                        horizontal = MaterialTheme.spacing.md,
+                        vertical = MaterialTheme.spacing.md,
+                    ),
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.md),
         ) {
             StoryBar(
@@ -179,9 +187,10 @@ private fun SessionContent(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 repeat(3) {
                     Box(
-                        modifier = Modifier
-                            .size(8.dp)
-                            .background(ui.difficulty.color(), CircleShape),
+                        modifier =
+                            Modifier
+                                .size(8.dp)
+                                .background(ui.difficulty.color(), CircleShape),
                     )
                     Spacer(Modifier.width(MaterialTheme.spacing.xs))
                 }
@@ -222,7 +231,10 @@ private fun SessionContent(
 }
 
 @Composable
-private fun Timer(seconds: Int, maxSeconds: Int) {
+private fun Timer(
+    seconds: Int,
+    maxSeconds: Int,
+) {
     val animatedFraction by animateFloatAsState(
         targetValue = seconds.toFloat() / maxSeconds.toFloat().coerceAtLeast(1f),
         animationSpec = tween(durationMillis = 1000, easing = LinearEasing),
@@ -280,19 +292,20 @@ private fun Answers(
     val contentColor = choice.contentColor()
 
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .then(
-                if (showBorder) {
-                    Modifier.border(1.5.dp, MaterialTheme.colorScheme.outline, MaterialTheme.shapes.medium)
-                } else {
-                    Modifier
-                }
-            )
-            .clip(MaterialTheme.shapes.medium)
-            .background(backgroundColor)
-            .clickable(enabled = !isAnswered) { onSelect() }
-            .padding(horizontal = MaterialTheme.spacing.md, vertical = MaterialTheme.spacing.md),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .then(
+                    if (showBorder) {
+                        Modifier.border(1.5.dp, MaterialTheme.colorScheme.outline, MaterialTheme.shapes.medium)
+                    } else {
+                        Modifier
+                    },
+                )
+                .clip(MaterialTheme.shapes.medium)
+                .background(backgroundColor)
+                .clickable(enabled = !isAnswered) { onSelect() }
+                .padding(horizontal = MaterialTheme.spacing.md, vertical = MaterialTheme.spacing.md),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
@@ -301,9 +314,10 @@ private fun Answers(
             horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.md),
         ) {
             Box(
-                modifier = Modifier
-                    .size(32.dp)
-                    .border(1.5.dp, contentColor, CircleShape),
+                modifier =
+                    Modifier
+                        .size(32.dp)
+                        .border(1.5.dp, contentColor, CircleShape),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
@@ -341,17 +355,19 @@ private fun StoryBar(
         repeat(totalQuestions) { index ->
             val fillFraction = if (index <= currentIndex) 1f else 0f
             Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(3.dp)
-                    .clip(CircleShape)
-                    .background(trackColor),
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .height(3.dp)
+                        .clip(CircleShape)
+                        .background(trackColor),
             ) {
                 Box(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .fillMaxWidth(fillFraction)
-                        .background(neonColor),
+                    modifier =
+                        Modifier
+                            .fillMaxHeight()
+                            .fillMaxWidth(fillFraction)
+                            .background(neonColor),
                 )
             }
         }
@@ -369,10 +385,11 @@ private fun ResultBar(
     val barContentColor = resultChoice.contentColor()
 
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(barColor)
-            .padding(horizontal = MaterialTheme.spacing.md, vertical = MaterialTheme.spacing.lg),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .background(barColor)
+                .padding(horizontal = MaterialTheme.spacing.md, vertical = MaterialTheme.spacing.lg),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -393,10 +410,11 @@ private fun ResultBar(
                 if (isLastQuestion) onSeeResultClick() else onNextClick()
             },
             shape = MaterialTheme.shapes.extraLarge,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.popKnowColors.textPrimary,
-                contentColor = MaterialTheme.popKnowColors.background,
-            ),
+            colors =
+                ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.popKnowColors.textPrimary,
+                    contentColor = MaterialTheme.popKnowColors.background,
+                ),
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,

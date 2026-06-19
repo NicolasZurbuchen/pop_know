@@ -32,8 +32,7 @@ class ResultStoreFactory(
         }
     }
 
-    private inner class ExecutorImpl :
-        CoroutineExecutor<ResultIntent, ResultAction, ResultState, ResultMessage, ResultLabel>() {
+    private inner class ExecutorImpl : CoroutineExecutor<ResultIntent, ResultAction, ResultState, ResultMessage, ResultLabel>() {
         override fun executeAction(action: ResultAction) {
             when (action) {
                 ResultAction.LoadResult -> loadResult()
@@ -65,20 +64,26 @@ class ResultStoreFactory(
     private object ReducerImpl : Reducer<ResultState, ResultMessage> {
         override fun ResultState.reduce(msg: ResultMessage): ResultState =
             when (msg) {
-                ResultMessage.ResultLoading -> copy(
-                    isLoading = true,
-                    error = null,
-                )
+                ResultMessage.ResultLoading -> {
+                    copy(
+                        isLoading = true,
+                        error = null,
+                    )
+                }
 
-                is ResultMessage.ResultLoaded -> copy(
-                    isLoading = false,
-                    content = msg.result,
-                )
+                is ResultMessage.ResultLoaded -> {
+                    copy(
+                        isLoading = false,
+                        content = msg.result,
+                    )
+                }
 
-                is ResultMessage.Error -> copy(
-                    isLoading = false,
-                    error = msg.error,
-                )
+                is ResultMessage.Error -> {
+                    copy(
+                        isLoading = false,
+                        error = msg.error,
+                    )
+                }
             }
     }
 }

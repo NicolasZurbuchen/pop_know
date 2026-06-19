@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.combine
 class HomeRepositoryImpl(
     private val localDataSource: HomeLocalDataSource,
 ) : HomeRepository {
-
     override fun observeAnswerStats(): Flow<AnswerStats?> =
         combine(
             localDataSource.observeCountAll(),

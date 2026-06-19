@@ -34,11 +34,9 @@ class HomeStoreFactory(
         }
     }
 
-    private inner class ExecutorImpl :
-        CoroutineExecutor<HomeIntent, HomeAction, HomeState, HomeMessage, HomeLabel>() {
-        
+    private inner class ExecutorImpl : CoroutineExecutor<HomeIntent, HomeAction, HomeState, HomeMessage, HomeLabel>() {
         private var loadStatsJob: Job? = null
-        
+
         override fun executeAction(action: HomeAction) {
             when (action) {
                 HomeAction.LoadStats -> loadStats()
@@ -56,31 +54,37 @@ class HomeStoreFactory(
 
         private fun loadStats() {
             loadStatsJob?.cancel()
-            loadStatsJob = scope.launch {
-                try {
-                    getAnswerStats().collect { stats ->
-                        dispatch(HomeMessage.StatsLoaded(stats))
+            loadStatsJob =
+                scope.launch {
+                    try {
+                        getAnswerStats().collect { stats ->
+                            dispatch(HomeMessage.StatsLoaded(stats))
+                        }
+                    } catch (e: Exception) {
+                        val error = (e as? AppException)?.error ?: AppError.Unexpected(e)
+                        dispatch(HomeMessage.Error(error))
                     }
-                } catch (e: Exception) {
-                    val error = (e as? AppException)?.error ?: AppError.Unexpected(e)
-                    dispatch(HomeMessage.Error(error))
                 }
-            }
         }
     }
 
     private object ReducerImpl : Reducer<HomeState, HomeMessage> {
         override fun HomeState.reduce(msg: HomeMessage): HomeState =
             when (msg) {
-                is HomeMessage.StatsLoaded -> copy(
-                    isLoading = false,
-                    stats = msg.stats,
-                    error = null,
-                )
-                is HomeMessage.Error -> copy(
-                    isLoading = false,
-                    error = msg.error,
-                )
+                is HomeMessage.StatsLoaded -> {
+                    copy(
+                        isLoading = false,
+                        stats = msg.stats,
+                        error = null,
+                    )
+                }
+
+                is HomeMessage.Error -> {
+                    copy(
+                        isLoading = false,
+                        error = msg.error,
+                    )
+                }
             }
     }
 }

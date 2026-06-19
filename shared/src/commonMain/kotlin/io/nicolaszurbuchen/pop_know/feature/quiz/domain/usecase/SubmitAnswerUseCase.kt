@@ -9,7 +9,10 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.domain.repository.QuizRepositor
 class SubmitAnswerUseCase(
     private val repository: QuizRepository,
 ) {
-    suspend operator fun invoke(session: QuizSession, answer: String?): QuizSession {
+    suspend operator fun invoke(
+        session: QuizSession,
+        answer: String?,
+    ): QuizSession {
         val nextSession = session.submitAnswer(answer)
         val answered = nextSession.currentQuestion as? QuestionProgress.Answered ?: return nextSession
 

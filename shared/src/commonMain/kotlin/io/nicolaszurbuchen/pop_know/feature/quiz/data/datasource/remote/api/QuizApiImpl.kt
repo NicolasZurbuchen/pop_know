@@ -10,17 +10,16 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.dto.Triv
 class QuizApiImpl(
     private val client: HttpClient,
 ) : QuizApi {
-
     override suspend fun getQuestions(
         amount: Int,
         categoryId: Int?,
-        difficulty: String?
-    ): TriviaResponseDto = client.get("api.php") {
-        parameter("amount", amount)
-        categoryId?.let { parameter("category", it) }
-        difficulty?.let { parameter("difficulty", it) }
-    }.body()
+        difficulty: String?,
+    ): TriviaResponseDto =
+        client.get("api.php") {
+            parameter("amount", amount)
+            categoryId?.let { parameter("category", it) }
+            difficulty?.let { parameter("difficulty", it) }
+        }.body()
 
-    override suspend fun getCategories(): CategoryResponseDto =
-        client.get("api_category.php").body()
+    override suspend fun getCategories(): CategoryResponseDto = client.get("api_category.php").body()
 }

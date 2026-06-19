@@ -15,15 +15,15 @@ data class StatsUiModel(
 data class StatsDataUiModel(
     val summary: AnswerStatsUiModel,
     val perCategory: List<StatsCategoryUiModel>,
-    val perDifficulty: List<StatsDifficultyUiModel>
+    val perDifficulty: List<StatsDifficultyUiModel>,
 )
 
 data class StatsCategoryUiModel(
     val category: CategoryUiModel,
-    val answerStats: AnswerStatsUiModel
+    val answerStats: AnswerStatsUiModel,
 )
 
 data class StatsDifficultyUiModel(
     val difficulty: DifficultyUiModel,
-    val answerStats: AnswerStatsUiModel
+    val answerStats: AnswerStatsUiModel,
 )

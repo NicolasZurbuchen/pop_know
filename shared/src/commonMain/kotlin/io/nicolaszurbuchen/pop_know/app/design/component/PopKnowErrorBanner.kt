@@ -39,10 +39,11 @@ fun PopKnowErrorBanner(
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm),
-        modifier = modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.errorContainer)
-            .padding(MaterialTheme.spacing.md),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.errorContainer)
+                .padding(MaterialTheme.spacing.md),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -51,10 +52,11 @@ fun PopKnowErrorBanner(
         ) {
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.error),
+                modifier =
+                    Modifier
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.error),
             ) {
                 Icon(
                     imageVector = icon,
@@ -66,10 +68,11 @@ fun PopKnowErrorBanner(
 
             Text(
                 text = text.asString(),
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    fontFamily = SpaceGroteskFontFamily,
-                    fontSize = 14.sp,
-                ),
+                style =
+                    MaterialTheme.typography.bodyMedium.copy(
+                        fontFamily = SpaceGroteskFontFamily,
+                        fontSize = 14.sp,
+                    ),
                 color = MaterialTheme.colorScheme.onErrorContainer,
                 modifier = Modifier.weight(1f),
             )
@@ -93,7 +96,7 @@ fun PopKnowErrorBanner(
                     text = UiText.Resource(Res.string.error_dismiss),
                     onClick = it,
                     contentColor = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.padding(start = MaterialTheme.spacing.sm)
+                    modifier = Modifier.padding(start = MaterialTheme.spacing.sm),
                 )
             }
         }

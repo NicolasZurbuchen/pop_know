@@ -7,7 +7,8 @@ data class CategoryUiModel(
     val category: String,
 )
 
-fun Category.toUiModel() = CategoryUiModel(
-    id = id,
-    category = category,
-)
+fun Category.toUiModel() =
+    CategoryUiModel(
+        id = id,
+        category = category,
+    )

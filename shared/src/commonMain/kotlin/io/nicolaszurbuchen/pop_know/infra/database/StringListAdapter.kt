@@ -5,10 +5,9 @@ import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 
-val stringListAdapter = object : ColumnAdapter<List<String>, String> {
-    override fun decode(databaseValue: String): List<String> =
-        Json.decodeFromString(ListSerializer(String.serializer()), databaseValue)
+val stringListAdapter =
+    object : ColumnAdapter<List<String>, String> {
+        override fun decode(databaseValue: String): List<String> = Json.decodeFromString(ListSerializer(String.serializer()), databaseValue)
 
-    override fun encode(value: List<String>): String =
-        Json.encodeToString(ListSerializer(String.serializer()), value)
-}
+        override fun encode(value: List<String>): String = Json.encodeToString(ListSerializer(String.serializer()), value)
+    }

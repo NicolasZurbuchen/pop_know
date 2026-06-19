@@ -17,9 +17,10 @@ class HomeViewModel(
     private val store = factory.create()
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val state: StateFlow<HomeUiModel> = store.stateFlow
-        .map { it.toUiModel() }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), HomeState().toUiModel())
+    val state: StateFlow<HomeUiModel> =
+        store.stateFlow
+            .map { it.toUiModel() }
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), HomeState().toUiModel())
 
     val labels: Flow<HomeLabel> = store.labels
 

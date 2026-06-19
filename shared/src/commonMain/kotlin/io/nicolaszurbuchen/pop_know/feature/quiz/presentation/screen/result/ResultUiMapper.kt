@@ -7,29 +7,33 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnsweredQuestionRe
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.GameResult
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.toUiModel
 
-fun ResultState.toUiModel() = ResultUiModel(
-    isLoading = isLoading,
-    error = error?.toUiModel(),
-    content = content?.toUiModel()
-)
-
-fun GameResult.toUiModel() = GameResultUiModel(
-    questions = questions.map { it.toUiModel() },
-    correctCount = correctCount,
-    incorrectCount = incorrectCount,
-    timeoutCount = timeoutCount,
-    score = AnswerStatsUiModel(
-        totalAnswered = score.totalAnswered,
-        totalCorrect = score.totalCorrect,
-        accuracy = score.accuracy,
+fun ResultState.toUiModel() =
+    ResultUiModel(
+        isLoading = isLoading,
+        error = error?.toUiModel(),
+        content = content?.toUiModel(),
     )
-)
 
-fun AnsweredQuestionResult.toUiModel() = AnsweredQuestionResultUiModel(
-    question = question,
-    correctAnswer = correctAnswer,
-    selectedAnswer = selectedAnswer,
-    status = status.toUiModel(),
-    categoryName = categoryName,
-    difficulty = difficulty.toUiModel(),
-)
+fun GameResult.toUiModel() =
+    GameResultUiModel(
+        questions = questions.map { it.toUiModel() },
+        correctCount = correctCount,
+        incorrectCount = incorrectCount,
+        timeoutCount = timeoutCount,
+        score =
+            AnswerStatsUiModel(
+                totalAnswered = score.totalAnswered,
+                totalCorrect = score.totalCorrect,
+                accuracy = score.accuracy,
+            ),
+    )
+
+fun AnsweredQuestionResult.toUiModel() =
+    AnsweredQuestionResultUiModel(
+        question = question,
+        correctAnswer = correctAnswer,
+        selectedAnswer = selectedAnswer,
+        status = status.toUiModel(),
+        categoryName = categoryName,
+        difficulty = difficulty.toUiModel(),
+    )

@@ -7,7 +7,8 @@ enum class QuestionTypeUiModel {
     BOOLEAN,
 }
 
-fun QuestionType.toUiModel() = when (this) {
-    QuestionType.MULTIPLE -> QuestionTypeUiModel.MULTIPLE
-    QuestionType.BOOLEAN -> QuestionTypeUiModel.BOOLEAN
-}
+fun QuestionType.toUiModel() =
+    when (this) {
+        QuestionType.MULTIPLE -> QuestionTypeUiModel.MULTIPLE
+        QuestionType.BOOLEAN -> QuestionTypeUiModel.BOOLEAN
+    }

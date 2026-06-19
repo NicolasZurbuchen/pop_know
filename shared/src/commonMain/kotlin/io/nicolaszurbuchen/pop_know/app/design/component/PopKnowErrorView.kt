@@ -35,9 +35,10 @@ fun PopKnowErrorView(
     onRetry: () -> Unit,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(MaterialTheme.spacing.xl),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(MaterialTheme.spacing.xl),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

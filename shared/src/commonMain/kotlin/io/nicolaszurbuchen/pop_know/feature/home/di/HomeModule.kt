@@ -13,14 +13,15 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val homeModule = module {
-    singleOf(::HomeLocalDataSourceImpl) bind HomeLocalDataSource::class
+val homeModule =
+    module {
+        singleOf(::HomeLocalDataSourceImpl) bind HomeLocalDataSource::class
 
-    singleOf(::HomeRepositoryImpl) bind HomeRepository::class
+        singleOf(::HomeRepositoryImpl) bind HomeRepository::class
 
-    factoryOf(::GetAnswerStatsUseCase)
+        factoryOf(::GetAnswerStatsUseCase)
 
-    factoryOf(::HomeStoreFactory)
+        factoryOf(::HomeStoreFactory)
 
-    viewModelOf(::HomeViewModel)
-}
+        viewModelOf(::HomeViewModel)
+    }

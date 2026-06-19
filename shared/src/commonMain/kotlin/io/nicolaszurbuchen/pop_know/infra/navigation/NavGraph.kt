@@ -23,10 +23,11 @@ fun NavGraph(modifier: Modifier = Modifier) {
     val initialRoute = koinInject<NavKey>(named("initialRoute"))
     val handlers = getKoin().getAll<NavKeyHandler>()
 
-    val backStack = rememberNavBackStack(
-        navConfig,
-        initialRoute,
-    )
+    val backStack =
+        rememberNavBackStack(
+            navConfig,
+            initialRoute,
+        )
 
     LaunchedEffect(backStack) {
         navigator.attach(backStack)
@@ -34,18 +35,21 @@ fun NavGraph(modifier: Modifier = Modifier) {
 
     NavDisplay(
         backStack = backStack,
-        modifier = modifier
-            .background(color = MaterialTheme.colorScheme.background)
-            .systemBarsPadding(),
+        modifier =
+            modifier
+                .background(color = MaterialTheme.colorScheme.background)
+                .systemBarsPadding(),
         onBack = { backStack.removeLastOrNull() },
-        entryDecorators = listOf(
-            rememberSaveableStateHolderNavEntryDecorator(),
-            rememberViewModelStoreNavEntryDecorator()
-        ),
-        entryProvider = entryProvider {
-            handlers.forEach { handler ->
-                with(handler) { registerEntries() }
-            }
-        }
+        entryDecorators =
+            listOf(
+                rememberSaveableStateHolderNavEntryDecorator(),
+                rememberViewModelStoreNavEntryDecorator(),
+            ),
+        entryProvider =
+            entryProvider {
+                handlers.forEach { handler ->
+                    with(handler) { registerEntries() }
+                }
+            },
     )
 }

@@ -9,33 +9,34 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.dto.Triv
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.TriviaQuestion
 import io.nicolaszurbuchen.pop_know.infra.platform.decodeHtml
 
-fun CategoryDto.toEntity(): CategoryEntity {
-    return CategoryEntity(
+fun CategoryDto.toEntity(): CategoryEntity =
+    CategoryEntity(
         id = id.toLong(),
-        name = category
+        name = category,
     )
-}
 
-fun TriviaQuestionDto.toDomain(categories: List<Category>): TriviaQuestion {
-    return TriviaQuestion(
-        questionType = when (type) {
-            "multiple" -> QuestionType.MULTIPLE
-            "boolean" -> QuestionType.BOOLEAN
-            else -> throw IllegalArgumentException("Unknown question type: $type")
-        },
-        difficulty = when (difficulty) {
-            "easy" -> Difficulty.EASY
-            "medium" -> Difficulty.MEDIUM
-            "hard" -> Difficulty.HARD
-            else -> throw IllegalArgumentException("Unknown difficulty: $difficulty")
-        },
-        category = categories.find { it.category == category }
-            ?: Category(
-                id = -1,
-                category = category
-            ),
+fun TriviaQuestionDto.toDomain(categories: List<Category>): TriviaQuestion =
+    TriviaQuestion(
+        questionType =
+            when (type) {
+                "multiple" -> QuestionType.MULTIPLE
+                "boolean" -> QuestionType.BOOLEAN
+                else -> throw IllegalArgumentException("Unknown question type: $type")
+            },
+        difficulty =
+            when (difficulty) {
+                "easy" -> Difficulty.EASY
+                "medium" -> Difficulty.MEDIUM
+                "hard" -> Difficulty.HARD
+                else -> throw IllegalArgumentException("Unknown difficulty: $difficulty")
+            },
+        category =
+            categories.find { it.category == category }
+                ?: Category(
+                    id = -1,
+                    category = category,
+                ),
         question = question.decodeHtml(),
         correctAnswer = correctAnswer.decodeHtml(),
-        incorrectAnswers = incorrectAnswers.map { it.decodeHtml() }
+        incorrectAnswers = incorrectAnswers.map { it.decodeHtml() },
     )
-}

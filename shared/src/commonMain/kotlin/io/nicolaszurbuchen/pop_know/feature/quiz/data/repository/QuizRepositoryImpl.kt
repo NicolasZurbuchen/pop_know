@@ -15,18 +15,18 @@ class QuizRepositoryImpl(
     private val remoteDataSource: QuizRemoteDataSource,
     private val localDataSource: QuizLocalDataSource,
 ) : QuizRepository {
-
     override suspend fun fetchQuestions(amount: Int): List<TriviaQuestion> {
         val localCategories = localDataSource.getCategories()
-        val categories = if (localCategories.isEmpty()) {
-            val fetchedDto = remoteDataSource.fetchCategories()
-            val entities = fetchedDto.map { it.toEntity() }
-            localDataSource.saveCategories(entities)
-            entities.map { it.toDomain() }
-        } else {
-            localCategories.map { it.toDomain() }
-        }
-        
+        val categories =
+            if (localCategories.isEmpty()) {
+                val fetchedDto = remoteDataSource.fetchCategories()
+                val entities = fetchedDto.map { it.toEntity() }
+                localDataSource.saveCategories(entities)
+                entities.map { it.toDomain() }
+            } else {
+                localCategories.map { it.toDomain() }
+            }
+
         return remoteDataSource.fetchQuestions(amount).map { it.toDomain(categories) }
     }
 

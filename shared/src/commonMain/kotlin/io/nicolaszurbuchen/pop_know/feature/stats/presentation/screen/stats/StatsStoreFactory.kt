@@ -35,8 +35,7 @@ class StatsStoreFactory(
         }
     }
 
-    private inner class ExecutorImpl :
-        CoroutineExecutor<StatsIntent, StatsAction, StatsState, StatsMessage, StatsLabel>() {
+    private inner class ExecutorImpl : CoroutineExecutor<StatsIntent, StatsAction, StatsState, StatsMessage, StatsLabel>() {
         override fun executeAction(action: StatsAction) {
             when (action) {
                 StatsAction.LoadStats -> loadStats()
@@ -46,9 +45,18 @@ class StatsStoreFactory(
 
         override fun executeIntent(intent: StatsIntent) {
             when (intent) {
-                StatsIntent.NavigateBack -> publish(StatsLabel.NavigateBack)
-                StatsIntent.Retry -> loadStats()
-                is StatsIntent.ShowClearDialog -> dispatch(StatsMessage.ShowClearDialog(intent.isOpen))
+                StatsIntent.NavigateBack -> {
+                    publish(StatsLabel.NavigateBack)
+                }
+
+                StatsIntent.Retry -> {
+                    loadStats()
+                }
+
+                is StatsIntent.ShowClearDialog -> {
+                    dispatch(StatsMessage.ShowClearDialog(intent.isOpen))
+                }
+
                 StatsIntent.ConfirmClearStats -> {
                     dispatch(StatsMessage.ShowClearDialog(false))
                     performClearStats()
@@ -85,24 +93,32 @@ class StatsStoreFactory(
     private object ReducerImpl : Reducer<StatsState, StatsMessage> {
         override fun StatsState.reduce(msg: StatsMessage): StatsState =
             when (msg) {
-                StatsMessage.StatsLoading -> copy(
-                    isLoading = true,
-                    error = null,
-                )
+                StatsMessage.StatsLoading -> {
+                    copy(
+                        isLoading = true,
+                        error = null,
+                    )
+                }
 
-                is StatsMessage.StatsLoaded -> copy(
-                    isLoading = false,
-                    stats = msg.stats,
-                )
+                is StatsMessage.StatsLoaded -> {
+                    copy(
+                        isLoading = false,
+                        stats = msg.stats,
+                    )
+                }
 
-                is StatsMessage.Error -> copy(
-                    isLoading = false,
-                    error = msg.error,
-                )
+                is StatsMessage.Error -> {
+                    copy(
+                        isLoading = false,
+                        error = msg.error,
+                    )
+                }
 
-                is StatsMessage.ShowClearDialog -> copy(
-                    isClearDialogOpen = msg.isOpen,
-                )
+                is StatsMessage.ShowClearDialog -> {
+                    copy(
+                        isClearDialogOpen = msg.isOpen,
+                    )
+                }
             }
     }
 }

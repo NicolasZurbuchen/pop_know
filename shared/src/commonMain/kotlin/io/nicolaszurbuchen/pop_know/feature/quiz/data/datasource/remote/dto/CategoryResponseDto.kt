@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CategoryResponseDto(
     @SerialName("trivia_categories")
-    val triviaCategories: List<CategoryDto>
+    val triviaCategories: List<CategoryDto>,
 )

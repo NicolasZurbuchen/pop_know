@@ -5,7 +5,7 @@ import io.nicolaszurbuchen.pop_know.feature.home.domain.repository.HomeRepositor
 import kotlinx.coroutines.flow.Flow
 
 class GetAnswerStatsUseCase(
-    private val repository: HomeRepository
+    private val repository: HomeRepository,
 ) {
     operator fun invoke(): Flow<AnswerStats?> = repository.observeAnswerStats()
 }

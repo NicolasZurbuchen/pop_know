@@ -4,5 +4,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface HomeLocalDataSource {
     fun observeCountAll(): Flow<Long>
+
     fun observeCountCorrect(): Flow<Long>
 }

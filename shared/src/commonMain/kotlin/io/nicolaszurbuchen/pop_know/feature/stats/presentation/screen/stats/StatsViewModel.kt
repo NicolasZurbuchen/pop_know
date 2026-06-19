@@ -17,9 +17,10 @@ class StatsViewModel(
     private val store = factory.create()
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val state: StateFlow<StatsUiModel> = store.stateFlow
-        .map { it.toUiModel() }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), StatsState().toUiModel())
+    val state: StateFlow<StatsUiModel> =
+        store.stateFlow
+            .map { it.toUiModel() }
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), StatsState().toUiModel())
 
     val labels: Flow<StatsLabel> = store.labels
 

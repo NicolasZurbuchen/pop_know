@@ -40,13 +40,15 @@ fun PopKnowSecondaryButton(
         enabled = enabled,
         modifier = buttonModifier.height(56.dp),
         shape = MaterialTheme.shapes.extraLarge,
-        border = BorderStroke(
-            width = 1.5.dp,
-            color = MaterialTheme.colorScheme.onBackground,
-        ),
-        colors = ButtonDefaults.outlinedButtonColors(
-            contentColor = MaterialTheme.colorScheme.onBackground,
-        ),
+        border =
+            BorderStroke(
+                width = 1.5.dp,
+                color = MaterialTheme.colorScheme.onBackground,
+            ),
+        colors =
+            ButtonDefaults.outlinedButtonColors(
+                contentColor = MaterialTheme.colorScheme.onBackground,
+            ),
     ) {
         Row(
             horizontalArrangement = if (isFullWidth) Arrangement.SpaceBetween else Arrangement.spacedBy(MaterialTheme.spacing.md),
@@ -55,14 +57,15 @@ fun PopKnowSecondaryButton(
         ) {
             Text(
                 text = text.asString().uppercase(),
-                style = TextStyle(
-                    color = MaterialTheme.colorScheme.onBackground,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = SpaceGroteskFontFamily,
-                    letterSpacing = 0.sp,
-                    lineHeight = 27.sp,
-                ),
+                style =
+                    TextStyle(
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = SpaceGroteskFontFamily,
+                        letterSpacing = 0.sp,
+                        lineHeight = 27.sp,
+                    ),
             )
             if (showArrow) {
                 Icon(

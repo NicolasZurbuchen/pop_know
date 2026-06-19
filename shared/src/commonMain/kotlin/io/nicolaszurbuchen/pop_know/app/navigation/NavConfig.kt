@@ -10,13 +10,15 @@ import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.modules.subclass
 
-val navConfig = SavedStateConfiguration {
-    serializersModule = SerializersModule {
-        polymorphic(NavKey::class) {
-            subclass(HomeMainDestination::class)
-            subclass(QuizMainDestination::class)
-            subclass(ResultDestination::class)
-            subclass(StatsMainDestination::class)
-        }
+val navConfig =
+    SavedStateConfiguration {
+        serializersModule =
+            SerializersModule {
+                polymorphic(NavKey::class) {
+                    subclass(HomeMainDestination::class)
+                    subclass(QuizMainDestination::class)
+                    subclass(ResultDestination::class)
+                    subclass(StatsMainDestination::class)
+                }
+            }
     }
-}

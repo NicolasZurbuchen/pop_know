@@ -29,49 +29,51 @@ data class PopKnowColors(
     val isDark: Boolean,
 )
 
-val DarkPopKnowColors = PopKnowColors(
-    isDark = true,
-    // Surfaces
-    background = InkPalette.ink950,
-    surface = InkPalette.ink800,
-    surfaceRaised = InkPalette.ink700,
-    // Borders
-    borderSubtle = InkPalette.ink700,
-    borderDefault = InkPalette.ink600,
-    // Text
-    textPrimary = InkPalette.ink50,
-    textSecondary = InkPalette.ink200,
-    textTertiary = InkPalette.ink300,
-    textDisabled = InkPalette.ink500,
-    textInverse = InkPalette.ink900,
-    // Accent — acid yellow in dark mode
-    accent = AcidPalette.acid300,
-    onAccent = InkPalette.ink950,
-    accentSubtle = AcidPalette.acid900,
-    onAccentSubtle = AcidPalette.acid200,
-)
+val DarkPopKnowColors =
+    PopKnowColors(
+        isDark = true,
+        // Surfaces
+        background = InkPalette.ink950,
+        surface = InkPalette.ink800,
+        surfaceRaised = InkPalette.ink700,
+        // Borders
+        borderSubtle = InkPalette.ink700,
+        borderDefault = InkPalette.ink600,
+        // Text
+        textPrimary = InkPalette.ink50,
+        textSecondary = InkPalette.ink200,
+        textTertiary = InkPalette.ink300,
+        textDisabled = InkPalette.ink500,
+        textInverse = InkPalette.ink900,
+        // Accent — acid yellow in dark mode
+        accent = AcidPalette.acid300,
+        onAccent = InkPalette.ink950,
+        accentSubtle = AcidPalette.acid900,
+        onAccentSubtle = AcidPalette.acid200,
+    )
 
-val LightPopKnowColors = PopKnowColors(
-    isDark = false,
-    // Surfaces
-    background = InkPalette.ink50,
-    surface = Color(0xFFFFFFFF),
-    surfaceRaised = Color(0xFFE8E4DC),
-    // Borders
-    borderSubtle = InkPalette.ink100,
-    borderDefault = InkPalette.ink200,
-    // Text
-    textPrimary = InkPalette.ink900,
-    textSecondary = InkPalette.ink500,
-    textTertiary = InkPalette.ink400,
-    textDisabled = InkPalette.ink300,
-    textInverse = InkPalette.ink50,
-    // Accent — violet in light mode
-    accent = VioletPalette.violet600,
-    onAccent = Color(0xFFFFFFFF),
-    accentSubtle = VioletPalette.violet100,
-    onAccentSubtle = VioletPalette.violet800,
-)
+val LightPopKnowColors =
+    PopKnowColors(
+        isDark = false,
+        // Surfaces
+        background = InkPalette.ink50,
+        surface = Color(0xFFFFFFFF),
+        surfaceRaised = Color(0xFFE8E4DC),
+        // Borders
+        borderSubtle = InkPalette.ink100,
+        borderDefault = InkPalette.ink200,
+        // Text
+        textPrimary = InkPalette.ink900,
+        textSecondary = InkPalette.ink500,
+        textTertiary = InkPalette.ink400,
+        textDisabled = InkPalette.ink300,
+        textInverse = InkPalette.ink50,
+        // Accent — violet in light mode
+        accent = VioletPalette.violet600,
+        onAccent = Color(0xFFFFFFFF),
+        accentSubtle = VioletPalette.violet100,
+        onAccentSubtle = VioletPalette.violet800,
+    )
 
 internal val LocalPopKnowColors = staticCompositionLocalOf { DarkPopKnowColors }
 

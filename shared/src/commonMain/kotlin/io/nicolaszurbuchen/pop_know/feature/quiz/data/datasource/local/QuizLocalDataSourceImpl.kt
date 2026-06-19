@@ -10,7 +10,6 @@ class QuizLocalDataSourceImpl(
     private val questionHistoryQueries: QuestionHistoryQueries,
     private val categoryQueries: CategoryQueries,
 ) : QuizLocalDataSource {
-
     override fun saveAnswer(
         gameId: Long,
         type: String,
@@ -36,13 +35,9 @@ class QuizLocalDataSourceImpl(
         )
     }
 
-    override fun getLastGame(): List<GetLastGame> {
-        return questionHistoryQueries.getLastGame().executeAsList()
-    }
+    override fun getLastGame(): List<GetLastGame> = questionHistoryQueries.getLastGame().executeAsList()
 
-    override fun getCategories(): List<CategoryEntity> {
-        return categoryQueries.getAllCategories().executeAsList()
-    }
+    override fun getCategories(): List<CategoryEntity> = categoryQueries.getAllCategories().executeAsList()
 
     override fun saveCategories(categories: List<CategoryEntity>) {
         categories.forEach { category ->

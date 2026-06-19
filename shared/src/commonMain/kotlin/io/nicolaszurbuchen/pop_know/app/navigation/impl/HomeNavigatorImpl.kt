@@ -7,7 +7,7 @@ import io.nicolaszurbuchen.pop_know.infra.navigation.AppNavigator
 import kotlin.time.Clock
 
 class HomeNavigatorImpl(
-    private val appNavigator: AppNavigator
+    private val appNavigator: AppNavigator,
 ) : HomeNavigator {
     override fun navigateToPlay() {
         appNavigator.navigateTo(QuizMainDestination(timestamp = Clock.System.now().toEpochMilliseconds()))

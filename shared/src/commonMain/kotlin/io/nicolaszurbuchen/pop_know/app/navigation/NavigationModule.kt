@@ -17,14 +17,15 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val appNavigationModule = module {
-    single<NavKey>(named("initialRoute")) { HomeMainDestination }
+val appNavigationModule =
+    module {
+        single<NavKey>(named("initialRoute")) { HomeMainDestination }
 
-    singleOf(::HomeNavigatorImpl) bind HomeNavigator::class
-    singleOf(::QuizNavigatorImpl) bind QuizNavigator::class
-    singleOf(::StatsNavigatorImpl) bind StatsNavigator::class
+        singleOf(::HomeNavigatorImpl) bind HomeNavigator::class
+        singleOf(::QuizNavigatorImpl) bind QuizNavigator::class
+        singleOf(::StatsNavigatorImpl) bind StatsNavigator::class
 
-    singleOf(::HomeNavKeyHandler) { named("home") } bind NavKeyHandler::class
-    singleOf(::QuizNavKeyHandler) { named("quiz") } bind NavKeyHandler::class
-    singleOf(::StatsNavKeyHandler) { named("stats") } bind NavKeyHandler::class
-}
+        singleOf(::HomeNavKeyHandler) { named("home") } bind NavKeyHandler::class
+        singleOf(::QuizNavKeyHandler) { named("quiz") } bind NavKeyHandler::class
+        singleOf(::StatsNavKeyHandler) { named("stats") } bind NavKeyHandler::class
+    }

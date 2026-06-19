@@ -21,22 +21,25 @@ enum class DifficultyUiModel {
     HARD,
 }
 
-fun Difficulty.toUiModel() = when (this) {
-    Difficulty.EASY -> EASY
-    Difficulty.MEDIUM -> MEDIUM
-    Difficulty.HARD -> HARD
-}
+fun Difficulty.toUiModel() =
+    when (this) {
+        Difficulty.EASY -> EASY
+        Difficulty.MEDIUM -> MEDIUM
+        Difficulty.HARD -> HARD
+    }
 
-fun DifficultyUiModel.toText(): UiText = when (this) {
-    EASY -> UiText.Resource(Res.string.common_difficulty_easy)
-    MEDIUM -> UiText.Resource(Res.string.common_difficulty_medium)
-    HARD -> UiText.Resource(Res.string.common_difficulty_hard)
-}
+fun DifficultyUiModel.toText(): UiText =
+    when (this) {
+        EASY -> UiText.Resource(Res.string.common_difficulty_easy)
+        MEDIUM -> UiText.Resource(Res.string.common_difficulty_medium)
+        HARD -> UiText.Resource(Res.string.common_difficulty_hard)
+    }
 
 @Composable
 @ReadOnlyComposable
-fun DifficultyUiModel.color(): Color = when (this) {
-    EASY -> MaterialTheme.popKnowGameColors.difficultyEasy
-    MEDIUM -> MaterialTheme.popKnowGameColors.difficultyMedium
-    HARD -> MaterialTheme.popKnowGameColors.difficultyHard
-}
+fun DifficultyUiModel.color(): Color =
+    when (this) {
+        EASY -> MaterialTheme.popKnowGameColors.difficultyEasy
+        MEDIUM -> MaterialTheme.popKnowGameColors.difficultyMedium
+        HARD -> MaterialTheme.popKnowGameColors.difficultyHard
+    }

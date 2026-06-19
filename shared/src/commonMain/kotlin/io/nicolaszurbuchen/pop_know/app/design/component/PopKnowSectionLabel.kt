@@ -15,18 +15,19 @@ import io.nicolaszurbuchen.pop_know.infra.ui.asString
 fun PopKnowSectionLabel(
     text: UiText,
     modifier: Modifier = Modifier,
-    showSlashes: Boolean = false
+    showSlashes: Boolean = false,
 ) {
     Text(
         text = if (showSlashes) "// ${text.asString()}" else text.asString(),
-        style = TextStyle(
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Normal,
-            fontFamily = JetBrainsMonoFontFamily,
-            letterSpacing = 2.sp,
-            lineHeight = 17.sp,
-        ),
+        style =
+            TextStyle(
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Normal,
+                fontFamily = JetBrainsMonoFontFamily,
+                letterSpacing = 2.sp,
+                lineHeight = 17.sp,
+            ),
         modifier = modifier,
     )
 }

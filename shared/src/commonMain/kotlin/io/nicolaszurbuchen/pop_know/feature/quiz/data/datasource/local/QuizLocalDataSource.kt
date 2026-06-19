@@ -15,7 +15,10 @@ interface QuizLocalDataSource {
         selectedAnswer: String?,
         status: String,
     )
+
     fun getLastGame(): List<GetLastGame>
+
     fun getCategories(): List<CategoryEntity>
+
     fun saveCategories(categories: List<CategoryEntity>)
 }

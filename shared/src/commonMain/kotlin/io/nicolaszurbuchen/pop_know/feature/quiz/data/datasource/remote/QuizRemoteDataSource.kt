@@ -5,6 +5,7 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.dto.Triv
 
 interface QuizRemoteDataSource {
     suspend fun fetchCategories(): List<CategoryDto>
+
     suspend fun fetchQuestions(
         amount: Int,
         categoryId: Int? = null,

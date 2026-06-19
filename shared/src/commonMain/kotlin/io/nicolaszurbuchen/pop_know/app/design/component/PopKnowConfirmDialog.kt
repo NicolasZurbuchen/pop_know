@@ -23,27 +23,30 @@ fun PopKnowConfirmDialog(
         title = {
             Text(
                 text = title,
-                style = MaterialTheme.typography.headlineSmall.copy(
-                    fontFamily = SpaceGroteskFontFamily
-                )
+                style =
+                    MaterialTheme.typography.headlineSmall.copy(
+                        fontFamily = SpaceGroteskFontFamily,
+                    ),
             )
         },
         text = {
             Text(
                 text = text,
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    fontFamily = SpaceGroteskFontFamily
-                )
+                style =
+                    MaterialTheme.typography.bodyMedium.copy(
+                        fontFamily = SpaceGroteskFontFamily,
+                    ),
             )
         },
         confirmButton = {
             TextButton(onClick = onConfirm) {
                 Text(
                     text = confirmText.uppercase(),
-                    style = MaterialTheme.typography.labelLarge.copy(
-                        fontFamily = SpaceGroteskFontFamily,
-                        color = MaterialTheme.colorScheme.primary
-                    )
+                    style =
+                        MaterialTheme.typography.labelLarge.copy(
+                            fontFamily = SpaceGroteskFontFamily,
+                            color = MaterialTheme.colorScheme.primary,
+                        ),
                 )
             }
         },
@@ -51,10 +54,11 @@ fun PopKnowConfirmDialog(
             TextButton(onClick = onDismiss) {
                 Text(
                     text = dismissText.uppercase(),
-                    style = MaterialTheme.typography.labelLarge.copy(
-                        fontFamily = SpaceGroteskFontFamily,
-                        color = MaterialTheme.colorScheme.secondary
-                    )
+                    style =
+                        MaterialTheme.typography.labelLarge.copy(
+                            fontFamily = SpaceGroteskFontFamily,
+                            color = MaterialTheme.colorScheme.secondary,
+                        ),
                 )
             }
         },

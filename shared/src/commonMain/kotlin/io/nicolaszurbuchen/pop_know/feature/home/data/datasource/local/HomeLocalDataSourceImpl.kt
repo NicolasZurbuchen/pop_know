@@ -9,10 +9,7 @@ import kotlinx.coroutines.flow.Flow
 class HomeLocalDataSourceImpl(
     private val queries: QuestionHistoryQueries,
 ) : HomeLocalDataSource {
+    override fun observeCountAll(): Flow<Long> = queries.countAllHistory().asFlow().mapToOne(Dispatchers.Default)
 
-    override fun observeCountAll(): Flow<Long> =
-        queries.countAllHistory().asFlow().mapToOne(Dispatchers.Default)
-
-    override fun observeCountCorrect(): Flow<Long> =
-        queries.countCorrectAnswers().asFlow().mapToOne(Dispatchers.Default)
+    override fun observeCountCorrect(): Flow<Long> = queries.countCorrectAnswers().asFlow().mapToOne(Dispatchers.Default)
 }

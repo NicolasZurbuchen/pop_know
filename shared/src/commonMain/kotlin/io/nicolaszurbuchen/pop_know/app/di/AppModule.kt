@@ -9,13 +9,14 @@ import io.nicolaszurbuchen.pop_know.infra.mvi.storeModule
 import io.nicolaszurbuchen.pop_know.infra.navigation.infraNavigationModule
 import io.nicolaszurbuchen.pop_know.infra.network.networkModule
 
-val appModule = listOf(
-    appNavigationModule,
-    databaseModule,
-    networkModule,
-    homeModule,
-    infraNavigationModule,
-    statsModule,
-    storeModule,
-    quizModule,
-)
+val appModule =
+    listOf(
+        appNavigationModule,
+        databaseModule,
+        networkModule,
+        homeModule,
+        infraNavigationModule,
+        statsModule,
+        storeModule,
+        quizModule,
+    )

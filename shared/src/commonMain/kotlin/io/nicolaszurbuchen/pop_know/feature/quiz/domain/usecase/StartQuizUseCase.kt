@@ -12,7 +12,7 @@ class StartQuizUseCase(
         val questions = repository.fetchQuestions(amount = 10)
         return QuizSession(
             gameId = Clock.System.now().toEpochMilliseconds(),
-            questionStates = questions.map { QuestionProgress.Unanswered(it) }
+            questionStates = questions.map { QuestionProgress.Unanswered(it) },
         )
     }
 }

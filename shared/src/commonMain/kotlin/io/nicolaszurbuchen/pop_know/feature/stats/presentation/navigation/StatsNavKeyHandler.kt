@@ -6,7 +6,7 @@ import io.nicolaszurbuchen.pop_know.feature.stats.presentation.screen.stats.Stat
 import io.nicolaszurbuchen.pop_know.infra.navigation.NavKeyHandler
 
 class StatsNavKeyHandler(
-    private val navigator: StatsNavigator
+    private val navigator: StatsNavigator,
 ) : NavKeyHandler {
     override fun EntryProviderScope<NavKey>.registerEntries() {
         entry<StatsMainDestination> {

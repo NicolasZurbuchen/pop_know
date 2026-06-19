@@ -21,21 +21,22 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val quizModule = module {
-    singleOf(::QuizApiImpl) bind QuizApi::class
+val quizModule =
+    module {
+        singleOf(::QuizApiImpl) bind QuizApi::class
 
-    singleOf(::QuizRemoteDataSourceImpl) bind QuizRemoteDataSource::class
-    singleOf(::QuizLocalDataSourceImpl) bind QuizLocalDataSource::class
+        singleOf(::QuizRemoteDataSourceImpl) bind QuizRemoteDataSource::class
+        singleOf(::QuizLocalDataSourceImpl) bind QuizLocalDataSource::class
 
-    singleOf(::QuizRepositoryImpl) bind QuizRepository::class
+        singleOf(::QuizRepositoryImpl) bind QuizRepository::class
 
-    factoryOf(::StartQuizUseCase)
-    factoryOf(::SubmitAnswerUseCase)
-    factoryOf(::GetLastGameResultUseCase)
+        factoryOf(::StartQuizUseCase)
+        factoryOf(::SubmitAnswerUseCase)
+        factoryOf(::GetLastGameResultUseCase)
 
-    factoryOf(::QuizStoreFactory)
-    factoryOf(::ResultStoreFactory)
+        factoryOf(::QuizStoreFactory)
+        factoryOf(::ResultStoreFactory)
 
-    viewModelOf(::QuizViewModel)
-    viewModelOf(::ResultViewModel)
-}
+        viewModelOf(::QuizViewModel)
+        viewModelOf(::ResultViewModel)
+    }

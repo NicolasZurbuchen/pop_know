@@ -14,7 +14,7 @@ object InkPalette {
     val ink300 = Color(0xFF969696)
     val ink200 = Color(0xFFBBBBBB)
     val ink100 = Color(0xFFD8D8D8)
-    val ink50  = Color(0xFFF0EDE6)
+    val ink50 = Color(0xFFF0EDE6)
 }
 
 // Yellow-green — dark theme accent
@@ -29,7 +29,7 @@ object AcidPalette {
     val acid300 = Color(0xFFD4DC00)
     val acid200 = Color(0xFFE8EE4A)
     val acid100 = Color(0xFFF2F580)
-    val acid50  = Color(0xFFFAFAC8)
+    val acid50 = Color(0xFFFAFAC8)
 }
 
 // Purple — light theme accent
@@ -44,7 +44,7 @@ object VioletPalette {
     val violet300 = Color(0xFFAD88EC)
     val violet200 = Color(0xFFCAB0F4)
     val violet100 = Color(0xFFE2D4FA)
-    val violet50  = Color(0xFFF2ECFD)
+    val violet50 = Color(0xFFF2ECFD)
 }
 
 // Semantic correct
@@ -59,7 +59,7 @@ object LimePalette {
     val lime300 = Color(0xFF9ED400)
     val lime200 = Color(0xFFBEE84A)
     val lime100 = Color(0xFFD8F480)
-    val lime50  = Color(0xFFEEFAC0)
+    val lime50 = Color(0xFFEEFAC0)
 }
 
 // Semantic wrong
@@ -74,5 +74,5 @@ object CrimsonPalette {
     val crimson300 = Color(0xFFE05070)
     val crimson200 = Color(0xFFEE8898)
     val crimson100 = Color(0xFFF8C0C8)
-    val crimson50  = Color(0xFFFDE8EC)
+    val crimson50 = Color(0xFFFDE8EC)
 }

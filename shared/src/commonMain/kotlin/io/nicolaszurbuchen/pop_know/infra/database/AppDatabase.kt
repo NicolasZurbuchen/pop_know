@@ -7,8 +7,9 @@ fun createDatabase(driverFactory: DatabaseDriverFactory): AppDatabase {
     val driver = driverFactory.createDriver()
     return AppDatabase(
         driver = driver,
-        QuestionHistoryEntityAdapter = QuestionHistoryEntity.Adapter(
-            incorrect_answersAdapter = stringListAdapter
-        )
+        QuestionHistoryEntityAdapter =
+            QuestionHistoryEntity.Adapter(
+                incorrect_answersAdapter = stringListAdapter,
+            ),
     )
 }

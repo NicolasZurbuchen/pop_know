@@ -6,54 +6,66 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuestionProgress
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuizSession
 
-fun QuizState.toUiModel(): QuizUiModel {
-    return QuizUiModel(
+fun QuizState.toUiModel(): QuizUiModel =
+    QuizUiModel(
         isLoading = isLoading,
         initialError = initialError?.toUiModel(),
         insertionError = insertionError?.toUiModel(),
         quizData = session?.toDataUiModel(timerSeconds, shuffledAnswers),
-        isQuitDialogOpen = isQuitDialogOpen
+        isQuitDialogOpen = isQuitDialogOpen,
     )
-}
 
 private fun QuizSession.toDataUiModel(
     timerSeconds: Int,
-    shuffledAnswers: List<List<String>>
+    shuffledAnswers: List<List<String>>,
 ): QuizDataUiModel {
     val progress = currentQuestion
-    val question = when (progress) {
-        is QuestionProgress.Unanswered -> progress.question
-        is QuestionProgress.Answered -> progress.question
-    }
-    val answered = progress as? QuestionProgress.Answered
-    val currentShuffled = shuffledAnswers.getOrElse(currentIndex) {
-        (question.incorrectAnswers + question.correctAnswer).shuffled()
-    }
-
-    val choices = currentShuffled.mapIndexed { index, text ->
-        val status: AnswerStatusUiModel? = when {
-            answered == null -> null
-            answered.selectedAnswer == text && text == question.correctAnswer -> AnswerStatusUiModel.CORRECT
-            answered.selectedAnswer == text -> AnswerStatusUiModel.INCORRECT
-            text == question.correctAnswer -> AnswerStatusUiModel.CORRECT
-            else -> null
+    val question =
+        when (progress) {
+            is QuestionProgress.Unanswered -> progress.question
+            is QuestionProgress.Answered -> progress.question
         }
-        QuizChoiceUiModel(
-            letter = ('A' + index).toString(),
-            text = text,
-            status = status,
-        )
-    }
+    val answered = progress as? QuestionProgress.Answered
+    val currentShuffled =
+        shuffledAnswers.getOrElse(currentIndex) {
+            (question.incorrectAnswers + question.correctAnswer).shuffled()
+        }
 
-    val resultChoice: QuizChoiceUiModel? = when {
-        answered == null -> null
-        answered.status == AnswerStatus.TIMEOUT -> QuizChoiceUiModel(
-            letter = "",
-            text = "",
-            status = AnswerStatusUiModel.TIMEOUT,
-        )
-        else -> choices.firstOrNull { it.text == answered.selectedAnswer }
-    }
+    val choices =
+        currentShuffled.mapIndexed { index, text ->
+            val status: AnswerStatusUiModel? =
+                when {
+                    answered == null -> null
+                    answered.selectedAnswer == text && text == question.correctAnswer -> AnswerStatusUiModel.CORRECT
+                    answered.selectedAnswer == text -> AnswerStatusUiModel.INCORRECT
+                    text == question.correctAnswer -> AnswerStatusUiModel.CORRECT
+                    else -> null
+                }
+            QuizChoiceUiModel(
+                letter = ('A' + index).toString(),
+                text = text,
+                status = status,
+            )
+        }
+
+    val resultChoice: QuizChoiceUiModel? =
+        when {
+            answered == null -> {
+                null
+            }
+
+            answered.status == AnswerStatus.TIMEOUT -> {
+                QuizChoiceUiModel(
+                    letter = "",
+                    text = "",
+                    status = AnswerStatusUiModel.TIMEOUT,
+                )
+            }
+
+            else -> {
+                choices.firstOrNull { it.text == answered.selectedAnswer }
+            }
+        }
 
     val scoreValue = score
     val total = questionStates.size

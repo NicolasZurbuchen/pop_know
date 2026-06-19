@@ -28,18 +28,20 @@ fun PopKnowTextButton(
         onClick = onClick,
         enabled = enabled,
         modifier = modifier.height(40.dp),
-        colors = ButtonDefaults.textButtonColors(
-            contentColor = contentColor,
-        ),
+        colors =
+            ButtonDefaults.textButtonColors(
+                contentColor = contentColor,
+            ),
     ) {
         Text(
             text = text.asString().uppercase(),
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = SpaceGroteskFontFamily,
-                letterSpacing = 0.sp,
-            ),
+            style =
+                TextStyle(
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = SpaceGroteskFontFamily,
+                    letterSpacing = 0.sp,
+                ),
         )
     }
 }

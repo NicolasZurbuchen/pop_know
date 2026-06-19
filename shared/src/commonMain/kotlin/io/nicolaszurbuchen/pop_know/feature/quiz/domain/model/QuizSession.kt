@@ -22,35 +22,41 @@ data class QuizSession(
         }
 
     fun submitAnswer(answer: String?): QuizSession {
-        val progress = questionStates.getOrNull(currentIndex) as? QuestionProgress.Unanswered
-            ?: return this
+        val progress =
+            questionStates.getOrNull(currentIndex) as? QuestionProgress.Unanswered
+                ?: return this
 
-        val status = when (answer) {
-            null -> AnswerStatus.TIMEOUT
-            progress.question.correctAnswer -> AnswerStatus.CORRECT
-            else -> AnswerStatus.INCORRECT
-        }
+        val status =
+            when (answer) {
+                null -> AnswerStatus.TIMEOUT
+                progress.question.correctAnswer -> AnswerStatus.CORRECT
+                else -> AnswerStatus.INCORRECT
+            }
 
-        val updatedStates = questionStates.toMutableList().also {
-            it[currentIndex] = QuestionProgress.Answered(
-                question = progress.question,
-                selectedAnswer = answer,
-                status = status,
-            )
-        }
+        val updatedStates =
+            questionStates.toMutableList().also {
+                it[currentIndex] =
+                    QuestionProgress.Answered(
+                        question = progress.question,
+                        selectedAnswer = answer,
+                        status = status,
+                    )
+            }
         return copy(questionStates = updatedStates)
     }
 
     fun advance(): QuizSession {
-        val answered = questionStates.getOrNull(currentIndex) as? QuestionProgress.Answered
-            ?: return this
+        val answered =
+            questionStates.getOrNull(currentIndex) as? QuestionProgress.Answered
+                ?: return this
 
-        val updatedStates = questionStates.toMutableList().also {
-            it[currentIndex] = answered.copy(advancedToNext = true)
-        }
+        val updatedStates =
+            questionStates.toMutableList().also {
+                it[currentIndex] = answered.copy(advancedToNext = true)
+            }
         return copy(
             questionStates = updatedStates,
-            currentIndex = currentIndex + 1
+            currentIndex = currentIndex + 1,
         )
     }
 }

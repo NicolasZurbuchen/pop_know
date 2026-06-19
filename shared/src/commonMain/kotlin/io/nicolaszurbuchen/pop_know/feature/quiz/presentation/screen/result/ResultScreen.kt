@@ -73,35 +73,48 @@ fun ResultScreen(
     onRetryClick: () -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background),
     ) {
         PopKnowTopBar(
             left = UiText.Resource(Res.string.result_home),
             center = UiText.Resource(Res.string.result_appbar_left),
-            right = state.content?.let { 
-                UiText.Raw("${it.score.totalCorrect} / ${it.score.totalAnswered}")
-            },
+            right =
+                state.content?.let {
+                    UiText.Raw("${it.score.totalCorrect} / ${it.score.totalAnswered}")
+                },
             onBack = onNavigateHomeClick,
         )
 
         Box(modifier = Modifier.weight(1f)) {
             when {
-                state.isLoading -> Skeleton()
-                state.error != null -> PopKnowErrorView(
-                    title = state.error.title,
-                    subtitle = state.error.subtitle,
-                    icon = state.error.icon,
-                    onRetry = onRetryClick,
-                )
-                state.content == null -> Text(
-                    text = UiText.Resource(Res.string.quiz_result_no_results).asString(),
-                    modifier = Modifier.align(Alignment.Center)
-                )
-                else -> Content(
-                    result = state.content,
-                )
+                state.isLoading -> {
+                    Skeleton()
+                }
+
+                state.error != null -> {
+                    PopKnowErrorView(
+                        title = state.error.title,
+                        subtitle = state.error.subtitle,
+                        icon = state.error.icon,
+                        onRetry = onRetryClick,
+                    )
+                }
+
+                state.content == null -> {
+                    Text(
+                        text = UiText.Resource(Res.string.quiz_result_no_results).asString(),
+                        modifier = Modifier.align(Alignment.Center),
+                    )
+                }
+
+                else -> {
+                    Content(
+                        result = state.content,
+                    )
+                }
             }
         }
 
@@ -114,57 +127,59 @@ fun ResultScreen(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun Content(
-    result: GameResultUiModel,
-) {
+private fun Content(result: GameResultUiModel) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = MaterialTheme.spacing.md),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(horizontal = MaterialTheme.spacing.md),
     ) {
         PopKnowSectionLabel(
             text = UiText.Resource(Res.string.result_section_ratio),
             showSlashes = true,
-            modifier = Modifier.padding(top = MaterialTheme.spacing.xxl)
+            modifier = Modifier.padding(top = MaterialTheme.spacing.xxl),
         )
 
         Text(
             text = "${(result.score.accuracy * 100).roundToInt()}%",
-            style = TextStyle(
-                color = MaterialTheme.colorScheme.onBackground,
-                fontSize = 120.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = SpaceGroteskFontFamily,
-                lineHeight = 120.sp,
-            ),
-            modifier = Modifier.padding(top = MaterialTheme.spacing.xs)
+            style =
+                TextStyle(
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontSize = 120.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = SpaceGroteskFontFamily,
+                    lineHeight = 120.sp,
+                ),
+            modifier = Modifier.padding(top = MaterialTheme.spacing.xs),
         )
 
         val performanceLevel = getPerformanceLevel(result.score.accuracy)
         PopKnowPerformanceTag(
             text = performanceLevel.asString().uppercase(),
-            modifier = Modifier.padding(top = MaterialTheme.spacing.sm)
+            modifier = Modifier.padding(top = MaterialTheme.spacing.sm),
         )
 
         Text(
-            text = UiText.Resource(
-                Res.string.result_summary,
-                listOf(result.correctCount, result.score.totalAnswered, result.timeoutCount)
-            ).asString(),
+            text =
+                UiText.Resource(
+                    Res.string.result_summary,
+                    listOf(result.correctCount, result.score.totalAnswered, result.timeoutCount),
+                ).asString(),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.padding(top = MaterialTheme.spacing.lg)
+            modifier = Modifier.padding(top = MaterialTheme.spacing.lg),
         )
 
         PopKnowSectionLabel(
             text = UiText.Resource(Res.string.result_section_by_question),
-            modifier = Modifier.padding(top = MaterialTheme.spacing.xxl)
+            modifier = Modifier.padding(top = MaterialTheme.spacing.xxl),
         )
 
         FlowRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = MaterialTheme.spacing.sm),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = MaterialTheme.spacing.sm),
             horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.xs),
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.xs),
         ) {
@@ -181,9 +196,10 @@ private fun ActionButtons(
     onViewStatsClick: () -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .padding(MaterialTheme.spacing.md)
-            .padding(bottom = MaterialTheme.spacing.lg),
+        modifier =
+            Modifier
+                .padding(MaterialTheme.spacing.md)
+                .padding(bottom = MaterialTheme.spacing.lg),
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm),
     ) {
         PopKnowPrimaryButton(
@@ -201,23 +217,24 @@ private fun ActionButtons(
 @Composable
 private fun PopKnowPerformanceTag(
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier
-            .background(
-                color = MaterialTheme.popKnowColors.accent,
-                shape = RectangleShape
-            )
-            .padding(
-                horizontal = MaterialTheme.spacing.sm,
-                vertical = MaterialTheme.spacing.xs
-            )
+        modifier =
+            modifier
+                .background(
+                    color = MaterialTheme.popKnowColors.accent,
+                    shape = RectangleShape,
+                )
+                .padding(
+                    horizontal = MaterialTheme.spacing.sm,
+                    vertical = MaterialTheme.spacing.xs,
+                ),
     ) {
         Text(
             text = text,
             style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.popKnowColors.onAccent
+            color = MaterialTheme.popKnowColors.onAccent,
         )
     }
 }
@@ -225,35 +242,38 @@ private fun PopKnowPerformanceTag(
 @Composable
 private fun PopKnowQuestionResultDot(
     status: AnswerStatusUiModel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier
-            .size(24.dp)
-            .background(
-                color = status.backgroundColor(),
-                shape = MaterialTheme.shapes.extraSmall
-            ),
-        contentAlignment = Alignment.Center
+        modifier =
+            modifier
+                .size(24.dp)
+                .background(
+                    color = status.backgroundColor(),
+                    shape = MaterialTheme.shapes.extraSmall,
+                ),
+        contentAlignment = Alignment.Center,
     ) {
         Icon(
-            imageVector = when (status) {
-                AnswerStatusUiModel.CORRECT -> Icons.Default.Check
-                AnswerStatusUiModel.INCORRECT, AnswerStatusUiModel.TIMEOUT -> Icons.Default.Close
-            },
+            imageVector =
+                when (status) {
+                    AnswerStatusUiModel.CORRECT -> Icons.Default.Check
+                    AnswerStatusUiModel.INCORRECT, AnswerStatusUiModel.TIMEOUT -> Icons.Default.Close
+                },
             contentDescription = null,
             tint = status.contentColor(),
-            modifier = Modifier.size(14.dp)
+            modifier = Modifier.size(14.dp),
         )
     }
 }
 
-private fun getPerformanceLevel(accuracy: Float): UiText = when {
-    accuracy >= 0.85f -> UiText.Resource(Res.string.result_performance_legendary)
-    accuracy >= 0.60f -> UiText.Resource(Res.string.result_performance_hot)
-    accuracy >= 0.25f -> UiText.Resource(Res.string.result_performance_warm)
-    else -> UiText.Resource(Res.string.result_performance_cold)
-}
+private fun getPerformanceLevel(accuracy: Float): UiText =
+    when {
+        accuracy >= 0.85f -> UiText.Resource(Res.string.result_performance_legendary)
+        accuracy >= 0.60f -> UiText.Resource(Res.string.result_performance_hot)
+        accuracy >= 0.25f -> UiText.Resource(Res.string.result_performance_warm)
+        else -> UiText.Resource(Res.string.result_performance_cold)
+    }
 
 @Composable
 private fun Skeleton() {
@@ -273,67 +293,75 @@ private fun Skeleton() {
         )
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = spacing.md),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(horizontal = spacing.md),
     ) {
         Box(
-            modifier = Modifier
-                .padding(top = spacing.xxl)
-                .width(120.dp)
-                .height(20.dp)
-                .clip(MaterialTheme.shapes.small)
-                .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+            modifier =
+                Modifier
+                    .padding(top = spacing.xxl)
+                    .width(120.dp)
+                    .height(20.dp)
+                    .clip(MaterialTheme.shapes.small)
+                    .background(popKnowColors.surface.copy(alpha = shimmerAlpha)),
         )
 
         Box(
-            modifier = Modifier
-                .padding(top = spacing.xs)
-                .width(200.dp)
-                .height(120.dp)
-                .clip(MaterialTheme.shapes.small)
-                .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+            modifier =
+                Modifier
+                    .padding(top = spacing.xs)
+                    .width(200.dp)
+                    .height(120.dp)
+                    .clip(MaterialTheme.shapes.small)
+                    .background(popKnowColors.surface.copy(alpha = shimmerAlpha)),
         )
 
         Box(
-            modifier = Modifier
-                .padding(top = spacing.sm)
-                .width(100.dp)
-                .height(24.dp)
-                .clip(CircleShape)
-                .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+            modifier =
+                Modifier
+                    .padding(top = spacing.sm)
+                    .width(100.dp)
+                    .height(24.dp)
+                    .clip(CircleShape)
+                    .background(popKnowColors.surface.copy(alpha = shimmerAlpha)),
         )
 
         Box(
-            modifier = Modifier
-                .padding(top = spacing.lg)
-                .fillMaxWidth(0.8f)
-                .height(20.dp)
-                .clip(MaterialTheme.shapes.small)
-                .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+            modifier =
+                Modifier
+                    .padding(top = spacing.lg)
+                    .fillMaxWidth(0.8f)
+                    .height(20.dp)
+                    .clip(MaterialTheme.shapes.small)
+                    .background(popKnowColors.surface.copy(alpha = shimmerAlpha)),
         )
 
         Box(
-            modifier = Modifier
-                .padding(top = spacing.xxl)
-                .width(150.dp)
-                .height(20.dp)
-                .clip(MaterialTheme.shapes.small)
-                .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+            modifier =
+                Modifier
+                    .padding(top = spacing.xxl)
+                    .width(150.dp)
+                    .height(20.dp)
+                    .clip(MaterialTheme.shapes.small)
+                    .background(popKnowColors.surface.copy(alpha = shimmerAlpha)),
         )
 
         Row(
-            modifier = Modifier
-                .padding(top = spacing.sm)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(spacing.xs)
+            modifier =
+                Modifier
+                    .padding(top = spacing.sm)
+                    .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(spacing.xs),
         ) {
             repeat(5) {
                 Box(
-                    modifier = Modifier
-                        .size(12.dp)
-                        .clip(CircleShape)
-                        .background(popKnowColors.surface.copy(alpha = shimmerAlpha))
+                    modifier =
+                        Modifier
+                            .size(12.dp)
+                            .clip(CircleShape)
+                            .background(popKnowColors.surface.copy(alpha = shimmerAlpha)),
                 )
             }
         }
