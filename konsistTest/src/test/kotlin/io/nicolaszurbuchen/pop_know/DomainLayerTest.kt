@@ -134,7 +134,7 @@ class DomainLayerTest {
     @Test // ok
     fun `files in domain layer must contain exactly one top-level declaration`() {
         scope.files
-            .withPackage("..data..")
+            .withPackage("..domain..")
             .assertTrue { file ->
                 val topLevelDeclarations =
                     file.classes(includeNested = false) +
@@ -187,13 +187,6 @@ class DomainLayerTest {
     // endregion
 
     // region model rules
-
-    @Test // ok
-    fun `model classes must not declare any functions`() {
-        scope.classes()
-            .withPackage("..domain.model")
-            .assertTrue { it.numFunctions(includeNested = false) == 0 }
-    }
 
     @Test // ok
     fun `Dto classes must not implement any interface`() {

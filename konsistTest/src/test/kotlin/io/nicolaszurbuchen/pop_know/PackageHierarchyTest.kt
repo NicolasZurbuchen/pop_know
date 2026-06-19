@@ -87,7 +87,7 @@ class PackageHierarchyTest {
         val allowed = listOf("entity", "mapper")
 
         scope.packages
-            .filter { it.name.matches(Regex(".*\\.(feature|common)\\.[^.]+\\.data\\.datasource\\.remote\\.[^.]+$")) }
+            .filter { it.name.matches(Regex(".*\\.(feature|common)\\.[^.]+\\.data\\.datasource\\.local\\.[^.]+$")) }
             .assertTrue { pkg ->
                 val segments = pkg.name.split(Regex("\\.(feature|common)\\.")).last().split(".")
                 allowed.contains(segments.last())

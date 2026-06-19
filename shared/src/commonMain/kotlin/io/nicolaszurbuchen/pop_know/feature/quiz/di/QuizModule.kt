@@ -4,6 +4,8 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.local.QuizLocal
 import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.local.QuizLocalDataSourceImpl
 import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.QuizRemoteDataSource
 import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.QuizRemoteDataSourceImpl
+import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.api.QuizApi
+import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.api.QuizApiImpl
 import io.nicolaszurbuchen.pop_know.feature.quiz.data.repository.QuizRepositoryImpl
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.repository.QuizRepository
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.GetLastGameResultUseCase
@@ -20,6 +22,8 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val quizModule = module {
+    singleOf(::QuizApiImpl) bind QuizApi::class
+
     singleOf(::QuizRemoteDataSourceImpl) bind QuizRemoteDataSource::class
     singleOf(::QuizLocalDataSourceImpl) bind QuizLocalDataSource::class
 
