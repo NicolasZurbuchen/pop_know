@@ -18,9 +18,9 @@ class QuizNavigatorImpl(
         appNavigator.navigateBack()
     }
 
-    override fun onPlayAgain(gameId: Long) {
+    override fun onPlayAgain() {
         appNavigator.popUpTo { it is HomeMainDestination }
-        appNavigator.navigateTo(QuizMainDestination(gameId = gameId))
+        appNavigator.navigateTo(QuizMainDestination)
     }
 
     override fun navigateToStats() {

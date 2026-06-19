@@ -25,6 +25,6 @@ val quizModule = module {
     factoryOf(::GetLastGameResultUseCase)
     factoryOf(::QuizStoreFactory)
     factoryOf(::ResultStoreFactory)
-    factory { params -> QuizViewModel(params.get(), get()) }
-    factory { ResultViewModel(get()) }
+    factoryOf(::QuizViewModel)
+    factoryOf(::ResultViewModel)
 }

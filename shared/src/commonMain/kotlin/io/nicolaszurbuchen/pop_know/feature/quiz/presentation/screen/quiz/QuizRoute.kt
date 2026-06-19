@@ -7,14 +7,12 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.nicolaszurbuchen.pop_know.infra.platform.BackHandler
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.parameter.parametersOf
 
 @Composable
 fun QuizRoute(
-    gameId: Long,
     onNavigateToResult: () -> Unit,
     onNavigateBack: () -> Unit,
-    viewModel: QuizViewModel = koinViewModel { parametersOf(gameId) },
+    viewModel: QuizViewModel = koinViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val onNavigateToResultUpdated by rememberUpdatedState(onNavigateToResult)

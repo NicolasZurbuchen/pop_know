@@ -22,14 +22,14 @@ class QuizStoreFactory(
     private val startQuiz: StartQuizUseCase,
     private val submitAnswer: SubmitAnswerUseCase,
 ) {
-    fun create(gameId: Long): QuizStore =
+    fun create(): QuizStore =
         object :
             QuizStore,
             Store<QuizIntent, QuizState, QuizLabel> by storeFactory.create(
                 name = "QuizStore",
                 initialState = QuizState(isLoading = true),
                 bootstrapper = BootstrapperImpl(),
-                executorFactory = { ExecutorImpl(gameId) },
+                executorFactory = { ExecutorImpl() },
                 reducer = ReducerImpl,
             ) {}
 
@@ -39,7 +39,7 @@ class QuizStoreFactory(
         }
     }
 
-    private inner class ExecutorImpl(private val gameId: Long) :
+    private inner class ExecutorImpl :
         CoroutineExecutor<QuizIntent, QuizAction, QuizState, QuizMessage, QuizLabel>() {
 
         private var timerJob: Job? = null
@@ -70,7 +70,7 @@ class QuizStoreFactory(
             dispatch(QuizMessage.QuizLoading)
             scope.launch {
                 try {
-                    val quiz = startQuiz(gameId)
+                    val quiz = startQuiz()
                     val shuffled = quiz.questionStates.map { progress ->
                         val question = (progress as QuestionProgress.Unanswered).question
                         (question.incorrectAnswers + question.correctAnswer).shuffled()

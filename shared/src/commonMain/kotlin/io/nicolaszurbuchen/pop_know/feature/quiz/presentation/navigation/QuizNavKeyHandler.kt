@@ -5,15 +5,13 @@ import androidx.navigation3.runtime.NavKey
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.QuizRoute
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result.ResultRoute
 import io.nicolaszurbuchen.pop_know.infra.navigation.NavKeyHandler
-import kotlin.time.Clock
 
 class QuizNavKeyHandler(
     private val navigator: QuizNavigator
 ) : NavKeyHandler {
     override fun EntryProviderScope<NavKey>.registerEntries() {
-        entry<QuizMainDestination> { key ->
+        entry<QuizMainDestination> {
             QuizRoute(
-                gameId = key.gameId,
                 onNavigateToResult = { navigator.navigateToResult() },
                 onNavigateBack = { navigator.navigateBack() },
             )
@@ -22,10 +20,7 @@ class QuizNavKeyHandler(
         entry<ResultDestination> {
             ResultRoute(
                 onNavigateHome = { navigator.navigateToHome() },
-                onPlayAgain = {
-                    val quizId = Clock.System.now().toEpochMilliseconds()
-                    navigator.onPlayAgain(quizId)
-                },
+                onPlayAgain = { navigator.onPlayAgain() },
                 onNavigateToStats = { navigator.navigateToStats() },
             )
         }

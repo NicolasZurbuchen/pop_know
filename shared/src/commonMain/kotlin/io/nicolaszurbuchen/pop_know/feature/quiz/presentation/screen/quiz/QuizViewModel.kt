@@ -12,10 +12,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
 class QuizViewModel(
-    gameId: Long,
     factory: QuizStoreFactory,
 ) : ViewModel() {
-    private val store = factory.create(gameId)
+    private val store = factory.create()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val state: StateFlow<QuizUiModel> = store.stateFlow

@@ -8,8 +8,8 @@ import io.nicolaszurbuchen.pop_know.infra.navigation.AppNavigator
 class HomeNavigatorImpl(
     private val appNavigator: AppNavigator
 ) : HomeNavigator {
-    override fun navigateToPlay(gameId: Long) {
-        appNavigator.navigateTo(QuizMainDestination(gameId = gameId))
+    override fun navigateToPlay() {
+        appNavigator.navigateTo(QuizMainDestination)
     }
 
     override fun navigateToStats() {
