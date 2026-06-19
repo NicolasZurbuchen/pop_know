@@ -46,4 +46,8 @@ class StatsLocalDataSourceImpl(
                 )
             )
         }
+
+    override fun clearAll() {
+        queries.deleteAllHistory()
+    }
 }

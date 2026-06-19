@@ -7,6 +7,7 @@ import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.common.error.AppException
+import io.nicolaszurbuchen.pop_know.feature.stats.domain.usecase.ClearStatsUseCase
 import io.nicolaszurbuchen.pop_know.feature.stats.domain.usecase.GetFullStatsUseCase
 import kotlinx.coroutines.launch
 
@@ -15,6 +16,7 @@ interface StatsStore : Store<StatsIntent, StatsState, StatsLabel>
 class StatsStoreFactory(
     private val storeFactory: StoreFactory,
     private val getFullStats: GetFullStatsUseCase,
+    private val clearStats: ClearStatsUseCase,
 ) {
     fun create(): StatsStore =
         object :
@@ -38,6 +40,7 @@ class StatsStoreFactory(
         override fun executeAction(action: StatsAction) {
             when (action) {
                 StatsAction.LoadStats -> loadStats()
+                StatsAction.ClearStats -> performClearStats()
             }
         }
 
@@ -45,6 +48,11 @@ class StatsStoreFactory(
             when (intent) {
                 StatsIntent.NavigateBack -> publish(StatsLabel.NavigateBack)
                 StatsIntent.Retry -> loadStats()
+                is StatsIntent.ShowClearDialog -> dispatch(StatsMessage.ShowClearDialog(intent.isOpen))
+                StatsIntent.ConfirmClearStats -> {
+                    dispatch(StatsMessage.ShowClearDialog(false))
+                    performClearStats()
+                }
             }
         }
 
@@ -54,6 +62,18 @@ class StatsStoreFactory(
                 try {
                     val stats = getFullStats()
                     dispatch(StatsMessage.StatsLoaded(stats))
+                } catch (e: Exception) {
+                    val error = (e as? AppException)?.error ?: AppError.Unexpected(e)
+                    dispatch(StatsMessage.Error(error))
+                }
+            }
+        }
+
+        private fun performClearStats() {
+            scope.launch {
+                try {
+                    clearStats()
+                    publish(StatsLabel.NavigateToHome)
                 } catch (e: Exception) {
                     val error = (e as? AppException)?.error ?: AppError.Unexpected(e)
                     dispatch(StatsMessage.Error(error))
@@ -78,6 +98,10 @@ class StatsStoreFactory(
                 is StatsMessage.Error -> copy(
                     isLoading = false,
                     error = msg.error,
+                )
+
+                is StatsMessage.ShowClearDialog -> copy(
+                    isClearDialogOpen = msg.isOpen,
                 )
             }
     }

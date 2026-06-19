@@ -39,6 +39,7 @@ fun PopKnowTopBar(
     right: UiText? = null,
     backIcon: ImageVector = Icons.AutoMirrored.Filled.ArrowBack,
     onBack: (() -> Unit)? = null,
+    onRightClick: (() -> Unit)? = null,
     showDivider: Boolean = true,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
@@ -88,7 +89,17 @@ fun PopKnowTopBar(
                 PopKnowTopBarText(
                     text = it.asString(),
                     modifier = Modifier
-                        .align(Alignment.CenterEnd),
+                        .align(Alignment.CenterEnd)
+                        .then(
+                            if (onRightClick != null) {
+                                Modifier
+                                    .clip(MaterialTheme.shapes.small)
+                                    .clickable(onClick = onRightClick)
+                                    .padding(vertical = 4.dp, horizontal = 4.dp)
+                            } else {
+                                Modifier
+                            }
+                        ),
                 )
             }
         }

@@ -9,7 +9,8 @@ import io.nicolaszurbuchen.pop_know.feature.stats.domain.model.FullStats
 fun StatsState.toUiModel() = StatsUiModel(
     isLoading = isLoading,
     error = error?.toUiModel(),
-    stats = stats?.toUiModel()
+    stats = stats?.toUiModel(),
+    isClearDialogOpen = isClearDialogOpen,
 )
 
 private fun FullStats.toUiModel() = StatsDataUiModel(

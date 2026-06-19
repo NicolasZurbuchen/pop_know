@@ -36,6 +36,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowConfirmDialog
 import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowErrorView
 import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowSectionLabel
 import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowTopBar
@@ -52,6 +53,10 @@ import popknow.shared.generated.resources.Res
 import popknow.shared.generated.resources.stats_appbar_center
 import popknow.shared.generated.resources.stats_appbar_right
 import popknow.shared.generated.resources.stats_back
+import popknow.shared.generated.resources.stats_clear_dialog_confirm
+import popknow.shared.generated.resources.stats_clear_dialog_dismiss
+import popknow.shared.generated.resources.stats_clear_dialog_text
+import popknow.shared.generated.resources.stats_clear_dialog_title
 import popknow.shared.generated.resources.stats_overall
 import popknow.shared.generated.resources.stats_section_category
 import popknow.shared.generated.resources.stats_summary_correct
@@ -62,33 +67,50 @@ fun StatsScreen(
     state: StatsUiModel,
     onBackClick: () -> Unit,
     onRetryClick: () -> Unit,
+    onClearClick: () -> Unit,
+    onConfirmClear: () -> Unit,
+    onDismissClear: () -> Unit,
 ) {
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
     ) {
-        PopKnowTopBar(
-            left = UiText.Resource(Res.string.stats_back),
-            center = UiText.Resource(Res.string.stats_appbar_center),
-            right = UiText.Resource(Res.string.stats_appbar_right),
-            onBack = onBackClick,
-        )
+        if (state.isClearDialogOpen) {
+            PopKnowConfirmDialog(
+                title = UiText.Resource(Res.string.stats_clear_dialog_title).asString(),
+                text = UiText.Resource(Res.string.stats_clear_dialog_text).asString(),
+                confirmText = UiText.Resource(Res.string.stats_clear_dialog_confirm).asString(),
+                dismissText = UiText.Resource(Res.string.stats_clear_dialog_dismiss).asString(),
+                onConfirm = onConfirmClear,
+                onDismiss = onDismissClear,
+            )
+        }
 
-        Box(modifier = Modifier.weight(1f)) {
-            when {
-                state.isLoading -> Skeleton()
+        Column(modifier = Modifier.fillMaxSize()) {
+            PopKnowTopBar(
+                left = UiText.Resource(Res.string.stats_back),
+                center = UiText.Resource(Res.string.stats_appbar_center),
+                right = UiText.Resource(Res.string.stats_appbar_right),
+                onBack = onBackClick,
+                onRightClick = onClearClick,
+            )
 
-                state.error != null -> PopKnowErrorView(
-                    title = state.error.title,
-                    subtitle = state.error.subtitle,
-                    icon = state.error.icon,
-                    onRetry = onRetryClick,
-                )
+            Box(modifier = Modifier.weight(1f)) {
+                when {
+                    state.isLoading -> Skeleton()
 
-                state.stats != null -> Content(
-                    stats = state.stats,
-                )
+                    state.error != null -> PopKnowErrorView(
+                        title = state.error.title,
+                        subtitle = state.error.subtitle,
+                        icon = state.error.icon,
+                        onRetry = onRetryClick,
+                    )
+
+                    state.stats != null -> Content(
+                        stats = state.stats,
+                    )
+                }
             }
         }
     }

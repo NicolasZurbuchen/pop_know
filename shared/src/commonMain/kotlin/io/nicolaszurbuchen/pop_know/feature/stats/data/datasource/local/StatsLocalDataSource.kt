@@ -8,4 +8,5 @@ interface StatsLocalDataSource {
     fun countCorrect(): Long
     fun statsByDifficulty(): List<DifficultyStats>
     fun statsByCategory(): List<CategoryStats>
+    fun clearAll()
 }

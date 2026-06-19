@@ -9,6 +9,7 @@ data class StatsUiModel(
     val isLoading: Boolean,
     val error: AppErrorUiModel?,
     val stats: StatsDataUiModel?,
+    val isClearDialogOpen: Boolean,
 )
 
 data class StatsDataUiModel(

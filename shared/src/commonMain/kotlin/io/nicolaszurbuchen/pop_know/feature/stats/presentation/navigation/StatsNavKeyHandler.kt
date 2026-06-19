@@ -12,6 +12,7 @@ class StatsNavKeyHandler(
         entry<StatsMainDestination> {
             StatsRoute(
                 onNavigateBack = { navigator.navigateBack() },
+                onNavigateToHome = { navigator.navigateToHome() },
             )
         }
     }

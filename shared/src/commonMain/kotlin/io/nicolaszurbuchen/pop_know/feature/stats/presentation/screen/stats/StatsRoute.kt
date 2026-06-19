@@ -10,16 +10,19 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun StatsRoute(
     onNavigateBack: () -> Unit,
+    onNavigateToHome: () -> Unit,
     viewModel: StatsViewModel = koinViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     val onNavigateBackUpdated by rememberUpdatedState(onNavigateBack)
+    val onNavigateToHomeUpdated by rememberUpdatedState(onNavigateToHome)
 
     LaunchedEffect(Unit) {
         viewModel.labels.collect { label ->
             when (label) {
                 StatsLabel.NavigateBack -> onNavigateBackUpdated()
+                StatsLabel.NavigateToHome -> onNavigateToHomeUpdated()
             }
         }
     }
@@ -28,5 +31,8 @@ fun StatsRoute(
         state = state,
         onBackClick = { viewModel.onIntent(StatsIntent.NavigateBack) },
         onRetryClick = { viewModel.onIntent(StatsIntent.Retry) },
+        onClearClick = { viewModel.onIntent(StatsIntent.ShowClearDialog(true)) },
+        onConfirmClear = { viewModel.onIntent(StatsIntent.ConfirmClearStats) },
+        onDismissClear = { viewModel.onIntent(StatsIntent.ShowClearDialog(false)) },
     )
 }

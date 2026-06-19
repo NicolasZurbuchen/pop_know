@@ -24,4 +24,8 @@ class StatsRepositoryImpl(
             perCategory = localDataSource.statsByCategory(),
         )
     }
+
+    override suspend fun clearAllStats() {
+        localDataSource.clearAll()
+    }
 }

@@ -42,12 +42,16 @@
     <string name="result_performance_legendary">Legendary</string>
 
     <string name="stats_appbar_center">Stats</string>
-    <string name="stats_appbar_right">Live</string>
+    <string name="stats_appbar_right">Clear</string>
     <string name="stats_back">Back</string>
     <string name="stats_overall">Overall</string>
     <string name="stats_summary_correct">%1$d / %2$d Correct</string>
     <string name="stats_section_difficulty">Accuracy by Difficulty</string>
     <string name="stats_section_category">By Category</string>
+    <string name="stats_clear_dialog_title">Clear Statistics?</string>
+    <string name="stats_clear_dialog_text">Are you sure you want to clear all statistics? This action cannot be undone.</string>
+    <string name="stats_clear_dialog_confirm">Clear</string>
+    <string name="stats_clear_dialog_dismiss">Cancel</string>
 
     <string name="error_retry">Retry</string>
     <string name="error_dismiss">Dismiss</string>
