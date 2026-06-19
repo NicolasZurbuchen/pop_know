@@ -7,6 +7,6 @@ data class AnsweredQuestionResult(
     val correctAnswer: String,
     val selectedAnswer: String?,
     val status: AnswerStatus,
-    val categoryName: String,
+    val categoryName: String?,
     val difficulty: Difficulty,
 )

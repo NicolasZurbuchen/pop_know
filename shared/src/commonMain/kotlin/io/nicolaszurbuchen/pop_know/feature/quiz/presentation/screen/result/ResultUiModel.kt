@@ -24,6 +24,6 @@ data class AnsweredQuestionResultUiModel(
     val correctAnswer: String,
     val selectedAnswer: String?,
     val status: AnswerStatusUiModel,
-    val categoryName: String,
+    val categoryName: String?,
     val difficulty: DifficultyUiModel,
 )

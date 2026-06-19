@@ -49,7 +49,7 @@ SELECT
     h.selected_answer, h.status, h.answered_at,
     c.name AS category_name
 FROM QuestionHistoryEntity h
-JOIN CategoryEntity c ON h.category_id = c.id
+LEFT JOIN CategoryEntity c ON h.category_id = c.id
 WHERE h.game_id = (SELECT MAX(game_id) FROM QuestionHistoryEntity)
 ORDER BY h.id ASC;
 
