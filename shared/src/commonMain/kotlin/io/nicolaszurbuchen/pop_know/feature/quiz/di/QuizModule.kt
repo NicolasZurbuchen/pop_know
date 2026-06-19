@@ -14,17 +14,24 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.QuizVi
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result.ResultStoreFactory
 import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result.ResultViewModel
 import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val quizModule = module {
-    single<QuizRemoteDataSource> { QuizRemoteDataSourceImpl(get()) }
-    single<QuizLocalDataSource> { QuizLocalDataSourceImpl(get(), get()) }
-    single<QuizRepository> { QuizRepositoryImpl(get(), get()) }
+    singleOf(::QuizRemoteDataSourceImpl) bind QuizRemoteDataSource::class
+    singleOf(::QuizLocalDataSourceImpl) bind QuizLocalDataSource::class
+
+    singleOf(::QuizRepositoryImpl) bind QuizRepository::class
+
     factoryOf(::StartQuizUseCase)
     factoryOf(::SubmitAnswerUseCase)
     factoryOf(::GetLastGameResultUseCase)
+
     factoryOf(::QuizStoreFactory)
     factoryOf(::ResultStoreFactory)
-    factoryOf(::QuizViewModel)
-    factoryOf(::ResultViewModel)
+
+    viewModelOf(::QuizViewModel)
+    viewModelOf(::ResultViewModel)
 }

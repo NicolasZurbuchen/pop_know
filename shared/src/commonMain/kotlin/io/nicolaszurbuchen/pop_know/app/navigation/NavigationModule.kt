@@ -12,6 +12,7 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.navigation.QuizNav
 import io.nicolaszurbuchen.pop_know.feature.stats.presentation.navigation.StatsNavKeyHandler
 import io.nicolaszurbuchen.pop_know.feature.stats.presentation.navigation.StatsNavigator
 import io.nicolaszurbuchen.pop_know.infra.navigation.NavKeyHandler
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -19,11 +20,11 @@ import org.koin.dsl.module
 val appNavigationModule = module {
     single<NavKey>(named("initialRoute")) { HomeMainDestination }
 
-    single { HomeNavigatorImpl(get()) } bind HomeNavigator::class
-    single { QuizNavigatorImpl(get()) } bind QuizNavigator::class
-    single { StatsNavigatorImpl(get()) } bind StatsNavigator::class
+    singleOf(::HomeNavigatorImpl) bind HomeNavigator::class
+    singleOf(::QuizNavigatorImpl) bind QuizNavigator::class
+    singleOf(::StatsNavigatorImpl) bind StatsNavigator::class
 
-    single(named("home")) { HomeNavKeyHandler(get()) } bind NavKeyHandler::class
-    single(named("quiz")) { QuizNavKeyHandler(get()) } bind NavKeyHandler::class
-    single(named("stats")) { StatsNavKeyHandler(get()) } bind NavKeyHandler::class
+    singleOf(::HomeNavKeyHandler) { named("home") } bind NavKeyHandler::class
+    singleOf(::QuizNavKeyHandler) { named("quiz") } bind NavKeyHandler::class
+    singleOf(::StatsNavKeyHandler) { named("stats") } bind NavKeyHandler::class
 }
