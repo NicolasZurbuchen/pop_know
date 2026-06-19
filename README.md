@@ -28,7 +28,7 @@ The primary goal of PopKnow is **not the app itself** — it is a living archite
 
 ## 🖼️ Showcase
 
-<img src="assets/popknow-home.jpg" width="150">  <img src="assets/popknow-home.jpg" width="150">  <img src="assets/popknow-right.jpg" width="150">  <img src="assets/popknow-result.jpg" width="150">  <img src="assets/popknow-stats.jpg" width="150">
+<img src="assets/popknow-home.jpg" width="150">  <img src="assets/popknow-wrong.jpg" width="150">  <img src="assets/popknow-right.jpg" width="150">  <img src="assets/popknow-result.jpg" width="150">  <img src="assets/popknow-stats.jpg" width="150">
 
 ---
 
