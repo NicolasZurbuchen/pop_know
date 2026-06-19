@@ -71,10 +71,11 @@ fun ResultScreen(
     onPlayAgainClick: () -> Unit,
     onViewStatsClick: () -> Unit,
     onRetryClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier =
-            Modifier
+            modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background),
     ) {

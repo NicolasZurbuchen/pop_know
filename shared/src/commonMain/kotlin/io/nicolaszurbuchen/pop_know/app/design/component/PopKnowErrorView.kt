@@ -28,11 +28,11 @@ import popknow.shared.generated.resources.error_unexpected_title
 
 @Composable
 fun PopKnowErrorView(
+    onRetry: () -> Unit,
     modifier: Modifier = Modifier,
     title: UiText = UiText.Resource(Res.string.error_unexpected_title),
     subtitle: UiText = UiText.Resource(Res.string.error_unexpected_subtitle),
     icon: ImageVector = Icons.Default.ErrorOutline,
-    onRetry: () -> Unit,
 ) {
     Column(
         modifier =

@@ -67,10 +67,11 @@ fun HomeScreen(
     onViewStatsClick: () -> Unit,
     onRetryClick: () -> Unit,
     onDismissErrorClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier =
-            Modifier
+            modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background),
     ) {

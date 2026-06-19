@@ -71,10 +71,11 @@ fun StatsScreen(
     onClearClick: () -> Unit,
     onConfirmClear: () -> Unit,
     onDismissClear: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier =
-            Modifier
+            modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background),
     ) {

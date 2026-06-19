@@ -76,10 +76,11 @@ fun QuizScreen(
     onDismissInsertionErrorClick: () -> Unit,
     onShowQuitDialog: (Boolean) -> Unit,
     onConfirmQuit: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier =
-            Modifier
+            modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background),
     ) {

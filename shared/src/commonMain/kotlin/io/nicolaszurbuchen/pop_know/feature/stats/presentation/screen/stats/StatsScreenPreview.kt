@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:filename")
+
 package io.nicolaszurbuchen.pop_know.feature.stats.presentation.screen.stats
 
 import androidx.compose.material.icons.Icons
