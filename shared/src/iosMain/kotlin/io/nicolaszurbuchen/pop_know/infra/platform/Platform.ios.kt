@@ -1,6 +1,5 @@
-package io.nicolaszurbuchen.pop_know
+package io.nicolaszurbuchen.pop_know.infra.platform
 
-import io.nicolaszurbuchen.pop_know.infra.platform.Platform
 import platform.UIKit.UIDevice
 
 class IOSPlatform: Platform {

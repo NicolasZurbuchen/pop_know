@@ -1,4 +1,4 @@
-package io.nicolaszurbuchen.pop_know.infra.ui
+package io.nicolaszurbuchen.pop_know.infra.platform
 
 import androidx.compose.runtime.Composable
 
