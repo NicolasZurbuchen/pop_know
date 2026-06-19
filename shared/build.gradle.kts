@@ -54,6 +54,7 @@ kotlin {
             implementation(libs.mvikotlin.main)
             implementation(libs.mvikotlin.extensions.coroutines)
             implementation(libs.navigation3.ui)
+            implementation(libs.sqldelight.coroutines)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

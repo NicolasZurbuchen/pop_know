@@ -8,6 +8,7 @@ import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import io.nicolaszurbuchen.pop_know.common.error.AppError
 import io.nicolaszurbuchen.pop_know.common.error.AppException
 import io.nicolaszurbuchen.pop_know.feature.home.domain.usecase.GetAnswerStatsUseCase
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 interface HomeStore : Store<HomeIntent, HomeState, HomeLabel>
@@ -35,6 +36,9 @@ class HomeStoreFactory(
 
     private inner class ExecutorImpl :
         CoroutineExecutor<HomeIntent, HomeAction, HomeState, HomeMessage, HomeLabel>() {
+        
+        private var loadStatsJob: Job? = null
+        
         override fun executeAction(action: HomeAction) {
             when (action) {
                 HomeAction.LoadStats -> loadStats()
@@ -51,10 +55,12 @@ class HomeStoreFactory(
         }
 
         private fun loadStats() {
-            scope.launch {
+            loadStatsJob?.cancel()
+            loadStatsJob = scope.launch {
                 try {
-                    val stats = getAnswerStats()
-                    dispatch(HomeMessage.StatsLoaded(stats))
+                    getAnswerStats().collect { stats ->
+                        dispatch(HomeMessage.StatsLoaded(stats))
+                    }
                 } catch (e: Exception) {
                     val error = (e as? AppException)?.error ?: AppError.Unexpected(e)
                     dispatch(HomeMessage.Error(error))
