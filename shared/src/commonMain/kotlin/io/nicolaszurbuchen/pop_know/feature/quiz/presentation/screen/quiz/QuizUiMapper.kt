@@ -31,11 +31,11 @@ private fun QuizSession.toDataUiModel(
     }
 
     val choices = currentShuffled.mapIndexed { index, text ->
-        val status: QuizAnswerStatusUi? = when {
+        val status: AnswerStatusUiModel? = when {
             answered == null -> null
-            answered.selectedAnswer == text && text == question.correctAnswer -> QuizAnswerStatusUi.CORRECT
-            answered.selectedAnswer == text -> QuizAnswerStatusUi.INCORRECT
-            text == question.correctAnswer -> QuizAnswerStatusUi.CORRECT
+            answered.selectedAnswer == text && text == question.correctAnswer -> AnswerStatusUiModel.CORRECT
+            answered.selectedAnswer == text -> AnswerStatusUiModel.INCORRECT
+            text == question.correctAnswer -> AnswerStatusUiModel.CORRECT
             else -> null
         }
         QuizChoiceUiModel(
@@ -50,7 +50,7 @@ private fun QuizSession.toDataUiModel(
         answered.status == AnswerStatus.TIMEOUT -> QuizChoiceUiModel(
             letter = "",
             text = "",
-            status = QuizAnswerStatusUi.TIMEOUT,
+            status = AnswerStatusUiModel.TIMEOUT,
         )
         else -> choices.firstOrNull { it.text == answered.selectedAnswer }
     }

@@ -5,6 +5,7 @@ import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.AnswerSta
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.toUiModel
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnsweredQuestionResult
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.GameResult
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.toUiModel
 
 fun ResultState.toUiModel() = ResultUiModel(
     isLoading = isLoading,
@@ -28,7 +29,7 @@ fun AnsweredQuestionResult.toUiModel() = AnsweredQuestionResultUiModel(
     question = question,
     correctAnswer = correctAnswer,
     selectedAnswer = selectedAnswer,
-    status = status,
+    status = status.toUiModel(),
     categoryName = categoryName,
     difficulty = difficulty.toUiModel(),
 )

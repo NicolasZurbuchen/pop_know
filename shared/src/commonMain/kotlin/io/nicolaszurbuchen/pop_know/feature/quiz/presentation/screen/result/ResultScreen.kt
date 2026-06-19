@@ -43,13 +43,15 @@ import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowSectionLabel
 import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowTopBar
 import io.nicolaszurbuchen.pop_know.app.design.theme.SpaceGroteskFontFamily
 import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowColors
-import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowGameColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
-import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.AnswerStatusUiModel
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.backgroundColor
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.contentColor
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.infra.ui.asString
 import popknow.shared.generated.resources.Res
 import popknow.shared.generated.resources.home_view_stats
+import popknow.shared.generated.resources.quiz_result_no_results
 import popknow.shared.generated.resources.result_appbar_left
 import popknow.shared.generated.resources.result_home
 import popknow.shared.generated.resources.result_performance_cold
@@ -94,7 +96,7 @@ fun ResultScreen(
                     onRetry = onRetryClick,
                 )
                 state.content == null -> Text(
-                    text = "No results available.",
+                    text = UiText.Resource(Res.string.quiz_result_no_results).asString(),
                     modifier = Modifier.align(Alignment.Center)
                 )
                 else -> Content(
@@ -222,36 +224,25 @@ private fun PopKnowPerformanceTag(
 
 @Composable
 private fun PopKnowQuestionResultDot(
-    status: AnswerStatus,
+    status: AnswerStatusUiModel,
     modifier: Modifier = Modifier
 ) {
-    val backgroundColor = when (status) {
-        AnswerStatus.CORRECT -> MaterialTheme.popKnowGameColors.correct
-        AnswerStatus.INCORRECT -> MaterialTheme.popKnowGameColors.wrong
-        AnswerStatus.TIMEOUT -> MaterialTheme.popKnowGameColors.timeout
-    }
-    val contentColor = when (status) {
-        AnswerStatus.CORRECT -> MaterialTheme.popKnowGameColors.onCorrect
-        AnswerStatus.INCORRECT -> MaterialTheme.popKnowGameColors.onWrong
-        AnswerStatus.TIMEOUT -> MaterialTheme.popKnowGameColors.onTimeout
-    }
-
     Box(
         modifier = modifier
             .size(24.dp)
             .background(
-                color = backgroundColor,
+                color = status.backgroundColor(),
                 shape = MaterialTheme.shapes.extraSmall
             ),
         contentAlignment = Alignment.Center
     ) {
         Icon(
             imageVector = when (status) {
-                AnswerStatus.CORRECT -> Icons.Default.Check
-                AnswerStatus.INCORRECT, AnswerStatus.TIMEOUT -> Icons.Default.Close
+                AnswerStatusUiModel.CORRECT -> Icons.Default.Check
+                AnswerStatusUiModel.INCORRECT, AnswerStatusUiModel.TIMEOUT -> Icons.Default.Close
             },
             contentDescription = null,
-            tint = contentColor,
+            tint = status.contentColor(),
             modifier = Modifier.size(14.dp)
         )
     }

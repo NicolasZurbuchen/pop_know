@@ -46,15 +46,16 @@ import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowGameColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.AnswerStatsUiModel
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.DifficultyUiModel
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.color
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.toText
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 import io.nicolaszurbuchen.pop_know.infra.ui.asString
 import popknow.shared.generated.resources.Res
+import popknow.shared.generated.resources.common_cancel
 import popknow.shared.generated.resources.stats_appbar_center
 import popknow.shared.generated.resources.stats_appbar_right
 import popknow.shared.generated.resources.stats_back
 import popknow.shared.generated.resources.stats_clear_dialog_confirm
-import popknow.shared.generated.resources.stats_clear_dialog_dismiss
 import popknow.shared.generated.resources.stats_clear_dialog_text
 import popknow.shared.generated.resources.stats_clear_dialog_title
 import popknow.shared.generated.resources.stats_overall
@@ -81,7 +82,7 @@ fun StatsScreen(
                 title = UiText.Resource(Res.string.stats_clear_dialog_title).asString(),
                 text = UiText.Resource(Res.string.stats_clear_dialog_text).asString(),
                 confirmText = UiText.Resource(Res.string.stats_clear_dialog_confirm).asString(),
-                dismissText = UiText.Resource(Res.string.stats_clear_dialog_dismiss).asString(),
+                dismissText = UiText.Resource(Res.string.common_cancel).asString(),
                 onConfirm = onConfirmClear,
                 onDismiss = onDismissClear,
             )
@@ -218,20 +219,17 @@ private fun OverallSummary(
 
 @Composable
 private fun DifficultyRings(perDifficulty: List<StatsDifficultyUiModel>) {
-    val gameColors = MaterialTheme.popKnowGameColors
     val inactiveColor = MaterialTheme.colorScheme.outlineVariant
+    val ringData = perDifficulty.asReversed().map { 
+        it.difficulty.color() to it.answerStats.accuracy 
+    }
 
     Canvas(modifier = Modifier.fillMaxSize()) {
         val strokeWidth = 10.dp.toPx()
         val spacing = 8.dp.toPx()
         
-        perDifficulty.asReversed().forEachIndexed { index, diffStats ->
+        ringData.forEachIndexed { index, (color, accuracy) ->
             val radius = size.minDimension / 2 - (index * (strokeWidth + spacing)) - strokeWidth / 2
-            val color = when (diffStats.difficulty) {
-                DifficultyUiModel.EASY -> gameColors.difficultyEasy
-                DifficultyUiModel.MEDIUM -> gameColors.difficultyMedium
-                DifficultyUiModel.HARD -> gameColors.difficultyHard
-            }
             
             // Inactive ring
             drawCircle(
@@ -244,7 +242,7 @@ private fun DifficultyRings(perDifficulty: List<StatsDifficultyUiModel>) {
             drawArc(
                 color = color,
                 startAngle = -90f,
-                sweepAngle = diffStats.answerStats.accuracy * 360f,
+                sweepAngle = accuracy * 360f,
                 useCenter = false,
                 style = Stroke(width = strokeWidth, cap = StrokeCap.Round),
                 size = androidx.compose.ui.geometry.Size(radius * 2, radius * 2),
@@ -256,11 +254,6 @@ private fun DifficultyRings(perDifficulty: List<StatsDifficultyUiModel>) {
 
 @Composable
 private fun DifficultySummaryRow(stats: StatsDifficultyUiModel) {
-    val color = when (stats.difficulty) {
-        DifficultyUiModel.EASY -> MaterialTheme.popKnowGameColors.difficultyEasy
-        DifficultyUiModel.MEDIUM -> MaterialTheme.popKnowGameColors.difficultyMedium
-        DifficultyUiModel.HARD -> MaterialTheme.popKnowGameColors.difficultyHard
-    }
     val accuracy = (stats.answerStats.accuracy * 100).roundToInt()
     val accuracyColor = when {
         accuracy >= 80 -> MaterialTheme.popKnowGameColors.correct
@@ -275,11 +268,14 @@ private fun DifficultySummaryRow(stats: StatsDifficultyUiModel) {
         Box(
             modifier = Modifier
                 .size(8.dp)
-                .background(color, CircleShape)
+                .background(
+                    color = stats.difficulty.color(),
+                    shape = CircleShape,
+                ),
         )
         Spacer(Modifier.width(MaterialTheme.spacing.sm))
         Text(
-            text = stats.difficulty.name,
+            text = stats.difficulty.toText().asString().uppercase(),
             style = TextStyle(
                 color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 12.sp,

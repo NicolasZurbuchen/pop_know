@@ -42,7 +42,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
@@ -51,10 +50,21 @@ import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowErrorBanner
 import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowErrorView
 import io.nicolaszurbuchen.pop_know.app.design.component.PopKnowTopBar
 import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowColors
-import io.nicolaszurbuchen.pop_know.app.design.theme.popKnowGameColors
 import io.nicolaszurbuchen.pop_know.app.design.theme.spacing
-import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.DifficultyUiModel
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.color
+import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.toText
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
+import io.nicolaszurbuchen.pop_know.infra.ui.asString
+import popknow.shared.generated.resources.Res
+import popknow.shared.generated.resources.common_cancel
+import popknow.shared.generated.resources.quiz_appbar_center
+import popknow.shared.generated.resources.quiz_appbar_left
+import popknow.shared.generated.resources.quiz_appbar_right
+import popknow.shared.generated.resources.quiz_next
+import popknow.shared.generated.resources.quiz_question_label
+import popknow.shared.generated.resources.quiz_quit_dialog_confirm
+import popknow.shared.generated.resources.quiz_quit_dialog_text
+import popknow.shared.generated.resources.quiz_quit_dialog_title
 
 @Composable
 fun QuizScreen(
@@ -74,10 +84,10 @@ fun QuizScreen(
     ) {
         if (state.isQuitDialogOpen) {
             PopKnowConfirmDialog(
-                title = "Quit Game?",
-                text = "Are you sure you want to quit the current game? Your progress will be lost.",
-                confirmText = "Quit",
-                dismissText = "Cancel",
+                title = UiText.Resource(Res.string.quiz_quit_dialog_title).asString(),
+                text = UiText.Resource(Res.string.quiz_quit_dialog_text).asString(),
+                confirmText = UiText.Resource(Res.string.quiz_quit_dialog_confirm).asString(),
+                dismissText = UiText.Resource(Res.string.common_cancel).asString(),
                 onConfirm = onConfirmQuit,
                 onDismiss = { onShowQuitDialog(false) }
             )
@@ -95,9 +105,9 @@ fun QuizScreen(
 
             state.quizData != null -> Column {
                 PopKnowTopBar(
-                    left = UiText.Raw("Quit"),
-                    center = UiText.Raw("On Air"),
-                    right = UiText.Raw("Live"),
+                    left = UiText.Resource(Res.string.quiz_appbar_left),
+                    center = UiText.Resource(Res.string.quiz_appbar_center),
+                    right = UiText.Resource(Res.string.quiz_appbar_right),
                     backIcon = Icons.Default.Close,
                     onBack = { onShowQuitDialog(true) }
                 )
@@ -127,8 +137,6 @@ private fun SessionContent(
     onNextClick: () -> Unit,
     onSeeResultClick: () -> Unit,
 ) {
-    val dotColor = difficultyColor(ui.difficulty)
-
     Column(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -152,7 +160,7 @@ private fun SessionContent(
             ) {
                 Column {
                     Text(
-                        text = "QUESTION",
+                        text = UiText.Resource(Res.string.quiz_question_label).asString().uppercase(),
                         style = MaterialTheme.typography.displaySmall,
                         color = MaterialTheme.colorScheme.secondary,
                     )
@@ -173,13 +181,13 @@ private fun SessionContent(
                     Box(
                         modifier = Modifier
                             .size(8.dp)
-                            .background(dotColor, CircleShape),
+                            .background(ui.difficulty.color(), CircleShape),
                     )
                     Spacer(Modifier.width(MaterialTheme.spacing.xs))
                 }
                 Spacer(Modifier.width(MaterialTheme.spacing.xs))
                 Text(
-                    text = "${ui.difficulty.name} · ${ui.categoryText}",
+                    text = "${ui.difficulty.toText().asString().uppercase()} · ${ui.categoryText}",
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.secondary,
                 )
@@ -310,9 +318,9 @@ private fun Answers(
                 color = contentColor,
             )
         }
-        if (choice.status == QuizAnswerStatusUi.CORRECT) {
+        if (choice.status == AnswerStatusUiModel.CORRECT) {
             Icon(Icons.Default.Check, contentDescription = null, tint = contentColor)
-        } else if (choice.status == QuizAnswerStatusUi.INCORRECT) {
+        } else if (choice.status == AnswerStatusUiModel.INCORRECT) {
             Icon(Icons.Default.Close, contentDescription = null, tint = contentColor)
         }
     }
@@ -370,12 +378,12 @@ private fun ResultBar(
     ) {
         Column {
             Text(
-                text = resultChoice.label(),
+                text = "· ${resultChoice.status?.toLabel()?.asString()?.uppercase() ?: ""}",
                 style = MaterialTheme.typography.displaySmall,
                 color = barContentColor,
             )
             Text(
-                text = resultChoice.headline(),
+                text = resultChoice.status?.toHeadline()?.asString()?.uppercase() ?: "",
                 style = MaterialTheme.typography.headlineLarge,
                 color = barContentColor,
             )
@@ -395,7 +403,7 @@ private fun ResultBar(
                 horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.xs),
             ) {
                 Text(
-                    text = "NEXT",
+                    text = UiText.Resource(Res.string.quiz_next).asString().uppercase(),
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.popKnowColors.background,
                 )
@@ -407,43 +415,6 @@ private fun ResultBar(
             }
         }
     }
-}
-
-@Composable
-private fun difficultyColor(difficulty: DifficultyUiModel): Color = when (difficulty) {
-    DifficultyUiModel.EASY -> MaterialTheme.popKnowGameColors.difficultyEasy
-    DifficultyUiModel.MEDIUM -> MaterialTheme.popKnowGameColors.difficultyMedium
-    DifficultyUiModel.HARD -> MaterialTheme.popKnowGameColors.difficultyHard
-}
-
-@Composable
-private fun QuizChoiceUiModel.backgroundColor(): Color = when (status) {
-    QuizAnswerStatusUi.CORRECT -> MaterialTheme.popKnowGameColors.correct
-    QuizAnswerStatusUi.INCORRECT -> MaterialTheme.popKnowGameColors.wrong
-    QuizAnswerStatusUi.TIMEOUT -> MaterialTheme.popKnowGameColors.timeout
-    null -> MaterialTheme.colorScheme.background
-}
-
-@Composable
-private fun QuizChoiceUiModel.contentColor(): Color = when (status) {
-    QuizAnswerStatusUi.CORRECT -> MaterialTheme.popKnowGameColors.onCorrect
-    QuizAnswerStatusUi.INCORRECT -> MaterialTheme.popKnowGameColors.onWrong
-    QuizAnswerStatusUi.TIMEOUT -> MaterialTheme.popKnowGameColors.onTimeout
-    null -> MaterialTheme.colorScheme.onBackground
-}
-
-private fun QuizChoiceUiModel.label(): String = when (status) {
-    QuizAnswerStatusUi.CORRECT -> "· POINTS WON"
-    QuizAnswerStatusUi.INCORRECT -> "· POINTS LOST"
-    QuizAnswerStatusUi.TIMEOUT -> "· TIMED OUT"
-    null -> ""
-}
-
-private fun QuizChoiceUiModel.headline(): String = when (status) {
-    QuizAnswerStatusUi.CORRECT -> "NICE."
-    QuizAnswerStatusUi.INCORRECT -> "NOPE."
-    QuizAnswerStatusUi.TIMEOUT -> "SLOW."
-    null -> ""
 }
 
 @Composable

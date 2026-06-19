@@ -11,7 +11,7 @@ import io.nicolaszurbuchen.pop_know.app.design.theme.PopKnowTheme
 import io.nicolaszurbuchen.pop_know.common.error.AppErrorUiModel
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.AnswerStatsUiModel
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.DifficultyUiModel
-import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.AnswerStatusUiModel
 import io.nicolaszurbuchen.pop_know.infra.ui.UiText
 
 class ResultUiModelProvider : PreviewParameterProvider<ResultUiModel> {
@@ -22,11 +22,11 @@ class ResultUiModelProvider : PreviewParameterProvider<ResultUiModel> {
             error = null,
             content = GameResultUiModel(
                 questions = listOf(
-                    AnsweredQuestionResultUiModel("Q1", "A1", "A1", AnswerStatus.CORRECT, "Cat", DifficultyUiModel.EASY),
-                    AnsweredQuestionResultUiModel("Q2", "A2", "W2", AnswerStatus.INCORRECT, "Cat", DifficultyUiModel.EASY),
-                    AnsweredQuestionResultUiModel("Q3", "A3", null, AnswerStatus.TIMEOUT, "Cat", DifficultyUiModel.EASY),
-                    AnsweredQuestionResultUiModel("Q4", "A4", "A4", AnswerStatus.CORRECT, "Cat", DifficultyUiModel.EASY),
-                    AnsweredQuestionResultUiModel("Q5", "A5", "A5", AnswerStatus.CORRECT, "Cat", DifficultyUiModel.EASY),
+                    AnsweredQuestionResultUiModel("Q1", "A1", "A1", AnswerStatusUiModel.CORRECT, "Cat", DifficultyUiModel.EASY),
+                    AnsweredQuestionResultUiModel("Q2", "A2", "W2", AnswerStatusUiModel.INCORRECT, "Cat", DifficultyUiModel.EASY),
+                    AnsweredQuestionResultUiModel("Q3", "A3", null, AnswerStatusUiModel.TIMEOUT, "Cat", DifficultyUiModel.EASY),
+                    AnsweredQuestionResultUiModel("Q4", "A4", "A4", AnswerStatusUiModel.CORRECT, "Cat", DifficultyUiModel.EASY),
+                    AnsweredQuestionResultUiModel("Q5", "A5", "A5", AnswerStatusUiModel.CORRECT, "Cat", DifficultyUiModel.EASY),
                 ),
                 correctCount = 3,
                 incorrectCount = 1,

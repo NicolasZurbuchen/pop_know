@@ -15,16 +15,31 @@
     <string name="home_start_round">Start Round</string>
     <string name="home_view_stats">View Stats</string>
 
+    <string name="common_cancel">Cancel</string>
+    <string name="common_difficulty_easy">Easy</string>
+    <string name="common_difficulty_medium">Medium</string>
+    <string name="common_difficulty_hard">Hard</string>
+
+    <string name="quiz_appbar_left">Quit</string>
+    <string name="quiz_appbar_center">On Air</string>
+    <string name="quiz_appbar_right">Live</string>
+    <string name="quiz_question_label">Question</string>
+    <string name="quiz_quit_dialog_title">Quit Game?</string>
+    <string name="quiz_quit_dialog_text">Are you sure you want to quit the current game? Your progress will be lost.</string>
+    <string name="quiz_quit_dialog_confirm">Quit</string>
+    <string name="quiz_result_no_results">No results available.</string>
+
+    <string name="quiz_quiz_label_pointsWon">Points Won</string>
+    <string name="quiz_quiz_label_pointsLost">Points Lost</string>
+    <string name="quiz_quiz_label_timedOut">Timed Out</string>
+    <string name="quiz_headline_nice">Nice</string>
+    <string name="quiz_headline_nope">Nope</string>
+    <string name="quiz_headline_slow">Slow</string>
+
     <string name="quiz_question">Question</string>
     <string name="quiz_question_count">%1$d%</string>
-    <string name="quiz_easy">Easy</string>
-    <string name="quiz_medium">Medium</string>
-    <string name="quiz_hard">Hard</string>
     <string name="quiz_points_banked">+ Points Banked</string>
     <string name="quiz_points_lost">- Points Lost</string>
-    <string name="quiz_nice">Nice!</string>
-    <string name="quiz_nope">Nope.</string>
-    <string name="quiz_slow">Slow.</string>
     <string name="quiz_next">Next</string>
     <string name="quiz_see_result">See result</string>
 
@@ -51,7 +66,6 @@
     <string name="stats_clear_dialog_title">Clear Statistics?</string>
     <string name="stats_clear_dialog_text">Are you sure you want to clear all statistics? This action cannot be undone.</string>
     <string name="stats_clear_dialog_confirm">Clear</string>
-    <string name="stats_clear_dialog_dismiss">Cancel</string>
 
     <string name="error_retry">Retry</string>
     <string name="error_dismiss">Dismiss</string>

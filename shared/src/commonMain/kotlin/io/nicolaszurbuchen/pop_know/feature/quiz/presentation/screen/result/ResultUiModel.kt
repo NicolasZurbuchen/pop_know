@@ -3,7 +3,7 @@ package io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.result
 import io.nicolaszurbuchen.pop_know.common.error.AppErrorUiModel
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.AnswerStatsUiModel
 import io.nicolaszurbuchen.pop_know.common.trivia.presentation.uimodel.DifficultyUiModel
-import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
+import io.nicolaszurbuchen.pop_know.feature.quiz.presentation.screen.quiz.AnswerStatusUiModel
 
 data class ResultUiModel(
     val isLoading: Boolean,
@@ -23,7 +23,7 @@ data class AnsweredQuestionResultUiModel(
     val question: String,
     val correctAnswer: String,
     val selectedAnswer: String?,
-    val status: AnswerStatus,
+    val status: AnswerStatusUiModel,
     val categoryName: String,
     val difficulty: DifficultyUiModel,
 )
