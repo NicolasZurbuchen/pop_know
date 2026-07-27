@@ -9,13 +9,16 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.dto.Triv
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.TriviaQuestion
 import io.nicolaszurbuchen.pop_know.infra.platform.decodeHtml
 
-fun CategoryDto.toEntity(): CategoryEntity =
+fun CategoryDto.toEntity(decodeHtml: (String) -> String = String::decodeHtml): CategoryEntity =
     CategoryEntity(
         id = id.toLong(),
-        name = category,
+        name = decodeHtml(category),
     )
 
-fun TriviaQuestionDto.toDomain(categories: List<Category>): TriviaQuestion =
+fun TriviaQuestionDto.toDomain(
+    categories: List<Category>,
+    decodeHtml: (String) -> String = String::decodeHtml,
+): TriviaQuestion =
     TriviaQuestion(
         questionType =
             when (type) {
@@ -36,7 +39,7 @@ fun TriviaQuestionDto.toDomain(categories: List<Category>): TriviaQuestion =
                     id = -1,
                     category = category,
                 ),
-        question = question.decodeHtml(),
-        correctAnswer = correctAnswer.decodeHtml(),
-        incorrectAnswers = incorrectAnswers.map { it.decodeHtml() },
+        question = decodeHtml(question),
+        correctAnswer = decodeHtml(correctAnswer),
+        incorrectAnswers = incorrectAnswers.map { decodeHtml(it) },
     )

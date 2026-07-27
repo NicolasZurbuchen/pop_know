@@ -9,6 +9,7 @@ import kotlin.time.Clock
 class QuizLocalDataSourceImpl(
     private val questionHistoryQueries: QuestionHistoryQueries,
     private val categoryQueries: CategoryQueries,
+    private val nowMillis: () -> Long = { Clock.System.now().toEpochMilliseconds() },
 ) : QuizLocalDataSource {
     override fun saveAnswer(
         gameId: Long,
@@ -31,7 +32,7 @@ class QuizLocalDataSourceImpl(
             incorrect_answers = incorrectAnswers,
             selected_answer = selectedAnswer,
             status = status,
-            answered_at = Clock.System.now().toEpochMilliseconds(),
+            answered_at = nowMillis(),
         )
     }
 

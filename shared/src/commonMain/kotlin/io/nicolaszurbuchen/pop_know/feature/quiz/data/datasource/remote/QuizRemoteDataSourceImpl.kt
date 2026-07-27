@@ -6,6 +6,7 @@ import io.nicolaszurbuchen.pop_know.common.error.toAppError
 import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.api.QuizApi
 import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.dto.CategoryDto
 import io.nicolaszurbuchen.pop_know.feature.quiz.data.datasource.remote.dto.TriviaQuestionDto
+import kotlin.coroutines.cancellation.CancellationException
 
 class QuizRemoteDataSourceImpl(
     private val api: QuizApi,
@@ -13,6 +14,8 @@ class QuizRemoteDataSourceImpl(
     override suspend fun fetchCategories(): List<CategoryDto> =
         try {
             api.getCategories().triviaCategories
+        } catch (e: CancellationException) {
+            throw e
         } catch (_: Exception) {
             throw AppException(AppError.Network.Unavailable)
         }
@@ -36,6 +39,8 @@ class QuizRemoteDataSourceImpl(
             }
             response.results
         } catch (e: AppException) {
+            throw e
+        } catch (e: CancellationException) {
             throw e
         } catch (_: Exception) {
             throw AppException(AppError.Network.Unavailable)
