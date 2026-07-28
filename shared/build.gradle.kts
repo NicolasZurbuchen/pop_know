@@ -24,15 +24,6 @@ kotlin {
     }
     
     sourceSets {
-        androidMain.dependencies {
-            implementation(libs.android.driver)
-            implementation(libs.androidx.activity.compose)
-            implementation(libs.compose.uiToolingPreview)
-            implementation(libs.compose.uiTooling)
-            implementation(libs.ktor.client.android)
-            implementation(libs.ktor.client.okhttp)
-        }
-
         commonMain.dependencies {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
@@ -56,12 +47,25 @@ kotlin {
             implementation(libs.navigation3.ui)
             implementation(libs.sqldelight.coroutines)
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
+        androidMain.dependencies {
+            implementation(libs.android.driver)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.compose.uiToolingPreview)
+            implementation(libs.compose.uiTooling)
+            implementation(libs.ktor.client.android)
+            implementation(libs.ktor.client.okhttp)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
             implementation(libs.native.driver)
+        }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.ktor.client.mock)
+        }
+        androidUnitTest.dependencies {
+            implementation(libs.sqldelight.driver.jdbc.sqlite)
         }
     }
 }
