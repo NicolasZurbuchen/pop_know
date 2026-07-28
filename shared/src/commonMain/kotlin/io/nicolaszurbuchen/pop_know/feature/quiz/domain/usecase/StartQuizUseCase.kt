@@ -11,7 +11,6 @@ class StartQuizUseCase(
     suspend operator fun invoke(): QuizSession {
         val questions = repository.fetchQuestions(amount = 10)
         return QuizSession(
-            gameId = Clock.System.now().toEpochMilliseconds(),
             questionStates = questions.map { QuestionProgress.Unanswered(it) },
         )
     }

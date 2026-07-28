@@ -26,9 +26,9 @@ val quizModule =
         singleOf(::QuizApiImpl) bind QuizApi::class
 
         singleOf(::QuizRemoteDataSourceImpl) bind QuizRemoteDataSource::class
-        singleOf(::QuizLocalDataSourceImpl) bind QuizLocalDataSource::class
+        single<QuizLocalDataSource> { QuizLocalDataSourceImpl(get(), get()) }
 
-        singleOf(::QuizRepositoryImpl) bind QuizRepository::class
+        single<QuizRepository> { QuizRepositoryImpl(get(), get()) }
 
         factoryOf(::StartQuizUseCase)
         factoryOf(::SubmitAnswerUseCase)

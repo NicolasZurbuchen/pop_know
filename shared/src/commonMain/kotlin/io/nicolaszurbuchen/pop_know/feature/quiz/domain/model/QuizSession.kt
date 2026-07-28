@@ -1,10 +1,11 @@
 package io.nicolaszurbuchen.pop_know.feature.quiz.domain.model
 
 import io.nicolaszurbuchen.pop_know.common.trivia.domain.model.AnswerStats
+import kotlin.time.Clock
 
 data class QuizSession(
-    val gameId: Long,
     val questionStates: List<QuestionProgress>,
+    val gameId: Long = Clock.System.now().toEpochMilliseconds(),
     val currentIndex: Int = 0,
 ) {
     val currentQuestion: QuestionProgress
