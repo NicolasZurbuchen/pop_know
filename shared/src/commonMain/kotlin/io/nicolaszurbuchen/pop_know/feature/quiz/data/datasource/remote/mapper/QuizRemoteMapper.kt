@@ -34,7 +34,7 @@ fun TriviaQuestionDto.toDomain(
                 else -> throw IllegalArgumentException("Unknown difficulty: $difficulty")
             },
         category =
-            categories.find { it.category == category }
+            categories.find { it.category == decodeHtml(category) }
                 ?: Category(
                     id = -1,
                     category = category,

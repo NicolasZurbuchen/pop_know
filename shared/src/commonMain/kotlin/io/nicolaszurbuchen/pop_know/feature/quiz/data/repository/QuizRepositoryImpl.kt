@@ -10,24 +10,26 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.AnswerStatus
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.GameResult
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.TriviaQuestion
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.repository.QuizRepository
+import io.nicolaszurbuchen.pop_know.infra.platform.decodeHtml
 
 class QuizRepositoryImpl(
     private val remoteDataSource: QuizRemoteDataSource,
     private val localDataSource: QuizLocalDataSource,
+    private val decodeHtml: (String) -> String = String::decodeHtml,
 ) : QuizRepository {
     override suspend fun fetchQuestions(amount: Int): List<TriviaQuestion> {
         val localCategories = localDataSource.getCategories()
         val categories =
             if (localCategories.isEmpty()) {
                 val fetchedDto = remoteDataSource.fetchCategories()
-                val entities = fetchedDto.map { it.toEntity() }
+                val entities = fetchedDto.map { it.toEntity(decodeHtml) }
                 localDataSource.saveCategories(entities)
                 entities.map { it.toDomain() }
             } else {
                 localCategories.map { it.toDomain() }
             }
 
-        return remoteDataSource.fetchQuestions(amount).map { it.toDomain(categories) }
+        return remoteDataSource.fetchQuestions(amount).map { it.toDomain(categories, decodeHtml) }
     }
 
     override suspend fun saveAnswer(
