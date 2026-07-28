@@ -63,6 +63,7 @@ kotlin {
             implementation(libs.kotlin.test)
             implementation(libs.kotlinx.coroutines.test)
             implementation(libs.ktor.client.mock)
+            implementation(libs.turbine)
         }
         androidUnitTest.dependencies {
             implementation(libs.sqldelight.driver.jdbc.sqlite)
