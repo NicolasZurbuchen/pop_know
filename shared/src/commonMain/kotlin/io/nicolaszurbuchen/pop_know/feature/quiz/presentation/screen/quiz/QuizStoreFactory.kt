@@ -14,6 +14,7 @@ import io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase.SubmitAnswerUseC
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 interface QuizStore : Store<QuizIntent, QuizState, QuizLabel>
 
@@ -138,16 +139,16 @@ class QuizStoreFactory(
             timerJob =
                 scope.launch {
                     for (remaining in 14 downTo 0) {
-                        delay(1000)
+                        delay(1000.milliseconds)
                         dispatch(QuizMessage.TimerTick(remaining))
                     }
-                    delay(1000)
+                    delay(1000.milliseconds)
                     handleSelectAnswer(state().session, null)
                 }
         }
     }
 
-    private object ReducerImpl : Reducer<QuizState, QuizMessage> {
+    internal object ReducerImpl : Reducer<QuizState, QuizMessage> {
         override fun QuizState.reduce(msg: QuizMessage): QuizState =
             when (msg) {
                 QuizMessage.QuizLoading -> {

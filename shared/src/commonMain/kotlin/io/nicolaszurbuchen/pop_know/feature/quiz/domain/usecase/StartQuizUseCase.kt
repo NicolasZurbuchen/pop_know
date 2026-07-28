@@ -3,7 +3,6 @@ package io.nicolaszurbuchen.pop_know.feature.quiz.domain.usecase
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuestionProgress
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.model.QuizSession
 import io.nicolaszurbuchen.pop_know.feature.quiz.domain.repository.QuizRepository
-import kotlin.time.Clock
 
 class StartQuizUseCase(
     private val repository: QuizRepository,
